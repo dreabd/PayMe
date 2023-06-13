@@ -18,7 +18,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    transaction = db.relationship("Transaction", back_populates="user")
     card = db.relationship("Card", back_populates="user")
 
     @property
