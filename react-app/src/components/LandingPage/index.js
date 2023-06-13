@@ -1,7 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from "../../store/session";
 import { NavLink } from "react-router-dom";
 
 function LandingPage() {
+  const dispatch = useDispatch()
+  const sessionUser = useSelector(state => state.session.user);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
+
+  if (sessionUser) {
+    return (
+      <div>
+        <h1>
+          I am Logged in as {sessionUser.first_name}
+        </h1>
+        <button onClick={handleLogout}>Log Out</button>
+      </div>
+    )
+  }
   return (
     <div>
       <h1>
@@ -17,6 +37,7 @@ function LandingPage() {
           Sign Up
         </NavLink>
       </button>
+
     </div>
   )
 }

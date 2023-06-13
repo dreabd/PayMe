@@ -68,15 +68,18 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signUp = (signUpInfo) => async (dispatch) => {
+	// console.log("response.................. okay?",)
+	// console.log("Signupinfo.........................",signUpInfo)
+	// for (let key of signUpInfo.entries()) {
+	// 	console.log("Thunk",key[0] + ' ----> ' + key[1])
+	// }
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
 		body: signUpInfo
 	});
 
 	if (response.ok) {
+		console.log('response ok....................!!!!!!!!!!!')
 		const data = await response.json();
 		dispatch(setUser(data));
 		return null;

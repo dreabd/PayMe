@@ -1,0 +1,34 @@
+.signupForm>h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem;
+  gap: 4px;
+  width: 100%;
+  height: auto;
+
+}
+
+.signupForm>* {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+.signupForm>label>input {
+  border: 1px solid #DCDEDD;
+  padding: 10px 20px;
+}
+
+.signupForm>label>textarea {
+  border: 1px solid #DCDEDD;
+  padding: 4px 4px;
+}

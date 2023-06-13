@@ -12,7 +12,6 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(),nullable=False,unique=False)
     last_name = db.Column(db.String(),nullable=False,unique=False)
-        # profile_picture = StringField('First Name', validators=[DataRequired()])
     balance = db.Column(db.Integer(),nullable=False,default=0)
     phone_number = db.Column(db.Integer(),nullable=False,unique=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
@@ -33,6 +32,12 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'balance': self.balance,
+            'phone_number': self.phone_number,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            "hashed_password": self.hashed_password
+
         }

@@ -18,11 +18,18 @@ def username_exists(form, field):
     user = User.query.filter(User.username == username).first()
     if user:
         raise ValidationError('Username is already in use.')
+
 def phone_exists(form,field):
     number = field.data
     user = User.query.filter(User.phone_number == number).first()
     if user:
         raise ValidationError('Phone number is already in use.')
+
+def phone_length(form,field):
+    number = field.data
+    if len(str(number)) != 10:
+        raise ValidationError('Please provide a valid 10-digit phone number')
+
 
 
 class SignUpForm(FlaskForm):
@@ -31,16 +38,12 @@ class SignUpForm(FlaskForm):
     username = StringField(
         'Username', validators=[DataRequired(), username_exists])
     email = StringField('Email', validators=[DataRequired(), user_exists])
-    # profile_picture = StringField('First Name', validators=[DataRequired()])
     phone_number = IntegerField(
         "Phone Number",
         validators=[
             DataRequired(),
-            NumberRange(
-                min=10,
-                max=10,
-                message="Please type a valid 10-digit phone number."),
-            phone_exists
+            phone_exists,
+            phone_length
             ]
         )
 

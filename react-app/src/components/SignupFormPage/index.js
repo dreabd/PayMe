@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
@@ -10,39 +10,83 @@ function SignupFormPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber,setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [submitted, setSubmitted] = useState(false)
 
 
-  if (sessionUser) return <Redirect to="/" />;
+  useEffect(() => {
+    const err = {}
+
+    if(!firstName.length) err["firstName"] = "Please provide a valid first name"
+
+    if(!lastName.length) err["lastName"] = "Please provide a valid last name"
+
+    if(!email.length) err["email"] = "Please provide a valid email"
+
+    if(!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
+    if(phoneNumber.length !== 10) err["phoneNumber"] = "Please provide a valid 10-digit phone number"
+
+    if(!password.length) err["password"] = "Please provide a valid password"
+
+
+    setErrors(err)
+  }, [firstName,lastName, email, phoneNumber, username, password])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setSubmitted(true)
     if (Object.values(errors).length) return
 
     if (password === confirmPassword) {
-        const data = await dispatch(signUp(username, email, password));
-        if (data) {
-          setErrors(data)
-        }
-    } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
-    }
-  };
 
-  return (
-    <>
+      const formData = new FormData()
+
+      formData.append("first_name", firstName)
+      formData.append("last_name", lastName)
+      formData.append("username", username)
+      formData.append("email", email)
+      formData.append("phone_number", phoneNumber)
+      formData.append("password", password)
+
+      // console.log("Form Data gathered from form:")
+      // for (let key of formData.entries()) {
+        // 	console.log(key[0] + ' ----> ' + key[1])
+        // }
+
+        const data = await dispatch(signUp(formData));
+        if (data) {
+          const err = data.reduce((acc,cv)=>{
+            let split = cv.split(":")
+            // acc[split[0]] = split[1]
+            console.log(split[0].trim(),split[1].trim())
+            let key = split[0].trim()
+            let property = split[1].trim()
+            console.log({key,property})
+            acc[key] = property
+            return acc
+          },{})
+          setErrors(err)
+          // console.log(err)
+
+        }
+      } else {
+        setErrors(['Confirm Password field must be the same as the Password field']);
+      }
+    };
+    if (sessionUser) return <Redirect to="/" />;
+
+    return (
+      <>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
+      <form className="signupForm" onSubmit={handleSubmit}>
+
         <label>
-          First Name
+          First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
           <input
             type="text"
             value={firstName}
@@ -51,7 +95,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Last Name
+          Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
           <input
             type="text"
             value={lastName}
@@ -60,7 +104,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Username
+          Username  {submitted &&<span className='errors'>{errors?.username}</span>}
           <input
             type="text"
             value={username}
@@ -69,7 +113,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Phone Number
+          Phone Number  {submitted && <span className='errors'>{errors?.phone_number || errors?.phoneNumber}</span>}
           <input
             type="tel"
             value={phoneNumber}
@@ -78,7 +122,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Email
+          Email  {submitted && <span className='errors'>{errors?.email}</span>}
           <input
             type="text"
             value={email}
@@ -87,7 +131,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Password
+          Password  {submitted && <span className='errors'>{errors?.password}</span>}
           <input
             type="password"
             value={password}
@@ -104,7 +148,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button className="signup-button" type="submit">Sign Up</button>
       </form>
     </>
   );
