@@ -24,10 +24,9 @@ class Transaction(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("categories.id")), nullable=False
     )
 
-    requester  = db.relationship("User", back_populates="transaction",foreign_keys=[requester_id])
-    payer = db.relationship("User", back_populates="transaction",foreign_keys=[payer_id])
+    requester  = db.relationship("users",back_populates="transaction", backref="transaction",foreign_keys=[requester_id])
+    payer = db.relationship("users",back_populates="transaction", backref="transaction",foreign_keys=[payer_id])
     category = db.relationship("Category", back_populates="transaction")
-    user = db.relationship("User", back_populates="transaction")
 
     def to_dict(self):
         return{
