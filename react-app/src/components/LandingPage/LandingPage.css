@@ -1,0 +1,98 @@
+.navlink {
+    color: black;
+    text-decoration:none;
+}
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:  100%;
+    background-color: #008cff1a;
+}
+
+.top-landing-container {
+    display: flex;
+    width: 83.7%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    /* margin: 1rem 1rem ; */
+}
+
+.logo{
+    color:#008CFF;
+}
+
+
+.landing-button-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.landing-button-container>button:nth-child(1),
+.motto-container>button
+{
+    font-size: 1rem;
+    display: flex;
+    gap: 1rem;
+    background-color: white;
+    border: 1.5px black solid;
+    padding: 1rem 3rem;
+    border-radius: 100px;
+}
+
+.sign-up-button{
+    font-size: 1rem;
+    display: flex;
+    gap: 1rem;
+    background-color:#008CFF;
+    border: 1.5px black solid;
+    padding: 1rem 3rem;
+    border-radius: 100px;
+    border: none;
+}
+.motto-container>button{
+    background-color: #008CFF;
+    border: none;
+    box-shadow: 10px 6px 0px rgb(105, 239, 152);
+}
+
+.motto-container > button > *,
+.sign-up-button > *{
+    color: white;
+    font-weight: bold;
+}
+
+.bottom-landing-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    /* gap: 3rem; */
+}
+
+.bottom-landing-container >img{
+    width: 30%;
+    padding: 1rem 1rem ;
+}
+
+.motto-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: baseline;
+    width: fit-content;
+    gap: 1rem;
+}
+
+.motto-container > h1{
+    margin: none;
+    padding: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+    font-weight:400;
+}
+
