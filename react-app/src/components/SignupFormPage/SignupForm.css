@@ -1,8 +1,9 @@
-.signupForm>h2 {
-  margin: 0;
-  padding: 0;
+.signup-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
 }
-
 .signupForm {
   display: flex;
   flex-direction: column;
@@ -19,9 +20,6 @@
   display: flex;
   flex-direction: column;
 }
-
-
-
 
 .signupForm>label>input {
   border: 1px solid #DCDEDD;

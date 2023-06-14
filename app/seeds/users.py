@@ -97,6 +97,9 @@ def seed_users():
         password="password",
     )
 
+    user_list = [user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,]
+
+    [db.session.add(user) for user in user_list]
     db.session.commit()
 
 

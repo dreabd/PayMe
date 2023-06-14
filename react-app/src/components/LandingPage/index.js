@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../../store/session";
 import { NavLink } from "react-router-dom";
 import "./LandingPage.css"
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function LandingPage() {
   const dispatch = useDispatch()
@@ -14,14 +15,7 @@ function LandingPage() {
   };
 
   if (sessionUser) {
-    return (
-      <div>
-        <h1>
-          I am Logged in as {sessionUser.first_name}
-        </h1>
-        <button onClick={handleLogout}>Log Out</button>
-      </div>
-    )
+    return <Redirect exact to="/user"/>
   }
   return (
     <div className="landing-container">

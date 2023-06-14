@@ -4,8 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
+// import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+import UserLandingPage from "./components/UserLandingPage";
 import "./index.css"
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
       {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
-          <Route exact path ="/">
-            <LandingPage/>
+          <Route exact path="/">
+            <LandingPage />
           </Route>
           <Route exact path="/login" >
             <LoginFormPage />
@@ -29,6 +30,10 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path="/user">
+            <UserLandingPage />
+          </Route>
+
         </Switch>
       )}
     </>

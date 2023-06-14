@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect,NavLink } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
 
@@ -21,20 +21,20 @@ function SignupFormPage() {
   useEffect(() => {
     const err = {}
 
-    if(!firstName.length) err["firstName"] = "Please provide a valid first name"
+    if (!firstName.length) err["firstName"] = "Please provide a valid first name"
 
-    if(!lastName.length) err["lastName"] = "Please provide a valid last name"
+    if (!lastName.length) err["lastName"] = "Please provide a valid last name"
 
-    if(!email.length) err["email"] = "Please provide a valid email"
+    if (!email.length) err["email"] = "Please provide a valid email"
 
-    if(!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
-    if(phoneNumber.length !== 10) err["phoneNumber"] = "Please provide a valid 10-digit phone number"
+    if (!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
+    if (phoneNumber.length !== 10) err["phoneNumber"] = "Please provide a valid 10-digit phone number"
 
-    if(!password.length) err["password"] = "Please provide a valid password"
+    if (!password.length) err["password"] = "Please provide a valid password"
 
 
     setErrors(err)
-  }, [firstName,lastName, email, phoneNumber, username, password])
+  }, [firstName, lastName, email, phoneNumber, username, password])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,34 +55,41 @@ function SignupFormPage() {
 
       // console.log("Form Data gathered from form:")
       // for (let key of formData.entries()) {
-        // 	console.log(key[0] + ' ----> ' + key[1])
-        // }
+      // 	console.log(key[0] + ' ----> ' + key[1])
+      // }
 
-        const data = await dispatch(signUp(formData));
-        if (data) {
-          const err = data.reduce((acc,cv)=>{
-            let split = cv.split(":")
-            // acc[split[0]] = split[1]
-            console.log(split[0].trim(),split[1].trim())
-            let key = split[0].trim()
-            let property = split[1].trim()
-            console.log({key,property})
-            acc[key] = property
-            return acc
-          },{})
-          setErrors(err)
-          // console.log(err)
-
-        }
-      } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
+      const data = await dispatch(signUp(formData));
+      if (data) {
+        const err = data.reduce((acc, cv) => {
+          let split = cv.split(":")
+          // acc[split[0]] = split[1]
+          console.log(split[0].trim(), split[1].trim())
+          let key = split[0].trim()
+          let property = split[1].trim()
+          console.log({ key, property })
+          acc[key] = property
+          return acc
+        }, {})
+        setErrors(err)
       }
-    };
-    if (sessionUser) return <Redirect to="/" />;
+      else{
+        return <Redirect exact to="/user"/>
+      }
+    } else {
+      setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+  };
+  if (sessionUser) return <Redirect to="/" />;
 
-    return (
-      <>
-      <h1>Sign Up</h1>
+  return (
+    <div className="signup-container">
+      <p>
+        <NavLink className="navlink" exact to="/">
+          <h1 className="logo">
+            PayMe
+          </h1>
+        </NavLink>
+      </p>
       <form className="signupForm" onSubmit={handleSubmit}>
 
         <label>
@@ -104,7 +111,7 @@ function SignupFormPage() {
           />
         </label>
         <label>
-          Username  {submitted &&<span className='errors'>{errors?.username}</span>}
+          Username  {submitted && <span className='errors'>{errors?.username}</span>}
           <input
             type="text"
             value={username}
@@ -150,7 +157,7 @@ function SignupFormPage() {
         </label>
         <button className="signup-button" type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

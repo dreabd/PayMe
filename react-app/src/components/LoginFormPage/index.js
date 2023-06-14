@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import './LoginForm.css';
 
 function LoginFormPage() {
@@ -20,11 +20,25 @@ function LoginFormPage() {
       return setErrors(data);
     }
   };
+  const handleDemo = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login("demo@aa.io", "password"));
+    if (data) {
+      return setErrors(data);
+    }
+  };
 
   return (
-    <>
+    <div className="login-container">
+      <p>
+        <NavLink className="navlink" exact to="/">
+          <h1 className="logo">
+            PayMe
+          </h1>
+        </NavLink>
+      </p>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="loginForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
@@ -48,9 +62,10 @@ function LoginFormPage() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button className="login-button" type="submit">Log In</button>
+        <button className="login-button" onClick={handleDemo}>Demo User</button>
       </form>
-    </>
+    </div>
   );
 }
 
