@@ -27,6 +27,13 @@ function LoginFormPage() {
       return setErrors(data);
     }
   };
+  const handleJorge = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login("jorge@email.com", "password"));
+    if (data) {
+      return setErrors(data);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -64,6 +71,7 @@ function LoginFormPage() {
         </label>
         <button className="login-button" type="submit">Log In</button>
         <button className="login-button" onClick={handleDemo}>Demo User</button>
+        <button className="login-button" onClick={handleJorge}>Jorge</button>
       </form>
     </div>
   );

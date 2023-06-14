@@ -7,7 +7,7 @@ def seed_categories():
     cat_1 = Category(type="Housing ")
     cat_2 = Category(type="Transportation")
     cat_3 = Category(type="Food")
-    cat_4 = Category(type="Personal ")
+    cat_4 = Category(type="Personal")
     cat_5 = Category(type="Entertainment")
     cat_6 = Category(type="Saving")
 

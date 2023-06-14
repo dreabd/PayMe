@@ -25,7 +25,7 @@ function UserLandingPage() {
         Log Out
       </button>
       <h1>
-        I am the user Landing Page
+        I am the {user.first_name}
       </h1>
     </div>
   )

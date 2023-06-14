@@ -33,6 +33,7 @@ class Transaction(db.Model):
 
     def to_dict(self):
         return {
+            "id":self.id,
             "requester_id": self.requester_id,
             "payer_id": self.payer_id,
             "description": self.description,
@@ -41,4 +42,20 @@ class Transaction(db.Model):
             "completed": self.completed,
             "created_at": self.created_at,
             "category": self.category.to_dict(),
+            "requester":self.requester.to_dict(),
+            "payer":self.payer.to_dict()
+        }
+    def user_dict(self):
+        return {
+            "id":self.id,
+            "requester_id": self.requester_id,
+            "payer_id": self.payer_id,
+            "description": self.description,
+            "public": self.public,
+            "money": self.money,
+            "completed": self.completed,
+            "created_at": self.created_at,
+            "category": self.category.to_dict(),
+            "requester":self.requester.to_dict(),
+            "payer":self.payer.to_dict()
         }

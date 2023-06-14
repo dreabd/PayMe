@@ -40,5 +40,4 @@ class User(db.Model, UserMixin):
             'phone_number': self.phone_number,
             'username': self.username,
             'email': self.email,
-            "hashed_password": self.hashed_password
         }
