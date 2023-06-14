@@ -58,7 +58,7 @@ function LandingPage() {
           </p>
           <button>
             <NavLink className="navlink motto-button-txt" exact to="/signup">
-              Get Venmo
+              Get PayMe
             </NavLink>
           </button>
         </div>
