@@ -63,10 +63,10 @@ function SignupFormPage() {
         const err = data.reduce((acc, cv) => {
           let split = cv.split(":")
           // acc[split[0]] = split[1]
-          console.log(split[0].trim(), split[1].trim())
+          // console.log(split[0].trim(), split[1].trim())
           let key = split[0].trim()
           let property = split[1].trim()
-          console.log({ key, property })
+          // console.log({ key, property })
           acc[key] = property
           return acc
         }, {})

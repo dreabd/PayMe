@@ -1,6 +1,9 @@
-nav{
+nav {
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem;
   gap: 6rem;
+  background-color:#008cff14;
+  border: 2px solid rgba(0, 0, 0, 0.231);
+  height: auto;
 }

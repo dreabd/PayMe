@@ -33,7 +33,6 @@ function App() {
           <Route exact path="/user">
             <UserLandingPage />
           </Route>
-
         </Switch>
       )}
     </>

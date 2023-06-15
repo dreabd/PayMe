@@ -6,6 +6,7 @@ from app.models import Transaction, db
 
 class TransactionForm(FlaskForm):
     payer_id = IntegerField("Payer Id", validators=[DataRequired()])
+    requester_id = IntegerField("Requester Id", validators=[DataRequired()])
     description = TextAreaField("Description", validators=[DataRequired()])
     public = BooleanField("Public", validators=[DataRequired()])
     money = IntegerField("Money", validators=[DataRequired()])
