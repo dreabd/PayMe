@@ -30,10 +30,9 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/user">
+          <Route path="/user">
             <UserLandingPage />
           </Route>
-
         </Switch>
       )}
     </>

@@ -1,5 +1,9 @@
+import { normalizeObj } from "./helpers";
+
+
 // constants
 const SET_USER = "session/SET_USER";
+const GET_USERS = "session/getAllUsers";
 const REMOVE_USER = "session/REMOVE_USER";
 
 const setUser = (user) => ({
@@ -11,7 +15,13 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-const initialState = { user: null };
+const getAllUsers=(users) =>{
+	return{
+		type:GET_USERS,
+		users
+	}
+}
+
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -28,6 +38,19 @@ export const authenticate = () => async (dispatch) => {
 		dispatch(setUser(data));
 	}
 };
+
+export const getAllUsersThunk = () => async dispatch =>{
+	const res = await fetch("/api/users/")
+
+	if(res.ok){
+		const {users} = await res.json()
+		dispatch(getAllUsers(users))
+		return
+	}
+	else{
+		console.log("There were some errors")
+	}
+}
 
 export const login = (email, password) => async (dispatch) => {
 	const response = await fetch("/api/auth/login", {
@@ -79,7 +102,7 @@ export const signUp = (signUpInfo) => async (dispatch) => {
 	});
 
 	if (response.ok) {
-		console.log('response ok....................!!!!!!!!!!!')
+		console.log('response ok..................!!!!!!!!!!!')
 		const data = await response.json();
 		dispatch(setUser(data));
 		return null;
@@ -93,12 +116,16 @@ export const signUp = (signUpInfo) => async (dispatch) => {
 	}
 };
 
+const initialState = { user: null,allUsers:{}};
+
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
-			return { user: action.payload };
+			return {...state,user: action.payload };
 		case REMOVE_USER:
-			return { user: null };
+			return {...state,user: null };
+		case GET_USERS:
+			return {...state,allUsers:{...normalizeObj(action.users)}}
 		default:
 			return state;
 	}

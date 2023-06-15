@@ -13,25 +13,44 @@ def get_user_transactions():
     """
     Grab all the transactions that are associated with the current user
     """
+
+    print(current_user)
     user_trans = Transaction.query.filter(
         (Transaction.payer_id == current_user.id)
         | (Transaction.requester_id == current_user.id)
-    )
+    ).filter(Transaction.completed == True)
 
     user_transaction = [trans.to_dict() for trans in user_trans]
 
-    return {"userTransaction": user_transaction}
+    return {"transactions": user_transaction}
+
+
+@transactions_routes.route("/user/incomplete")
+@login_required
+def get_incomplete_user_transactions():
+    """
+    Grab all the incompleted that are associated with the current user
+    """
+
+    print(current_user)
+    user_trans = Transaction.query.filter(
+        (Transaction.payer_id == current_user.id)
+        | (Transaction.requester_id == current_user.id)
+    ).filter(Transaction.completed == False)
+
+    user_transaction = [trans.to_dict() for trans in user_trans]
+
+    return {"transactions": user_transaction}
 
 
 @transactions_routes.route("/")
 @login_required
 def get_all_transaction():
     """
-    Grabbing all the transactions that are public
+    Grabbing all the transactions that are public and completed
     """
 
-    all_trans = Transaction.query.filter(Transaction.public == True).all()
-    print("I am the current user.........................", current_user.id)
+    all_trans = Transaction.query.filter(Transaction.public == True).filter(Transaction.completed == True).all()
     transactions = [trans.user_dict() for trans in all_trans]
 
     return {"transactions": transactions}
@@ -55,7 +74,7 @@ def post_transaction():
         data = form.data
         # print("I am validated.................",data)
         new_transaction = Transaction(
-            requester_id=current_user.id,
+            requester_id=data["requester_id"],
             payer_id=data["payer_id"],
             description=data["description"],
             public=data["public"],
@@ -100,7 +119,7 @@ def put_single_transaction(id):
   form = EditTransactionForm()
 
   if(single_transaction.requester_id != current_user.id):
-      return {"errors":"Can not edit another user's transaction request"},404
+      return {"errors":"Can not edit another user's transaction request"},401
 
   if(form.validate_on_submit and not single_transaction.completed):
     print("transaction edit.................")

@@ -1,0 +1,29 @@
+/* .trans-feed-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+.toggle-button{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  border-radius: 20px;
+  margin: 2rem 2rem;
+}
+
+.all-trans-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem;
+  gap: 1.5rem;
+}
+
+.trans-card {
+  width:80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

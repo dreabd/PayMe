@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from "../../store/session";
+import React from "react";
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import "./LandingPage.css"
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function LandingPage() {
-  const dispatch = useDispatch()
   const sessionUser = useSelector(state => state.session.user);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-  };
-
   if (sessionUser) {
-    return <Redirect exact to="/user"/>
+    return <Redirect exact to="/user" />
   }
   return (
     <div className="landing-container">
       <div className="top-landing-container">
-        <p>
-          <NavLink className="navlink" exact to="/">
-            <h1 className="logo">
-              PayMe
-            </h1>
-          </NavLink>
-        </p>
+        <NavLink className="navlink" exact to="/">
+          <h1 className="logo">
+            PayMe
+          </h1>
+        </NavLink>
 
         <div className="landing-button-container">
           <button>

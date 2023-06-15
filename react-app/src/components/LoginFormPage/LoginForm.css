@@ -35,7 +35,8 @@
 }
 
 .login-button,
-.pay-request-button{
+.pay-request-button,
+.toggle-button{
   border: none;
   width: 55%;
   text-align: center;
