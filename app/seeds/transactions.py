@@ -33,7 +33,7 @@ def seed_transactions():
             public=True,
             money=randint(5,50),
             completed=choice([True,False]),
-            created_at = date(choice([2023, 2022]), randint(1,6), randint(1, 29)),
+            created_at = date(choice([2023, 2022]), randint(1,6), randint(1, 28)),
             category_id=choice([1,2,3,4,5,6]),
         )
         trans_list.append(trans)
