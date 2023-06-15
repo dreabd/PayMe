@@ -35,14 +35,14 @@ function Navigation() {
         </p>
       </div>
       <button className="pay-request-button">
-        <NavLink className="navlink" exact to="/user/transaction">
+        <NavLink className="navlink" to="/user/transaction">
           Pay / Request
         </NavLink>
       </button>
-      <NavLink className="navlink" exact to="/user/cards">
+      <NavLink className="navlink" to="/user/cards">
         Manage your Payment Methods
       </NavLink>
-      <NavLink className="navlink" exact to="/user/incomplete">
+      <NavLink className="navlink" to="/user/incomplete">
         Incomplete
       </NavLink>
       <button onClick={handleLogout}>

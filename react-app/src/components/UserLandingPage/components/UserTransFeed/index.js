@@ -22,7 +22,7 @@ function UserTransFeed() {
   }, [dispatch])
 
   // ----------Helper Functions----------
-  const allTransactionsContainer = Object?.values(allTransactions)?.map(trans => {
+  const allTransactionsContainer =allTransactions && Object?.values(allTransactions)?.map(trans => {
     return (
       <div className="trans-card">
         <div className="left-trans">
@@ -49,7 +49,7 @@ function UserTransFeed() {
     setPersonal(!personal)
   }
 
-  const userTransactionsContainer = Object?.values(userTransactions)?.map(trans => {
+  const userTransactionsContainer =userTransactions && Object.values(userTransactions)?.map(trans => {
     return (
       <div className="trans-card">
         <div className="left-trans">
@@ -79,10 +79,13 @@ function UserTransFeed() {
       <button className="toggle-button" onClick={togglePersonal}>
         {personal ? "Checkout All Transactions" : "Checkout Your Transactions"}
       </button>
+      {(allTransactions && userTransactions)?
         <div className="all-trans-container">
           <h3>{!personal ? "All Transactions" : "Personal Transactions" }</h3>
           {!personal ? allTransactionsContainer : userTransactionsContainer}
-        </div>
+        </div> : `Loading bitch`
+      }
+
 
     </div>
   )

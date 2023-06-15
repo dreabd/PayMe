@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Navigation from "./components/Navigation";
 import UserTransFeed from "./components/UserTransFeed";
 import Incomplete from "./components/Incomplete";
+import TransactionForm from "./components/TransactionForm";
 
 import "./UserLandingPage.css"
 
@@ -34,7 +35,7 @@ function UserLandingPage() {
               <UserTransFeed />
             </Route>
             <Route exact path="/user/transaction">
-              <h1> Placeholder for user/transaction</h1>
+              <TransactionForm/>
             </Route>
             <Route exact path="/user/cards">
               <h1> Placeholder for user/cards</h1>
