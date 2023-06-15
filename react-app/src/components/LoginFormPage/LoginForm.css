@@ -34,7 +34,8 @@
   align-items: center;
 }
 
-.login-button{
+.login-button,
+.pay-request-button{
   border: none;
   width: 55%;
   text-align: center;

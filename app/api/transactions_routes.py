@@ -32,7 +32,7 @@ def get_all_transaction():
 
     all_trans = Transaction.query.filter(Transaction.public == True).all()
     print("I am the current user.........................", current_user.id)
-    transactions = [trans.to_dict() for trans in all_trans]
+    transactions = [trans.user_dict() for trans in all_trans]
 
     return {"transactions": transactions}
 

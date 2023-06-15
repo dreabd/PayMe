@@ -55,7 +55,7 @@ class Transaction(db.Model):
             "money": self.money,
             "completed": self.completed,
             "created_at": self.created_at,
-            "category": self.category.to_dict(),
-            "requester":self.requester.to_dict(),
-            "payer":self.payer.to_dict()
+            "category": self.category.to_dict()["type"],
+            "requester":self.requester.trans_dict(),
+            "payer":self.payer.trans_dict()
         }
