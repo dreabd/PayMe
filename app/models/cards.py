@@ -12,7 +12,7 @@ class Card(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
     bank_name = db.Column(db.String(),nullable=False)
-    card_number = db.Column(db.Integer(),nullable=False)
+    card_number = db.Column(db.Numeric,nullable=False)
     created_at = db.Column(db.Date, nullable=False, default=date.today())
 
     user = db.relationship("User",back_populates="card")
