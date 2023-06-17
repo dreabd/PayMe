@@ -37,15 +37,12 @@ function LoginFormPage() {
 
   return (
     <div className="login-container">
-      <p>
+      <form className="loginForm" onSubmit={handleSubmit}>
         <NavLink className="navlink" exact to="/">
           <h1 className="logo">
             PayMe
           </h1>
         </NavLink>
-      </p>
-      <h1>Log In</h1>
-      <form className="loginForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>

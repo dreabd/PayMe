@@ -2,17 +2,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 90%;
+  align-items: center;
+  padding-top: 4rem;
 }
-.signupForm {
+.signupForm{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 1rem 1rem;
-  gap: 4px;
-  width: 100%;
+  padding: 2rem 2rem;
+  gap: .5rem;
+  width: 25%;
   height: auto;
+  background-color: rgba(0, 0, 0, 0.020);
+  border-radius: 9px;
+  /* padding-bottom: 0; */
+  border: 3px solid rgba(0, 0, 0, 0.149);
 
 }
 
@@ -22,11 +26,27 @@
 }
 
 .signupForm>label>input {
-  border: 1px solid #DCDEDD;
-  padding: 10px 20px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.149);
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.005);
+
 }
 
-.signupForm>label>textarea {
-  border: 1px solid #DCDEDD;
-  padding: 4px 4px;
+
+.name-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+
+}
+
+.name-container > label >input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.149);
+  padding: 5px 0px;
+  background-color: rgba(0, 0, 0, 0.005);
+
 }

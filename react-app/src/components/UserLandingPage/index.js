@@ -15,11 +15,8 @@ function UserLandingPage() {
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.session.user)
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [userLoad, setUserLoad] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(authenticate()).then(() => setIsLoaded(true));
-  // }, [dispatch]);
 
 
   if (!user) {
@@ -28,20 +25,20 @@ function UserLandingPage() {
   return (
     <div className="user-landing-container">
       <BrowserRouter>
-        {<Navigation />}
+        {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
         {/* {isLoaded && */}
           <Switch>
             <Route exact path="/user">
               <UserTransFeed />
             </Route>
             <Route exact path="/user/transaction">
-              <TransactionForm/>
+              <TransactionForm setUserLoad={setUserLoad}/>
             </Route>
             <Route exact path="/user/cards">
               <h1> Placeholder for user/cards</h1>
             </Route>
             <Route exact path="/user/incomplete">
-              <Incomplete/>
+              <Incomplete setUserLoad={setUserLoad} />
             </Route>
           </Switch>
 

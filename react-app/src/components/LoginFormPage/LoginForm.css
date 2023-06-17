@@ -2,19 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 90%;
+  align-items: center;
+  padding: 4rem 0rem ;
 }
 .loginForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
   gap: .5rem;
-  width: 50%;
+  width: 25%;
   height: auto;
   background-color: white;
-  border-radius: 15%;
-  padding-bottom: 0;
+  border-radius: 30px;
+  /* padding-bottom: 0; */
+  border: 3px solid rgba(0, 0, 0, 0.149)
+
 }
 
 .loginForm>* {
@@ -36,9 +39,14 @@
 
 .login-button,
 .pay-request-button,
-.toggle-button{
+.toggle-button,
+.signup-button,
+.logout-button,
+.button-containers> button,
+.pay-request-button-container > button{
   border: none;
-  width: 55%;
+  /* width: 55%; */
+  width: 100%;
   text-align: center;
   background-color:#008CFF;
   color: white;

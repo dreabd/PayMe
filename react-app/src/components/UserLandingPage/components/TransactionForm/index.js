@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
+import { postPayTransactionsThunk, postReqTransactionsThunk } from "../../../../store/transactions";
 
-function TransactionForm() {
+import "./TransactionForm.css"
+
+function TransactionForm({ setUserLoad }) {
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const [description, setDescription] = useState("")
   const [publics, setPublics] = useState(false)
@@ -16,15 +20,78 @@ function TransactionForm() {
 
   const [pay, setPay] = useState(false)
   const [request, setRequest] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const categories = useSelector(state => state.category.categories);
   const users = useSelector(state => state.session.allUsers)
+  const current = useSelector(state => state.session.user)
 
   useEffect(() => {
-    // Fetch category data
+    // Fetch category and user data
     dispatch(getCategoriesThunk())
     dispatch(getAllUsersThunk())
   }, [dispatch])
+
+  useEffect(() => {
+    const err = {}
+
+    if (!description.trim().length) err["description"] = "Please provide a valuid description"
+    if (money <= 0) err["money"] = "Please provide a valid amout"
+    if (!name) err["name"] = "Please select a user"
+    if (!category) err["category"] = "Please select a category"
+
+    setErrors(err)
+
+  }, [description, name, money, category])
+
+  const handleTransactionSubmit = async (e) => {
+    e.preventDefault()
+
+    setSubmitted(true)
+
+    if (Object.values(errors).length) return
+
+    const formData = new FormData()
+
+    if (pay) {
+      formData.append("requester_id", name)
+      formData.append("payer_id", current.id)
+    }
+
+    if (request) {
+      formData.append("requester_id", current.id)
+      formData.append("payer_id", name)
+    }
+
+    formData.append("description", description)
+    formData.append("public", publics)
+    formData.append("money", money)
+    formData.append("category_id", category)
+
+    // for (let key of formData.entries()) {
+    //   console.log(key[0] + ' ----> ' + key[1])
+    // }
+
+
+    if (request) {
+      const data = await dispatch(postReqTransactionsThunk(formData))
+      if (data?.errors) {
+        return setErrors(data.errors)
+      }
+      history.push("/user")
+    }
+    if (pay) {
+      setUserLoad(true)
+      const data = await dispatch(postPayTransactionsThunk(formData))
+      if (data) {
+        console.log(data)
+        return setErrors(data)
+      }
+      history.push("/user")
+    }
+
+
+  }
 
 
   const userIsPaying = (e) => {
@@ -35,28 +102,28 @@ function TransactionForm() {
     e.preventDefault()
     setPay(false)
     setRequest(false)
+    setErrors({})
   }
-
   const userIsRequesting = (e) => {
     e.preventDefault()
     setRequest(true)
   }
+
+
   return (
-    <div>
-      <h1>I am the transaction form</h1>
-      <form action="">
+    <div className="trans-form-container">
+      <form className="trans-form" onSubmit={handleTransactionSubmit}>
+      {pay && submitted && <span className='errors'>{errors.money}</span>}
         <label >
-          Money <span className='errors'>{errors.money}</span>
-          <span className="dollar-sign">$</span>
+          Money
           <input
             type="number"
             value={money}
-            // placeholder="Amount to Pledge"
             onChange={e => setMoney(e.target.value)}
           />
         </label>
         <label >
-          To Whom <span className='errors'>{errors.money}</span>
+          To Whom {submitted && <span className='errors'>{errors.name}</span>}
           <select
             value={name}
             onChange={(e) => setName(e.target.value)}>
@@ -69,17 +136,25 @@ function TransactionForm() {
           </select>
         </label>
         <label>
-          Description  <span className='errors'>{errors.description}</span>
-          <input
+          Description  {submitted && <span className='errors'>{errors.description}</span>}
+          <textarea
             type='text'
             value={description}
             placeholder='Project Description'
             onChange={(e) => setDescription(e.target.value)}
           />
         </label>
+        <label className="public-checkbox">
+          Public
+          <input
+            type="checkbox"
+            value={publics}
+            onChange={e => { setPublics(!publics) }}
+          />
+        </label>
 
         <label>
-          Category <span className='errors'>{errors.category}</span>
+          Category {submitted && <span className='errors'>{errors.category}</span>}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}>
@@ -92,12 +167,12 @@ function TransactionForm() {
           </select>
         </label>
 
-        {!pay && !request && <button onClick={userIsPaying}> Pay </button>}
-        {!request && !pay && <button onClick={userIsRequesting}> Request </button>}
+        {!pay && !request && <button className="pay-request-button" onClick={userIsPaying}> Pay </button>}
+        {!request && !pay && <button className="pay-request-button" onClick={userIsRequesting}> Request </button>}
 
         {pay &&
-          <div>
-            <button type="submit">
+          <div className="pay-request-button-container">
+            <button disabled={Object.values(errors).length} type="submit">
               Pay
             </button>
             <button onClick={transactionIsCanceled}>
@@ -107,8 +182,8 @@ function TransactionForm() {
         }
 
         {request &&
-          <div>
-            <button type="submit">
+          <div className="pay-request-button-container">
+            <button disabled={Object.values(errors).length} type="submit">
               Request
             </button>
             <button onClick={transactionIsCanceled}>

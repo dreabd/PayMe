@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import { logout } from "../../../../store/session";
+import { authenticate, logout } from "../../../../store/session";
 import "./Navigation.css"
 
-function Navigation() {
+function Navigation({userLoad,setUserLoad}) {
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.session.user)
@@ -14,6 +14,11 @@ function Navigation() {
     e.preventDefault();
     dispatch(logout());
   };
+
+  useEffect(()=>{
+    setUserLoad(false)
+    dispatch(authenticate())
+  },[userLoad])
 
   if(!user) return <Redirect exact to="/" />
   return (
@@ -24,14 +29,14 @@ function Navigation() {
             PayMe
           </h1>
         </NavLink>
-        <h3>
+        <p className="first-last-name">
           {user.first_name}, {user.last_name}
-        </h3>
-        <p>
+        </p>
+        <p className="username">
           @{user.username}
         </p>
-        <p>
-          Balance:<span>${user.balance}</span>
+        <p className="balance-container">
+          Balance: <span className="user-balance">${user.balance}</span>
         </p>
       </div>
       <button className="pay-request-button">
@@ -45,7 +50,7 @@ function Navigation() {
       <NavLink className="navlink" to="/user/incomplete">
         Incomplete
       </NavLink>
-      <button onClick={handleLogout}>
+      <button className="logout-button" onClick={handleLogout}>
         Log Out
       </button>
     </nav>
