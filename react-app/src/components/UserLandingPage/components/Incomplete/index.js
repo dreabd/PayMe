@@ -1,20 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIncompleteUserTransactionsThunk,getPublicTransactionsThunk } from "../../../../store/transactions";
+import { deleteTransactionThunk, getIncompleteUserTransactionsThunk, getPublicTransactionsThunk, putIncompleteTransactionThunk } from "../../../../store/transactions";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+// import { postPayTransactionsThunk } from "../../../../store/transactions";
 
-function Incomplete() {
+function Incomplete({setUserLoad}) {
   const dispatch = useDispatch()
+
+  const [errors,setErrors] = useState({})
+  const [submited,setSubmited] = useState(false)
+
   useEffect(() => {
     dispatch(getIncompleteUserTransactionsThunk())
     dispatch(getPublicTransactionsThunk())
+    setSubmited(false)
     // Would probably need to do the buttons for updating and delting somewhere here as well
-  }, [dispatch])
+  }, [dispatch,errors,submited])
 
   const incompleteTransactions = useSelector(state => state.transaction.userTransactions.incompleted)
   const user = useSelector(state => state.session.user)
 
+
   const incompleteTransactionsContainer = incompleteTransactions && Object.values(incompleteTransactions)?.map(trans => {
+    const handlePayments = async e => {
+      const data  = await dispatch(putIncompleteTransactionThunk(trans.id))
+      if(data?.errors){
+        console.log(data.errors)
+      }
+      setSubmited(true)
+      setUserLoad(true)
+    }
+
+    const handleDelete = async e =>{
+      const data = await dispatch(deleteTransactionThunk(trans.id))
+      if(data?.errors){
+        console.log(data.errors)
+      }
+      setSubmited(true)
+    }
+
+    const handleEdit = async e =>{
+      return alert("Feature coming soon")
+    }
     return (
       <div className="trans-card">
         <div className="top-incomplete-cont trans-card">
@@ -35,22 +62,24 @@ function Incomplete() {
           </div>
         </div>
         <div className="button-containers">
-          {trans.payer.id !== user.id && <button>Edit</button>}
-          {trans.payer.id !== user.id && <button>Cancel</button>}
-          {trans.payer.id === user.id && <button>Pay</button>}
+          <span className="errors">{errors["money"]}</span>
+          {trans.payer.id !== user.id && <button onClick={handleEdit}>Edit</button>}
+          {trans.payer.id !== user.id && <button onClick={handleDelete}>Cancel</button>}
+          {trans.payer.id === user.id && <button onClick={handlePayments}>Pay</button>}
         </div>
       </div>
     )
   })
 
-  console.log(incompleteTransactions)
+  // console.log(incompleteTransactions)
 
 
-  if(!user) return <Redirect exact to="/user"/>
+  if (!user) return <Redirect exact to="/user" />
   return (
     <div className="all-trans-container">
       <h1>I am incomplete :c</h1>
       {incompleteTransactionsContainer}
+      {!incompleteTransactionsContainer?.length && <h1>Start a New Transaction! </h1>}
     </div>
   )
 }

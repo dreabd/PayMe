@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect,NavLink } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
 
@@ -72,8 +72,8 @@ function SignupFormPage() {
         }, {})
         setErrors(err)
       }
-      else{
-        return <Redirect exact to="/user"/>
+      else {
+        return <Redirect exact to="/user" />
       }
     } else {
       setErrors(['Confirm Password field must be the same as the Password field']);
@@ -83,33 +83,37 @@ function SignupFormPage() {
 
   return (
     <div className="signup-container">
-      <p>
-        <NavLink className="navlink" exact to="/">
-          <h1 className="logo">
-            PayMe
-          </h1>
-        </NavLink>
-      </p>
-      <form className="signupForm" onSubmit={handleSubmit}>
+      <NavLink className="navlink" exact to="/">
+        <h1 className="logo">
+          PayMe
+        </h1>
+      </NavLink>
 
-        <label>
-          First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
+      <form className="signupForm" onSubmit={handleSubmit}>
+        <h3>
+          Create Your Account
+        </h3>
+        <div className="name-container">
+          <label>
+            First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+
         <label>
           Username  {submitted && <span className='errors'>{errors?.username}</span>}
           <input

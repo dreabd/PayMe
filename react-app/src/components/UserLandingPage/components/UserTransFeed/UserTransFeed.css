@@ -1,8 +1,9 @@
-/* .trans-feed-container{
+.trans-feed-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-} */
+  width: 100%;
+}
 .toggle-button{
   display: flex;
   flex-direction: column;
@@ -19,6 +20,7 @@
   align-items: center;
   padding: 1rem 1rem;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .trans-card {
@@ -26,4 +28,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-bottom: .2px solid rgba(0, 0, 0, 0.195);
+}
+.left-trans{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding-bottom: 1.5rem;
+}
+.mid-trans{
+  font-size: 12px;
 }

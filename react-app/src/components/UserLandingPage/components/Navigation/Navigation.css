@@ -2,9 +2,37 @@ nav {
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem;
-  gap: 6rem;
   background-color:#008cff14;
+  gap: 1.5rem;
   border: 2px solid rgba(0, 0, 0, 0.231);
-  height: auto;
+  border-radius: 12px;
+  height: 100%;
   width: 15rem;
+
+}
+
+.pay-request-button > .navlink{
+  color: white;
+}
+
+.balance-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:20px 0px;
+  border-bottom: .2px solid rgba(0, 0, 0, 0.195);
+}
+
+.user-balance{
+  font-size: 30px;
+}
+
+.username{
+  color: rgba(0, 0, 0, 0.509);
+  font-size: smaller;
+}
+.first-last-name{
+  color: black;
+  padding: .5rem 0rem ;
+  font-size: 20px;
 }
