@@ -25,22 +25,22 @@ function UserLandingPage() {
   return (
     <div className="user-landing-container">
       <BrowserRouter>
-        {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
+      {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
         {/* {isLoaded && */}
-          <Switch>
-            <Route exact path="/user">
-              <UserTransFeed />
-            </Route>
-            <Route exact path="/user/transaction">
-              <TransactionForm setUserLoad={setUserLoad}/>
-            </Route>
-            <Route exact path="/user/cards">
-              <h1> Placeholder for user/cards</h1>
-            </Route>
-            <Route exact path="/user/incomplete">
-              <Incomplete setUserLoad={setUserLoad} />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route exact path="/user">
+            <UserTransFeed />
+          </Route>
+          <Route exact path="/user/transaction">
+            <TransactionForm setUserLoad={setUserLoad} />
+          </Route>
+          <Route exact path="/user/cards">
+            <h1> Placeholder for user/cards</h1>
+          </Route>
+          <Route exact path="/user/incomplete">
+            <Incomplete setUserLoad={setUserLoad} />
+          </Route>
+        </Switch>
 
       </BrowserRouter>
 

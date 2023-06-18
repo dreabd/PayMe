@@ -6,13 +6,13 @@ class Card(db.Model):
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
-        
+
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
     bank_name = db.Column(db.String(),nullable=False)
-    card_number = db.Column(db.Numeric,nullable=False)
+    card_number = db.Column(db.Numeric(precision=None, asdecimal=False, decimal_return_scale=None),nullable=False)
     created_at = db.Column(db.Date, nullable=False, default=date.today())
 
     user = db.relationship("User",back_populates="card")
@@ -20,6 +20,7 @@ class Card(db.Model):
 
     def to_dict(self):
         return{
+            "id": self.id,
             "owner_id": self.owner_id,
             "bank_name": self.bank_name,
             "card_number":self.card_number,

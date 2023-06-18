@@ -75,7 +75,7 @@ def post_pay_transaction():
     # print("I made it past the forms...........................")
     # print("I am the form data...................",form.data)
 
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         data = form.data
         # print("I am validated.................",data)
 
@@ -169,7 +169,7 @@ def post_req_transaction():
     # print("I made it past the forms...........................")
     # print("I am the form data...................",form.data)
 
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         data = form.data
         # print("I am validated.................",data)
         new_transaction = Transaction(
@@ -221,7 +221,7 @@ def put_single_transaction(id):
     if single_transaction.requester_id != current_user.id:
         return {"errors": "Can not edit another user's transaction request"}, 401
 
-    if form.validate_on_submit and not single_transaction.completed:
+    if form.validate_on_submit() and not single_transaction.completed:
         print("transaction edit.................")
         data = form.data
         updated_transaction = single_transaction

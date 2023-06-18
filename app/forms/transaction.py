@@ -8,12 +8,12 @@ class TransactionForm(FlaskForm):
     payer_id = IntegerField("Payer Id", validators=[DataRequired()])
     requester_id = IntegerField("Requester Id", validators=[DataRequired()])
     description = TextAreaField("Description", validators=[DataRequired()])
-    public = BooleanField("Public", validators=[DataRequired()])
+    public = BooleanField("Public", validators=[DataRequired()],default=False)
     money = IntegerField("Money", validators=[DataRequired()])
     category_id = IntegerField("Category Id", validators=[DataRequired()])
 
 class EditTransactionForm(FlaskForm):
     description = TextAreaField("Description", validators=[DataRequired()])
-    public = BooleanField("Public", validators=[DataRequired()])
+    public = BooleanField("Public", validators=[DataRequired()],default=False)
     money = IntegerField("Money", validators=[DataRequired()])
     category_id = IntegerField("Category Id", validators=[DataRequired()])
