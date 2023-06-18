@@ -6,7 +6,7 @@ nav {
   gap: 1.5rem;
   border: 2px solid rgba(0, 0, 0, 0.231);
   border-radius: 12px;
-  height: 100%;
+  height: fit-content;
   width: 15rem;
 
 }

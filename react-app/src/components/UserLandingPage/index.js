@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import UserTransFeed from "./components/UserTransFeed";
 import Incomplete from "./components/Incomplete";
 import TransactionForm from "./components/TransactionForm";
+import ManageCards from "./components/ManageCards";
 
 import "./UserLandingPage.css"
 
@@ -35,7 +36,7 @@ function UserLandingPage() {
             <TransactionForm setUserLoad={setUserLoad} />
           </Route>
           <Route exact path="/user/cards">
-            <h1> Placeholder for user/cards</h1>
+            <ManageCards/>
           </Route>
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />

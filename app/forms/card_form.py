@@ -37,12 +37,11 @@ def card_validator(form, field):
         raise ValidationError("Card number invalid")
     if bank_name == "AMEX" and str(card_number)[0] != 3:
         raise ValidationError("AMEX card number invalid")
-    if bank_name == "MASTERCARD":
-        if str(card_number)[0] == 2 or str(card_number) == 5:
+    if bank_name == "MASTERCARD" and str(card_number)[0] != 2:
             raise ValidationError("MASTERCARD card number invalid")
     if bank_name == "DISCOVER" and str(card_number)[0] != 6:
         raise ValidationError("DISCOVER card number invalid")
-    if bank_name == "VISA" and str(card_number)[0] != 4:
+    if bank_name == "VISA" and str(card_number)[0] != str(4):
         raise ValidationError("VISA card number invalid")
 
 
