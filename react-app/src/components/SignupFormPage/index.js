@@ -21,20 +21,30 @@ function SignupFormPage() {
   useEffect(() => {
     const err = {}
 
+    const isEmail = (email) => {
+      return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+    }
+
+    const hasWhiteSpace = (input) => {
+      return /\s/g.test(input);
+    }
+
     if (firstName.length > 50) err["firstName"] = "First Name can not be more than 50 charcters"
     if (firstName.length <= 2) err["firstName"] = "First name can not be less than 2 charcters"
     if (!firstName.length) err["firstName"] = "Please provide a valid first name"
 
     if (lastName.length > 50) err["lastName"] = "Last Name can not be more than 50 charcters"
-    if (lastName.length <=1) err["lastName"] = "Last name can not be less than 2 charcters"
+    if (lastName.length <= 1) err["lastName"] = "Last name can not be less than 2 charcters"
     if (!lastName.length) err["lastName"] = "Please provide a valid last name"
 
     if (username.length > 50) err["username"] = "Username can not be more than 50 charcters"
-    if (username.length <=1) err["username"] = "Username can not be less than 2 charcters"
+    if (username.length <= 1) err["username"] = "Username can not be less than 2 charcters"
+    if (hasWhiteSpace(username)) err["username"] = "Username can not contian any spaces"
     if (!username.length) err["username"] = "Please provide a valid Username"
 
-
     if (!email.length) err["email"] = "Please provide a valid email"
+    if(!isEmail(email)) err['email'] = "Email is invalid"
+
 
     if (!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
     if (phoneNumber.length !== 10) err["phoneNumber"] = "Please provide a valid 10-digit phone number"
@@ -42,8 +52,7 @@ function SignupFormPage() {
     if (password.length < 6) err["password"] = "Password must be at least 6 characters"
     if (password.length > 50) err["password"] = "Password must be less than 50 characters"
     if (!password.length) err["password"] = "Please provide a valid password"
-
-
+    if(hasWhiteSpace(password)) err["password"] = "Password can not include any white space."
 
     setErrors(err)
   }, [firstName, lastName, email, phoneNumber, username, password])
@@ -107,7 +116,7 @@ function SignupFormPage() {
         </h3>
         <div className="name-container">
 
-          <label style={{display:"flex",flexDirection:"column"}}>
+          <label style={{ display: "flex", flexDirection: "column" }}>
             First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
             <input
               type="text"
@@ -116,7 +125,7 @@ function SignupFormPage() {
               required
             />
           </label>
-          <label style={{display:"flex",flexDirection:"column"}}>
+          <label style={{ display: "flex", flexDirection: "column" }}>
             Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
             <input
               type="text"
