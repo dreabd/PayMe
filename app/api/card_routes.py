@@ -24,10 +24,10 @@ def get_all_user_cards():
 @login_required
 def post_new_card():
     '''
-    Posts a new Card:
+    Posts a new Cardnk
     - Grabs the information sent from the user
     - Passes that information through wtforms validators
-    - If they are validated on submit then submits a new credit card for the current user
+    - If they are validated on submit then submits a new credit card for the currenkt user
     - If there are any validation errors, then they will be sent back to the front end
     '''
 
