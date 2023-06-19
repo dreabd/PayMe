@@ -27,22 +27,24 @@ def card_validator(form, field):
     card_number = field.data
     bank_name = form.data["bank_name"]
 
-    print("length of card................", bank_name)
+    print("length of card................", len(str(card_number)))
     print("Card first digit................", str(card_number)[0])
     print(
         "Master card validator.................",
-        str(card_number)[0] == 2 or str(card_number) == 5,
+        str(card_number)[0] == str(2) or str(card_number) == str(5),
     )
+    print("this should be true.......",bank_name == "MASTERCARD" and not (str(card_number)[0] == str(2) or str(card_number) == str(5)))
+
     if len(str(card_number)) != 15 and len(str(card_number)) != 16:
         raise ValidationError("Card number invalid")
     if bank_name == "AMEX" and str(card_number)[0] != str(3):
-        raise ValidationError("AMEX card number invalid")
-    if bank_name == "MASTERCARD" and (str(card_number)[0] != str(2) or str(card_number)[0]!= str(5)):
-            raise ValidationError("MASTERCARD card number invalid")
-    if bank_name == "DISCOVER" and str(card_number)[0] != 6:
-        raise ValidationError("DISCOVER card number invalid")
+        raise ValidationError("AMEX card number invalid, must start with a 3")
+    if bank_name == "MASTERCARD" and str(card_number)[0] not in ["2","5"]:
+            raise ValidationError("MASTERCARD card number invalid,must start with a 2 or 5")
+    if bank_name == "DISCOVER" and str(card_number)[0] != str(6):
+        raise ValidationError("DISCOVER card number invalid,must start with a 6")
     if bank_name == "VISA" and str(card_number)[0] != str(4):
-        raise ValidationError("VISA card number invalid")
+        raise ValidationError("VISA card number invalid, must start with a 4")
 
 
 class CardForm(FlaskForm):

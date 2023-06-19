@@ -9,15 +9,25 @@ function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
+  const[submit,setSubmitted] =useState(false)
 
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitted(true)
     const data = await dispatch(login(email, password));
     if (data) {
-      return setErrors(data);
+      const err = data.reduce((acc, cv) => {
+        let split = cv.split(":")
+        let key = split[0].trim()
+        let property = split[1].trim()
+        acc[key] = property
+        return acc
+      }, {})
+      console.log(err)
+      return setErrors(err);
     }
   };
   const handleDemo = async (e) => {
@@ -43,13 +53,8 @@ function LoginFormPage() {
             PayMe
           </h1>
         </NavLink>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
         <label>
-          Email
+          Email {submit && <span className="errors">{errors?.email}</span>}
           <input
             type="text"
             value={email}
@@ -58,7 +63,7 @@ function LoginFormPage() {
           />
         </label>
         <label>
-          Password
+          Password {submit && <span className="errors">{errors?.password}</span>}
           <input
             type="password"
             value={password}

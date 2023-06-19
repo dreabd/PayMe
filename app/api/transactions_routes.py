@@ -14,14 +14,17 @@ def get_user_transactions():
     """
 
     print(current_user)
-    user_trans = Transaction.query.filter(
-        (Transaction.payer_id == current_user.id)
-        | (Transaction.requester_id == current_user.id)
-    ).filter(Transaction.completed == True).order_by(Transaction.created_at.desc())
+    user_trans = (
+        Transaction.query.filter(
+            (Transaction.payer_id == current_user.id)
+            | (Transaction.requester_id == current_user.id)
+        )
+        .filter(Transaction.completed == True)
+        .order_by(Transaction.created_at.desc())
+    )
 
     user_transaction = [trans.to_dict() for trans in user_trans]
-    user_transaction.sort(key=lambda result: result["created_at"],reverse=True)
-
+    user_transaction.sort(key=lambda result: result["created_at"], reverse=True)
 
     return {"transactions": user_transaction}
 
@@ -56,7 +59,7 @@ def get_all_transaction():
         .all()
     )
     transactions = [trans.user_dict() for trans in all_trans]
-    transactions.sort(key=lambda result: result["created_at"],reverse=True)
+    transactions.sort(key=lambda result: result["created_at"], reverse=True)
 
     return {"transactions": transactions}
 
@@ -98,6 +101,26 @@ def post_pay_transaction():
             payer.balance -= data["money"]
 
             # print("I'm the new guy.....................",new_transaction.payer_id)
+            db.session.add(new_transaction)
+            db.session.commit()
+            return (
+                {"newTransaction": new_transaction.to_dict()},
+                200,
+                {"Content-Type": "application/json"},
+            )
+        elif len(payer.card):
+            new_transaction = Transaction(
+                requester_id=data["requester_id"],
+                payer_id=data["payer_id"],
+                description=data["description"],
+                public=data["public"],
+                money=data["money"],
+                completed=True,
+                category_id=data["category_id"],
+            )
+
+            requester.balance += data["money"]
+
             db.session.add(new_transaction)
             db.session.commit()
             return (
@@ -147,6 +170,13 @@ def put_pay_transaction(id):
 
         db.session.commit()
         return {"transaction": single_transaction.to_dict()}
+    if len(payer.card):
+        single_transaction.completed = True
+
+        requester.balance += single_transaction.money
+
+        return {"transaction": single_transaction.to_dict()}
+
     else:
         return {
             "errors": {

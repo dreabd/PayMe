@@ -48,7 +48,7 @@ def post_new_card():
 
         db.session.add(new_card)
         db.session.commit()
-        return {"newCard": new_card.to_dict()},200
+        return {"card": new_card.to_dict()},200
     if form.errors:
         print("There were some form errors", form.errors)
         return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
@@ -62,7 +62,7 @@ def get_single_card(id):
         return {"error":"unauthorized"}
     if single_card is None:
         return {"error":"Card can not be found"}
-    
+
     return {"card": single_card.to_dict()}
 
 @card_routes.route("/<int:id>",methods=["PUT"])
@@ -79,7 +79,7 @@ def update_card(id):
 
     if updated_card.owner_id != current_user.id:
         return {"errors": "Unauthorized"},401
-    
+
     if updated_card is None:
         return {"errors": "Card Could not be found"},404
 
@@ -92,7 +92,7 @@ def update_card(id):
             updated_card.card_number = data["card_number"]
         if data["bank_name"]:
             updated_card.bank_name = data["bank_name"]
-        
+
         db.session.commit()
         return {"card": updated_card.to_dict()}
     if form.errors:
@@ -115,7 +115,7 @@ def delete_card(id):
 
     if(current_user.id != deleted_card.owner_id):
         return {"errors": "unauthorized"},400
-    
+
     if deleted_card is None:
         return {"errors": "Card could not be found"},404
 

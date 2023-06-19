@@ -24,8 +24,12 @@ function SingleCard() {
         if(data?.errors){
             return setErrors(data.errors)
         }else{
-            history.push("/user/cards")   
+            history.push("/user/cards")
         }
+    }
+
+    const editCard = e =>{
+        history.push(`/user/card/${id}/edit`)
     }
 
     const cards = singleCard && (
@@ -33,6 +37,7 @@ function SingleCard() {
             <p>{singleCard.bank_name}</p>
             <p>{singleCard.card_number}</p>
             <button onClick={handleDelete}> Remove Card</button>
+            <button onClick={editCard}>Update Card</button>
         </div>
     )
     return (

@@ -10,7 +10,8 @@ import Incomplete from "./components/Incomplete";
 import TransactionForm from "./components/TransactionForm";
 import ManageCards from "./components/ManageCards";
 import SingleCard from "./components/SingleCard";
-
+import CardForm from "./components/CardForm";
+import EditCard from "./components/EditCard";
 
 import "./UserLandingPage.css"
 
@@ -41,10 +42,13 @@ function UserLandingPage() {
             <ManageCards/>
           </Route>
           <Route exact path="/user/card/new">
-            <h1>New Card Form</h1>
+            <CardForm/>
           </Route>
           <Route exact path="/user/card/:id">
             <SingleCard/>
+          </Route>
+          <Route exact path="/user/card/:id/edit">
+            <EditCard/>
           </Route>
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />

@@ -35,7 +35,8 @@ function TransactionForm({ setUserLoad }) {
   useEffect(() => {
     const err = {}
 
-    if (!description.trim().length) err["description"] = "Please provide a valuid description"
+    if (!description.trim().length) err["description"] = "Please provide a valid description"
+    if (description.length > 50) err["description"] = "Description are limited to 50 characters  "
     if (money <= 0) err["money"] = "Please provide a valid amout"
     if (!name) err["name"] = "Please select a user"
     if (!category) err["category"] = "Please select a category"

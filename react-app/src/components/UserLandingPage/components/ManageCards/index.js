@@ -20,19 +20,19 @@ function ManageCards() {
     // console.log("stuf...............", last_four)
     if (card.bank_name === "AMEX") {
       return (
-        <div className="card-info-container">
+        <div key={card.id} className="card-info-container">
           <NavLink className="navlink" to={`/user/card/${card.id}`}>
             <p>{card.bank_name}</p>
             <p>
               <span>credit</span>
-              <p>&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022;&#x2022; {last_five}</p>
+              <p>&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022; {last_five}</p>
             </p>
           </NavLink>
         </div>
       )
     }
     return (
-      <div className="card-info-container">
+      <div  key={card.id}className="card-info-container">
         <NavLink className="navlink" to={`/user/card/${card.id}`}>
           <p>{card.bank_name}</p>
           <p>

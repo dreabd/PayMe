@@ -21,16 +21,28 @@ function SignupFormPage() {
   useEffect(() => {
     const err = {}
 
+    if (firstName.length > 50) err["firstName"] = "First Name can not be more than 50 charcters"
+    if (firstName.length <= 2) err["firstName"] = "First name can not be less than 2 charcters"
     if (!firstName.length) err["firstName"] = "Please provide a valid first name"
 
+    if (lastName.length > 50) err["lastName"] = "Last Name can not be more than 50 charcters"
+    if (lastName.length <=1) err["lastName"] = "Last name can not be less than 2 charcters"
     if (!lastName.length) err["lastName"] = "Please provide a valid last name"
+
+    if (username.length > 50) err["username"] = "Username can not be more than 50 charcters"
+    if (username.length <=1) err["username"] = "Username can not be less than 2 charcters"
+    if (!username.length) err["username"] = "Please provide a valid Username"
+
 
     if (!email.length) err["email"] = "Please provide a valid email"
 
     if (!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
     if (phoneNumber.length !== 10) err["phoneNumber"] = "Please provide a valid 10-digit phone number"
 
+    if (password.length < 6) err["password"] = "Password must be at least 6 characters"
+    if (password.length > 50) err["password"] = "Password must be less than 50 characters"
     if (!password.length) err["password"] = "Please provide a valid password"
+
 
 
     setErrors(err)
@@ -94,7 +106,8 @@ function SignupFormPage() {
           Create Your Account
         </h3>
         <div className="name-container">
-          <label>
+
+          <label style={{display:"flex",flexDirection:"column"}}>
             First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
             <input
               type="text"
@@ -103,7 +116,7 @@ function SignupFormPage() {
               required
             />
           </label>
-          <label>
+          <label style={{display:"flex",flexDirection:"column"}}>
             Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
             <input
               type="text"

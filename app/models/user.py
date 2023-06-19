@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
             'phone_number': self.phone_number,
             'username': self.username,
             'email': self.email,
+            'cards': [card.to_dict() for card in self.card]
         }
     def trans_dict(self):
         return {
