@@ -46,8 +46,9 @@
 .button-containers> button,
 .pay-request-button-container > button{
   border: none;
-  /* width: 55%; */
+  overflow: hidden;
   width: 100%;
+  word-wrap:break-word;
   text-align: center;
   background-color:#008CFF;
   color: white;

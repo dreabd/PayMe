@@ -114,7 +114,7 @@ function TransactionForm({ setUserLoad }) {
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={handleTransactionSubmit}>
-      {pay && submitted && <span className='errors'>{errors.money}</span>}
+        {pay && submitted && <span className='errors'>{errors.money}</span>}
         <label >
           Money
           <input
@@ -129,11 +129,14 @@ function TransactionForm({ setUserLoad }) {
             value={name}
             onChange={(e) => setName(e.target.value)}>
             <option default>Select a User</option>
-            {users && Object.values(users).map(user => (
-              <option key={user.id} value={user.id}>
-                {user.first_name} {user.last_name}
-              </option>
-            ))}
+            {users && Object.values(users).map(user => {
+              if (user.id !== current.id) {
+                return (
+                  <option key={user.id} value={user.id}>
+                    {user.first_name} {user.last_name}
+                  </option>)
+              }
+            })}
           </select>
         </label>
         <label>
@@ -174,7 +177,7 @@ function TransactionForm({ setUserLoad }) {
         {pay &&
           <div className="pay-request-button-container">
             <button disabled={Object.values(errors).length} type="submit">
-              Pay
+              Pay {users[name].first_name} ${money}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel
@@ -185,7 +188,7 @@ function TransactionForm({ setUserLoad }) {
         {request &&
           <div className="pay-request-button-container">
             <button disabled={Object.values(errors).length} type="submit">
-              Request
+              Request ${money} from {users[name].first_name}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel
