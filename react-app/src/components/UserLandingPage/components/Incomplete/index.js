@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTransactionThunk, getIncompleteUserTransactionsThunk, getPublicTransactionsThunk, putIncompleteTransactionThunk } from "../../../../store/transactions";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-// import { postPayTransactionsThunk } from "../../../../store/transactions";
 
 function Incomplete({setUserLoad}) {
   const dispatch = useDispatch()
@@ -31,10 +30,10 @@ function Incomplete({setUserLoad}) {
       setUserLoad(true)
     }
 
-    const handleDelete = async e =>{
-      const data = await dispatch(deleteTransactionThunk(trans.id))
+    const handleDelete = e =>{
+      const data = dispatch(deleteTransactionThunk(trans.id))
       if(data?.errors){
-        console.log(data.errors)
+        setErrors(data?.errors)
       }
       setSubmited(true)
     }

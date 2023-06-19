@@ -1,13 +1,15 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
-import transactionReducer from './transactions';
+import transactionReducer from './transactions'; 
+import cardReducer from "./cards"
 import category from './categories';
 
 const rootReducer = combineReducers({
   session,
   transaction:transactionReducer,
-  category
+  category,
+  card:cardReducer
 });
 
 

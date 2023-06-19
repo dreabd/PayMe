@@ -50,3 +50,9 @@ class CardForm(FlaskForm):
     card_number = IntegerField(
         "Card Number", validators=[DataRequired(), card_validator, card_exists]
     )
+
+class EditCardForm(FlaskForm):
+    bank_name = StringField("Bank Name", validators=[DataRequired(), valid_banks])
+    card_number = IntegerField(
+        "Card Number", validators=[DataRequired(), card_validator]
+    )
