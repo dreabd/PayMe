@@ -12,6 +12,7 @@ import ManageCards from "./components/ManageCards";
 import SingleCard from "./components/SingleCard";
 import CardForm from "./components/CardForm";
 import EditCard from "./components/EditCard";
+import EditTransaction from "./components/EditTransaction";
 
 import "./UserLandingPage.css"
 
@@ -37,6 +38,9 @@ function UserLandingPage() {
           </Route>
           <Route exact path="/user/transaction">
             <TransactionForm setUserLoad={setUserLoad} />
+          </Route>
+          <Route exact path="/user/transaction/:id/edit">
+            <EditTransaction/>
           </Route>
           <Route exact path="/user/cards">
             <ManageCards/>

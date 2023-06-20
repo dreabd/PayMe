@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
-import { postPayTransactionsThunk, postReqTransactionsThunk } from "../../../../store/transactions";
+import { postPayTransactionsThunk, postReqTransactionsThunk,putSingleTransactionThunk} from "../../../../store/transactions";
 
 import "./TransactionForm.css"
 
-function TransactionForm({ setUserLoad }) {
+function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const dispatch = useDispatch();
   const history = useHistory()
 
-  const [description, setDescription] = useState("")
-  const [publics, setPublics] = useState(false)
-  const [name, setName] = useState("")
-  const [money, setMoney] = useState(0)
-  const [category, setCategory] = useState("")
+  const [description, setDescription] = useState(trans?.description || "")
+  const [publics, setPublics] = useState(trans?.public || false)
+  const [name, setName] = useState(trans?.payer.id || "")
+  const [money, setMoney] = useState(trans?.money || 0)
+  const [category, setCategory] = useState(trans?.category.id || "")
   const [errors, setErrors] = useState({})
 
   const [pay, setPay] = useState(false)
@@ -94,6 +94,28 @@ function TransactionForm({ setUserLoad }) {
 
   }
 
+  const updateTransaction = async (e) => {
+    e.preventDefault()
+
+    setSubmitted(true)
+
+    if (Object.values(errors).length) return
+
+    const formData = new FormData()
+
+    formData.append("description", description)
+    formData.append("public", publics)
+    formData.append("money", money)
+    formData.append("category_id", category)
+
+    const data = await dispatch(putSingleTransactionThunk(formData,trans?.id))
+    if (data) {
+      return setErrors(data)
+    }
+    history.push("/user/incomplete")
+
+  }
+
 
   const userIsPaying = (e) => {
     e.preventDefault()
@@ -113,10 +135,10 @@ function TransactionForm({ setUserLoad }) {
 
   return (
     <div className="trans-form-container">
-      <form className="trans-form" onSubmit={handleTransactionSubmit}>
+      <form className="trans-form" onSubmit={!updated ? handleTransactionSubmit : updateTransaction}>
         <label style={{ display: "flex", flexDirection: "column" }}>
           Money
-        {submitted && <span className='errors'>{errors.money}</span>}
+          {submitted && <span className='errors'>{errors.money}</span>}
           <input
             type="number"
             value={money}
@@ -153,6 +175,8 @@ function TransactionForm({ setUserLoad }) {
           <input
             type="checkbox"
             value={publics}
+            defaultValue={publics}
+            checked={publics}
             onChange={e => { setPublics(!publics) }}
           />
         </label>
@@ -172,12 +196,12 @@ function TransactionForm({ setUserLoad }) {
           </select>
         </label>
 
-        {!pay && !request && <button className="pay-request-button" onClick={userIsPaying}> Pay </button>}
-        {!request && !pay && <button className="pay-request-button" onClick={userIsRequesting}> Request </button>}
+        {!updated && !pay && !request && <button className="pay-request-button" onClick={userIsPaying}> Pay </button>}
+        {!updated && !request && !pay && <button className="pay-request-button" onClick={userIsRequesting}> Request </button>}
 
-        {pay &&
+        {!updated && pay &&
           <div className="pay-request-button-container">
-            <button  type="submit">
+            <button type="submit">
               Pay {users[name]?.first_name} ${money}
             </button>
             <button onClick={transactionIsCanceled}>
@@ -186,9 +210,9 @@ function TransactionForm({ setUserLoad }) {
           </div>
         }
 
-        {request &&
+        {!updated && request &&
           <div className="pay-request-button-container">
-            <button  type="submit">
+            <button type="submit">
               Request ${money} from {users[name]?.first_name}
             </button>
             <button onClick={transactionIsCanceled}>
@@ -196,6 +220,8 @@ function TransactionForm({ setUserLoad }) {
             </button>
           </div>
         }
+
+        {updated && <button className="pay-request-button" > Update </button>}
       </form>
 
     </div>

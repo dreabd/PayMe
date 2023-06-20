@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicTransactionsThunk, getUserTransactionsThunk } from "../../../../store/transactions";
 import "./UserTransFeed.css"
-
+import { NavLink } from "react-router-dom";
 
 function UserTransFeed() {
   const dispatch = useDispatch()
@@ -34,7 +34,7 @@ function UserTransFeed() {
       <div className="trans-card">
         <div className="left-trans">
           <div className="top-trans">
-            {trans.payer.id === user.id ? "You" : `${trans.payer.first_name} ${trans.payer.last_name}`} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
+            {trans.payer.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} <span>paid</span> {trans.requester.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.requester.id}`}>{trans.requester.first_name} {trans.requester.last_name}</NavLink>}
           </div>
           <div className="mid-trans">
             {formatDate(trans.created_at)}
@@ -61,7 +61,7 @@ function UserTransFeed() {
       <div className="trans-card">
         <div className="left-trans">
           <div className="top-trans">
-            {trans.payer.id === user.id ? "You" : `${trans.payer.first_name} ${trans.payer.last_name}`} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
+            {trans.payer.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
           </div>
           <div className="mid-trans">
             {formatDate(trans.created_at)}

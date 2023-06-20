@@ -5,11 +5,14 @@ import { normalizeObj } from "./helpers"
 const GET_PUBLIC_TRANSACTIONS = "transaction/getPublicTransactions"
 const GET_USER_TRANSACTIONS = "transaction/getUserTransactions"
 const GET_INCOMPLETE_USER_TRANSACTIONS = "transaction/getIncompleteUserTransactions"
+// const GET_SINGLE_TRANSACTION = "transaction/getSingleTransaction"
 
 const POST_PAY_TRANSACTION = "transaction/postPayTransactions"
 const POST_REQ_TRANSACTION = "transaction/postReqTransactions"
 
+const PUT_SINGLE_TRANSACTION = "transaction/putSingleTransaction"
 const PUT_INCOMPLETE_TRANSACTION = "transaction/putIncompleteTransaction"
+
 const DELETE_TRANSACTIONS = "transaction/deleteTransaction"
 //--------------------- Action Creators --------------------
 const getPublicTransactions = (transactions) => {
@@ -25,34 +28,50 @@ const getUserTransactions = (transactions) => {
   }
 }
 
-const getIncompleteUserTransactions = (transactions) =>{
-  return{
-    type:GET_INCOMPLETE_USER_TRANSACTIONS,
+const getIncompleteUserTransactions = (transactions) => {
+  return {
+    type: GET_INCOMPLETE_USER_TRANSACTIONS,
     transactions
   }
 }
-const postPayTransactions = (transaction) =>{
-  return{
+
+// const getSingleTransaction = (transaction) =>{
+//   return{
+//     type: GET_SINGLE_TRANSACTION,
+//     transaction
+//   }
+// }
+
+
+const postPayTransactions = (transaction) => {
+  return {
     type: POST_PAY_TRANSACTION,
     transaction
   }
 }
-const postReqTransactions = (transaction) =>{
-  return{
+const postReqTransactions = (transaction) => {
+  return {
     type: POST_REQ_TRANSACTION,
     transaction
   }
 }
 
-const putIncompleteTransaction = (transactionId) =>{
-  return{
-    type:PUT_INCOMPLETE_TRANSACTION,
+const putSingleTransaction = (transaction) => {
+  return {
+    type: PUT_SINGLE_TRANSACTION,
+    transaction
+  }
+}
+
+const putIncompleteTransaction = (transactionId) => {
+  return {
+    type: PUT_INCOMPLETE_TRANSACTION,
     transactionId
   }
 }
 
-const deleteTransaction = (transactionId) =>{
-  return{
+const deleteTransaction = (transactionId) => {
+  return {
     type: DELETE_TRANSACTIONS,
     transactionId
   }
@@ -68,7 +87,7 @@ export const getPublicTransactionsThunk = () => async dispatch => {
     return
   }
   else {
-    console.log("Probelm with loading transaction")
+    // console.log("Probelm with loading transaction")
   }
 }
 export const getUserTransactionsThunk = () => async dispatch => {
@@ -80,7 +99,7 @@ export const getUserTransactionsThunk = () => async dispatch => {
     return
   }
   else {
-    console.log("Probelm with loading transaction")
+    // console.log("Probelm with loading transaction")
   }
 }
 export const getIncompleteUserTransactionsThunk = () => async dispatch => {
@@ -92,84 +111,107 @@ export const getIncompleteUserTransactionsThunk = () => async dispatch => {
     return
   }
   else {
-    console.log("Probelm with loading transaction")
+    // console.log("Probelm with loading transaction")
   }
 }
 
-export const postPayTransactionsThunk = (formData) => async dispatch =>{
-  console.log("thunk do be thunking................")
-  const res = await fetch("/api/transactions/pay",{
-    method:"POST",
+// export const getSingleTransactionThunk = (id) => async dispatch =>{
+//   const res = await fetch(`/api/transactions/`)
+// }
+
+export const postPayTransactionsThunk = (formData) => async dispatch => {
+  // console.log("thunk do be thunking................")
+  const res = await fetch("/api/transactions/pay", {
+    method: "POST",
     body: formData
   })
-  console.log("res....................",res)
+  // console.log("res....................",res)
 
-  if(res.ok){
-    console.log("res indeed okay.......................")
-    const {newTransaction} = await res.json()
+  if (res.ok) {
+    // console.log("res indeed okay.......................")
+    const { newTransaction } = await res.json()
     dispatch(postPayTransactions(newTransaction.id))
     return
   }
-  else{
-    const {errors} = await res.json()
-    console.log(errors)
-    console.log("Some Errors Occured")
+  else {
+    const { errors } = await res.json()
+    // console.log(errors)
+    // console.log("Some Errors Occured")
     return errors
   }
 
 }
-export const postReqTransactionsThunk = (formData) => async dispatch =>{
-  console.log("thunk do be thunking................")
-  const res = await fetch("/api/transactions/req",{
-    method:"POST",
+export const postReqTransactionsThunk = (formData) => async dispatch => {
+  // console.log("thunk do be thunking................")
+  const res = await fetch("/api/transactions/req", {
+    method: "POST",
     body: formData
   })
-  console.log("res....................",res)
+  // console.log("res....................",res)
 
-  if(res.ok){
-    console.log("res indeed okay.......................")
-    const {newTransaction} = await res.json()
+  if (res.ok) {
+    // console.log("res indeed okay.......................")
+    const { newTransaction } = await res.json()
     dispatch(postReqTransactions(newTransaction))
     return
   }
-  else{
-    const {errors} = await res.json()
+  else {
+    const { errors } = await res.json()
+    // console.log("Some Errors Occured")
+    return errors
+  }
+}
+
+export const putSingleTransactionThunk = (formData, transId) => async dispatch => {
+  const res = await fetch(`/api/transactions/${transId}`, {
+    method: "PUT",
+    body: formData
+  })
+
+  if (res.ok) {
+    console.log("res indeed okay.......................")
+    const { transaction } = await res.json()
+    dispatch(putSingleTransaction(transaction))
+    return
+  }
+  else {
+    const { errors } = await res.json()
     console.log("Some Errors Occured")
     return errors
   }
 }
 
-export const putIncompleteTransactionThunk = (transId) => async dispatch =>{
-  const res = await fetch(`/api/transactions/${transId}/pay`,{
+export const putIncompleteTransactionThunk = (transId) => async dispatch => {
+  const res = await fetch(`/api/transactions/${transId}/pay`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" }
   })
 
-  if(res.ok){
+  if (res.ok) {
     console.log("res indeed okay.......................")
-    const {transaction} = await res.json()
+    const { transaction } = await res.json()
     dispatch(putIncompleteTransaction(transaction.id))
     return
   }
-  else{
-    const {errors} = await res.json()
+  else {
+    const { errors } = await res.json()
     console.log("Some Errors Occured")
     return errors
   }
 }
 
-export const deleteTransactionThunk = (transId) => async dispatch =>{
-  const res = await fetch(`/api/transactions/${transId}`,{
+export const deleteTransactionThunk = (transId) => async dispatch => {
+  const res = await fetch(`/api/transactions/${transId}`, {
     method: "DELETE"
   })
 
-  if(res.ok){
+  if (res.ok) {
     console.log("res indeed okay.......................")
     dispatch(deleteTransaction(transId))
     return
   }
-  else{
-    const {errors} = await res.json()
+  else {
+    const { errors } = await res.json()
     console.log("Some Errors Occured")
     return errors
   }
@@ -177,27 +219,30 @@ export const deleteTransactionThunk = (transId) => async dispatch =>{
 
 
 //--------------------- Initial State ----------------------
-const initialState = { publicTransactions: {}, userTransactions: {completed:{},incompleted:{}}, singleTransaction: {} }
+const initialState = { publicTransactions: {}, userTransactions: { completed: {}, incompleted: {} }, singleTransaction: {} }
 //------------------------ Reducer -------------------------
 const transactionReducer = (state = initialState, action) => {
   let newState;
-  switch (action.type){
+  switch (action.type) {
     case GET_PUBLIC_TRANSACTIONS:
-      return {...state,publicTransactions:{...normalizeObj(action.transactions)}}
+      return { ...state, publicTransactions: { ...normalizeObj(action.transactions) } }
     case GET_USER_TRANSACTIONS:
-      return {...state,userTransactions:{completed:{...normalizeObj(action.transactions)}}}
+      return { ...state, userTransactions: { completed: { ...normalizeObj(action.transactions) } } }
     case GET_INCOMPLETE_USER_TRANSACTIONS:
-      return {...state,userTransactions:{incompleted:{...normalizeObj(action.transactions)}}}
+      return { ...state, userTransactions: { incompleted: { ...normalizeObj(action.transactions) } } }
+    case PUT_SINGLE_TRANSACTION:
+      newState ={...state}
+      newState.userTransactions.incompleted[action.transaction.id] = action.transaction
+      return newState
     case PUT_INCOMPLETE_TRANSACTION:
-      newState = {...state}
+      newState = { ...state }
       delete newState.userTransactions.incompleted[action.transactionId]
       return newState
     case DELETE_TRANSACTIONS:
-      newState = {...state}
+      newState = { ...state }
       delete newState.publicTransactions[action.transactionId]
       delete newState.userTransactions.incompleted[action.transactionId]
       return newState
-
 
 
     // Going to force a refresh by redirecting to home instead
@@ -210,9 +255,9 @@ const transactionReducer = (state = initialState, action) => {
     //   }
     // case POST_PAY_TRANSACTION:
     //   newState = {...state}
-      default:
+    default:
       return state
-    }
   }
+}
 
-  export default transactionReducer
+export default transactionReducer

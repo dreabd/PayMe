@@ -247,6 +247,8 @@ def put_single_transaction(id):
     """
     single_transaction = Transaction.query.get(id)
     form = EditTransactionForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
 
     if single_transaction.requester_id != current_user.id:
         return {"errors": "Can not edit another user's transaction request"}, 401
