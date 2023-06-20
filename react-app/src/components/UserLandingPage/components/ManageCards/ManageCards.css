@@ -14,7 +14,7 @@
   padding: 2rem 1rem;
   justify-content: space-evenly;
   background-color: white;
-  width: 35%;
+  width: 15rem;
   height: 10%;
   cursor: pointer;
   font-size: larger;
@@ -33,11 +33,15 @@
   color: white;
 }
 
-.all-user-card-container,
+.all-user-card-container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.card-info-container,
 .single-card-container{
   display: flex;
-  flex-direction: column;
-  width:17em;
+  width:17rem;
   height: 10rem;
   justify-content: center;
   align-items: center;
