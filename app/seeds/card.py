@@ -43,9 +43,21 @@ def seed_cards():
         bank_name="DISCOVER",
         card_number=6011038056797156,
     )
-    
-    card_list = [card1,card2,card3,card4,card5,card6,card7,card8] 
-    
+
+    card9 = Card(
+        owner_id=6,
+        bank_name="AMEX",
+        card_number=341150227331734
+    )
+
+    card10 = Card(
+        owner_id=1,
+        bank_name = "MASTERCARD",
+        card_number=5234145206075525,
+    )
+
+    card_list = [card1,card2,card3,card4,card5,card6,card7,card8,card9,card10]
+
     [db.session.add(card) for card in card_list]
     db.session.commit()
 

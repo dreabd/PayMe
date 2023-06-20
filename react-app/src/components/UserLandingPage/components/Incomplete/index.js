@@ -42,6 +42,13 @@ function Incomplete({ setUserLoad }) {
     const handleEdit = async e => {
       return alert("Feature coming soon")
     }
+
+    const formatDate = (dateString) => {
+      if (!dateString) return;
+      const date = new Date(dateString)
+      return date.toLocaleString();
+    }
+
     return (
       <>
         <div className="trans-card">
@@ -51,7 +58,7 @@ function Incomplete({ setUserLoad }) {
                 {trans.payer.id === user.id ? "You owe" : `${trans.payer.first_name} ${trans.payer.last_name} owes`}  {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
               </div>
               <div className="mid-trans">
-                {trans.created_at}
+                {formatDate(trans.created_at)}
               </div>
               <div className="bot-trans">
                 {trans.description}

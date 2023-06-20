@@ -53,6 +53,9 @@ function UserLandingPage() {
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />
           </Route>
+          <Route>
+            <Redirect to="/user"/>
+          </Route>
         </Switch>
 
       </BrowserRouter>

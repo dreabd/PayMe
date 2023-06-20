@@ -22,6 +22,13 @@ function UserTransFeed() {
   }, [dispatch])
 
   // ----------Helper Functions----------
+
+  const formatDate = (dateString) => {
+    if (!dateString) return;
+    const date = new Date(dateString)
+    return date.toLocaleString();
+  }
+
   const allTransactionsContainer = allTransactions && Object.values(allTransactions).reverse().map(trans => {
     return (
       <div className="trans-card">
@@ -30,7 +37,7 @@ function UserTransFeed() {
             {trans.payer.id === user.id ? "You" : `${trans.payer.first_name} ${trans.payer.last_name}`} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
           </div>
           <div className="mid-trans">
-            {trans.created_at}
+            {formatDate(trans.created_at)}
           </div>
           <div className="bot-trans">
             {trans.description}
@@ -57,7 +64,7 @@ function UserTransFeed() {
             {trans.payer.id === user.id ? "You" : `${trans.payer.first_name} ${trans.payer.last_name}`} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
           </div>
           <div className="mid-trans">
-            {trans.created_at}
+            {formatDate(trans.created_at)}
           </div>
           <div className="bot-trans">
             {trans.description}

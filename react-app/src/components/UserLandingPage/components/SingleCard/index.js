@@ -14,6 +14,7 @@ function SingleCard() {
 
 
     const singleCard = useSelector(state => state.card.singleCard)
+    const user = useSelector(state=>state.session.user)
 
     useEffect(() => {
         dispatch(getSingleCardThunk(id))
@@ -43,6 +44,9 @@ function SingleCard() {
 
         </div>
     )
+
+    if(!Object.values(singleCard).length) history.push("/user/cards")
+    if(singleCard?.owner_id !== user?.id) history.push("/user/cards")
     return (
         <div className="single-card-details-container">
             {cards}

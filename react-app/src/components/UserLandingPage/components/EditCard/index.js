@@ -23,7 +23,8 @@ function EditCard(){
 
   // console.log("😊............................",user)
   // console.log("😊............................",singleCard)
-  if(!user) return history.push("/user/cards")
+  if(!Object.values(singleCard).length) history.push("/user/cards")
+  if(singleCard?.owner_id !== user?.id) history.push("/user/cards")
   return (
     <CardForm card={singleCard} update={update}/>
   )
