@@ -5,7 +5,7 @@ import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { authenticate, logout } from "../../../../store/session";
 import "./Navigation.css"
 
-function Navigation({userLoad,setUserLoad}) {
+function Navigation({ userLoad, setUserLoad }) {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -16,15 +16,15 @@ function Navigation({userLoad,setUserLoad}) {
     dispatch(logout());
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setUserLoad(false)
     dispatch(authenticate())
-  },[userLoad])
+  }, [userLoad])
 
-  const payRequestRouting = e =>{
+  const payRequestRouting = e => {
     history.push("/user/transaction")
   }
-  if(!user) return <Redirect exact to="/" />
+  if (!user) return <Redirect exact to="/" />
   return (
     <nav>
       <div className="nav-info-container">
@@ -34,7 +34,10 @@ function Navigation({userLoad,setUserLoad}) {
           </h1>
         </NavLink>
         <p className="first-last-name">
-          {user.first_name}, {user.last_name}
+          <NavLink className="navlink important-navlinks" to="/user/:id">
+            {user.first_name}, {user.last_name}
+          </NavLink>
+
         </p>
         <p className="username">
           @{user.username}
@@ -43,14 +46,14 @@ function Navigation({userLoad,setUserLoad}) {
           Balance: <span className="user-balance">${user.balance}</span>
         </p>
       </div>
-      <button onClick={payRequestRouting}className="pay-request-button">
-          Pay / Request
+      <button onClick={payRequestRouting} className="pay-request-button">
+        Pay / Request
       </button>
       <NavLink className="navlink important-navlinks" to="/user/cards">
         Manage your Payment Methods
       </NavLink>
       <NavLink className="navlink important-navlinks" to="/user/incomplete">
-        Incomplete
+        Pending Transacations
       </NavLink>
       <button className="logout-button" onClick={handleLogout}>
         Log Out

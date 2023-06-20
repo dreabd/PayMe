@@ -22,4 +22,14 @@ def user(id):
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
+    # friends = user.friends
+    # # [friend for friend in fr]
+    # for friend in friends:
+    #     friend = friend.to_dict()
+    #     print("............................",friend)
+    # res2 = [friend.to_dict() for friend in friends]
+    # res = user.to_dict()
+    # res["friends"] = res2
+    # print(res2)
+    # # print("stuff...........................................",friends)
     return user.to_dict()

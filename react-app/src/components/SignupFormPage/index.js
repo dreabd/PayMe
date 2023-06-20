@@ -43,7 +43,7 @@ function SignupFormPage() {
     if (!username.length) err["username"] = "Please provide a valid Username"
 
     if (!email.length) err["email"] = "Please provide a valid email"
-    if(!isEmail(email)) err['email'] = "Email is invalid"
+    if (!isEmail(email)) err['email'] = "Email is invalid"
 
 
     if (!phoneNumber.length) err["phoneNumber"] = "Please provide a valid phone number"
@@ -52,7 +52,8 @@ function SignupFormPage() {
     if (password.length < 6) err["password"] = "Password must be at least 6 characters"
     if (password.length > 50) err["password"] = "Password must be less than 50 characters"
     if (!password.length) err["password"] = "Please provide a valid password"
-    if(hasWhiteSpace(password)) err["password"] = "Password can not include any white space."
+    if (password !== confirmPassword) err["password"] = "Passwords do not match"
+    if (hasWhiteSpace(password)) err["password"] = "Password can not include any white space."
 
     setErrors(err)
   }, [firstName, lastName, email, phoneNumber, username, password])
@@ -63,128 +64,123 @@ function SignupFormPage() {
     setSubmitted(true)
     if (Object.values(errors).length) return
 
-    if (password === confirmPassword) {
+    const formData = new FormData()
 
-      const formData = new FormData()
+    formData.append("first_name", firstName)
+    formData.append("last_name", lastName)
+    formData.append("username", username)
+    formData.append("email", email)
+    formData.append("phone_number", phoneNumber)
+    formData.append("password", password)
 
-      formData.append("first_name", firstName)
-      formData.append("last_name", lastName)
-      formData.append("username", username)
-      formData.append("email", email)
-      formData.append("phone_number", phoneNumber)
-      formData.append("password", password)
+    // console.log("Form Data gathered from form:")
+    // for (let key of formData.entries()) {
+    // 	console.log(key[0] + ' ----> ' + key[1])
+    // }
 
-      // console.log("Form Data gathered from form:")
-      // for (let key of formData.entries()) {
-      // 	console.log(key[0] + ' ----> ' + key[1])
-      // }
-
-      const data = await dispatch(signUp(formData));
-      if (data) {
-        const err = data.reduce((acc, cv) => {
-          let split = cv.split(":")
-          // acc[split[0]] = split[1]
-          // console.log(split[0].trim(), split[1].trim())
-          let key = split[0].trim()
-          let property = split[1].trim()
-          // console.log({ key, property })
-          acc[key] = property
-          return acc
-        }, {})
-        setErrors(err)
-      }
-      else {
-        return <Redirect exact to="/user" />
-      }
-    } else {
-      setErrors(['Confirm Password field must be the same as the Password field']);
+    const data = await dispatch(signUp(formData));
+    if (data) {
+      const err = data.reduce((acc, cv) => {
+        let split = cv.split(":")
+        // acc[split[0]] = split[1]
+        // console.log(split[0].trim(), split[1].trim())
+        let key = split[0].trim()
+        let property = split[1].trim()
+        // console.log({ key, property })
+        acc[key] = property
+        return acc
+      }, {})
+      setErrors(err)
     }
-  };
-  if (sessionUser) return <Redirect to="/" />;
+    else {
+      return <Redirect exact to="/user" />
+    }
+};
+if (sessionUser) return <Redirect to="/" />;
 
-  return (
-    <div className="signup-container">
-      <NavLink className="navlink" exact to="/">
-        <h1 className="logo">
-          PayMe
-        </h1>
-      </NavLink>
+return (
+  <div className="signup-container">
+    <NavLink className="navlink" exact to="/">
+      <h1 className="logo">
+        PayMe
+      </h1>
+    </NavLink>
 
-      <form className="signupForm" onSubmit={handleSubmit}>
-        <h3>
-          Create Your Account
-        </h3>
-        <div className="name-container">
+    <form className="signupForm" onSubmit={handleSubmit}>
+      <h3>
+        Create Your Account
+      </h3>
+      <div className="name-container">
 
-          <label style={{ display: "flex", flexDirection: "column" }}>
-            First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </label>
-          <label style={{ display: "flex", flexDirection: "column" }}>
-            Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-
-        <label>
-          Username  {submitted && <span className='errors'>{errors?.username}</span>}
+        <label style={{ display: "flex", flexDirection: "column" }}>
+          First Name {submitted && <span className='errors'>{errors?.firstName}</span>}
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </label>
-        <label>
-          Phone Number  {submitted && <span className='errors'>{errors?.phone_number || errors?.phoneNumber}</span>}
-          <input
-            type="tel"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email  {submitted && <span className='errors'>{errors?.email}</span>}
+        <label style={{ display: "flex", flexDirection: "column" }}>
+          Last Name  {submitted && <span className='errors'>{errors?.lastName}</span>}
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           />
         </label>
-        <label>
-          Password  {submitted && <span className='errors'>{errors?.password}</span>}
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button className="signup-button" type="submit">Sign Up</button>
-      </form>
-    </div>
-  );
+      </div>
+
+      <label>
+        Username  {submitted && <span className='errors'>{errors?.username}</span>}
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Phone Number  {submitted && <span className='errors'>{errors?.phone_number || errors?.phoneNumber}</span>}
+        <input
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Email  {submitted && <span className='errors'>{errors?.email}</span>}
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Password  {submitted && <span className='errors'>{errors?.password}</span>}
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Confirm Password
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+      </label>
+      <button className="signup-button" type="submit">Sign Up</button>
+    </form>
+  </div>
+);
 }
 
 export default SignupFormPage;

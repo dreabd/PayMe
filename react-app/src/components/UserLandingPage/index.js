@@ -53,6 +53,9 @@ function UserLandingPage() {
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />
           </Route>
+          <Route exact path="/user/:id">
+            {user.first_name}
+          </Route>
           <Route>
             <Redirect to="/user"/>
           </Route>

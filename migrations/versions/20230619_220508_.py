@@ -25,7 +25,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['userB_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('userA_id', 'userB_id'),
     sa.UniqueConstraint('userA_id', 'userB_id'),
-    created_at=Column(None, Date(), table=None, nullable=False, default=ColumnDefault(datetime.date(2023, 6, 19)))
     )
     # ### end Alembic commands ###
 
