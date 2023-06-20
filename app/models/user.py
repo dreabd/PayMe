@@ -1,6 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .friends import Friend
+from sqlalchemy import or_
 
 
 class User(db.Model, UserMixin):
@@ -19,6 +21,14 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
     card = db.relationship("Card", back_populates="user")
+    friends = db.relationship(
+        "User",
+        secondary="friends",
+        primaryjoin=or_(Friend.c.userA_id == id, Friend.c.userB_id == id),
+        secondaryjoin=or_(Friend.c.userA_id == id, Friend.c.userB_id == id),
+        back_populates='friends',
+        cascade="all, delete"
+        )
 
     @property
     def password(self):
