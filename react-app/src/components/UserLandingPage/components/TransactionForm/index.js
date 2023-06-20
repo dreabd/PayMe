@@ -159,6 +159,7 @@ function TransactionForm({ setUserLoad }) {
 
         <label style={{ display: "flex", flexDirection: "column" }}>
           Category {submitted && <span className='errors'>{errors.category}</span>}
+          {submitted && <span className='errors'>{errors.category_id}</span>}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}>
