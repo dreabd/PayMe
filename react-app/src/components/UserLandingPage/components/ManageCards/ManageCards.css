@@ -37,8 +37,8 @@
 .single-card-container{
   display: flex;
   flex-direction: column;
-  width:30%;
-  height: 24%;
+  width:17em;
+  height: 10rem;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
