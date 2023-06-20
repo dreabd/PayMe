@@ -1,0 +1,59 @@
+.manage-payment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 1rem;
+}
+
+.add-card-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2rem 1rem;
+  justify-content: space-evenly;
+  background-color: white;
+  width: 35%;
+  height: 10%;
+  cursor: pointer;
+  font-size: larger;
+  border: none;
+}
+
+.add-card-button>span {
+  font-size: 30px;
+  padding: 0px 15px;
+  border: 1px solid #008cff;
+  border-radius: 20px;
+}
+
+.add-card-button > span:hover{
+  background-color: #008cff;
+  color: white;
+}
+
+.all-user-card-container,
+.single-card-container{
+  display: flex;
+  flex-direction: column;
+  width:30%;
+  height: 24%;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.all-user-card-container > div > *{
+  font-size: 20px;
+  overflow: hidden;
+}
+.card-info-bot{
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: rgba(128, 128, 128, 0.656);
+}

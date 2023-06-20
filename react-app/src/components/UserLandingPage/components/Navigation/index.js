@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { authenticate, logout } from "../../../../store/session";
 import "./Navigation.css"
 
 function Navigation({userLoad,setUserLoad}) {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const user = useSelector(state => state.session.user)
 
@@ -20,6 +21,9 @@ function Navigation({userLoad,setUserLoad}) {
     dispatch(authenticate())
   },[userLoad])
 
+  const payRequestRouting = e =>{
+    history.push("/user/transaction")
+  }
   if(!user) return <Redirect exact to="/" />
   return (
     <nav>
@@ -39,15 +43,13 @@ function Navigation({userLoad,setUserLoad}) {
           Balance: <span className="user-balance">${user.balance}</span>
         </p>
       </div>
-      <button className="pay-request-button">
-        <NavLink className="navlink" to="/user/transaction">
+      <button onClick={payRequestRouting}className="pay-request-button">
           Pay / Request
-        </NavLink>
       </button>
-      <NavLink className="navlink" to="/user/cards">
+      <NavLink className="navlink important-navlinks" to="/user/cards">
         Manage your Payment Methods
       </NavLink>
-      <NavLink className="navlink" to="/user/incomplete">
+      <NavLink className="navlink important-navlinks" to="/user/incomplete">
         Incomplete
       </NavLink>
       <button className="logout-button" onClick={handleLogout}>

@@ -19,7 +19,7 @@ function CardForm({update,card}) {
 
     const validBanks = ["AMEX", "VISA", "DISCOVER", "MASTERCARD"]
     if (!bankName.length) err["bankName"] = "Please provide a valid bank"
-    if (bankName.length && !validBanks.includes(bankName.toUpperCase())) err["bankName"] = "Sorry we only accept the following banks as of now: AMEX,VISA,DISCOVER or MASTERCARD"
+    if (bankName.length && !validBanks.includes(bankName.toUpperCase())) err["bankName"] = "AMEX,VISA,DISCOVER or MASTERCARD"
     if (cardNumber.length < 15 && cardNumber.length > 16) err["cardNumber"] = "Please provide a valid card."
     if (bankName === "AMEX" && cardNumber.length !== 15) err["cardNumber"] = "AMEX card invalid."
     if (bankName !== "AMEX" && cardNumber.length !== 16) err["cardNumber"] = "Card number invalid."
@@ -88,21 +88,20 @@ function CardForm({update,card}) {
   }
   return (
     <div className="card-form-container">
-      <h4> Add a Card</h4>
       <form onSubmit={!update ? addCard : updateCard } className="card-form">
-        <label >
-          {submitted && <span className='errors'>{errors.bankName}</span>}
+        <label style={{ display: "flex", flexDirection: "column" }}>
           Bank Name
+          {submitted && <span className='errors'>{errors.bankName}</span>}
           <input
             type="text"
             value={bankName}
             onChange={e => setBankName(e.target.value.toUpperCase())}
           />
         </label>
-        <label >
+        <label  style={{ display: "flex", flexDirection: "column" }} >
+          Credit Card Number
           {submitted && <span className='errors'>{errors.cardNumber}</span>}
           {submitted && <span className='errors'>{errors.card_number}</span>}
-          Credit Card Number
           <input
             type="text"
             autoFocus
@@ -112,7 +111,7 @@ function CardForm({update,card}) {
             onChange={e => setCardNumber(e.target.value)}
           />
         </label>
-        {!update ?<button >Submit</button> : <button>Update</button>}
+        {!update ?<button className="submit-new-card" >Submit</button> : <button className="update-card">Update</button>}
       </form>
     </div>
   )

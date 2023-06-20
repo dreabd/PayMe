@@ -39,3 +39,11 @@
 .mid-trans{
   font-size: 12px;
 }
+
+.positive-trans{
+  color:#049d6f;
+}
+
+.negative-trans{
+  color: #d81159;
+}

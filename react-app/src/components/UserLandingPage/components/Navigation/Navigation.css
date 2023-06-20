@@ -36,3 +36,7 @@ nav {
   padding: .5rem 0rem ;
   font-size: 20px;
 }
+
+.important-navlinks:hover{
+  text-decoration: underline;
+}

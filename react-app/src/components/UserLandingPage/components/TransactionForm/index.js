@@ -36,7 +36,7 @@ function TransactionForm({ setUserLoad }) {
     const err = {}
 
     if (!description.trim().length) err["description"] = "Please provide a valid description"
-    if (description.length > 50) err["description"] = "Description are limited to 50 characters  "
+    if (description.length > 50) err["description"] = "Descriptions are limited to 50 characters  "
     if (money <= 0) err["money"] = "Please provide a valid amout"
     if (!name) err["name"] = "Please select a user"
     if (!category) err["category"] = "Please select a category"
@@ -76,8 +76,8 @@ function TransactionForm({ setUserLoad }) {
 
     if (request) {
       const data = await dispatch(postReqTransactionsThunk(formData))
-      if (data?.errors) {
-        return setErrors(data.errors)
+      if (data) {
+        return setErrors(data)
       }
       history.push("/user")
     }
@@ -103,7 +103,7 @@ function TransactionForm({ setUserLoad }) {
     e.preventDefault()
     setPay(false)
     setRequest(false)
-    setErrors({})
+    setSubmitted(false)
   }
   const userIsRequesting = (e) => {
     e.preventDefault()
@@ -114,16 +114,16 @@ function TransactionForm({ setUserLoad }) {
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={handleTransactionSubmit}>
-        {pay && submitted && <span className='errors'>{errors.money}</span>}
-        <label >
+        <label style={{ display: "flex", flexDirection: "column" }}>
           Money
+        {submitted && <span className='errors'>{errors.money}</span>}
           <input
             type="number"
             value={money}
             onChange={e => setMoney(e.target.value)}
           />
         </label>
-        <label >
+        <label style={{ display: "flex", flexDirection: "column" }} >
           To Whom {submitted && <span className='errors'>{errors.name}</span>}
           <select
             value={name}
@@ -139,7 +139,7 @@ function TransactionForm({ setUserLoad }) {
             })}
           </select>
         </label>
-        <label>
+        <label style={{ display: "flex", flexDirection: "column" }}>
           Description  {submitted && <span className='errors'>{errors.description}</span>}
           <textarea
             type='text'
@@ -157,7 +157,7 @@ function TransactionForm({ setUserLoad }) {
           />
         </label>
 
-        <label>
+        <label style={{ display: "flex", flexDirection: "column" }}>
           Category {submitted && <span className='errors'>{errors.category}</span>}
           <select
             value={category}
@@ -176,8 +176,8 @@ function TransactionForm({ setUserLoad }) {
 
         {pay &&
           <div className="pay-request-button-container">
-            <button disabled={Object.values(errors).length} type="submit">
-              Pay {users[name].first_name} ${money}
+            <button  type="submit">
+              Pay {users[name]?.first_name} ${money}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel
@@ -187,8 +187,8 @@ function TransactionForm({ setUserLoad }) {
 
         {request &&
           <div className="pay-request-button-container">
-            <button disabled={Object.values(errors).length} type="submit">
-              Request ${money} from {users[name].first_name}
+            <button  type="submit">
+              Request ${money} from {users[name]?.first_name}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel

@@ -44,7 +44,10 @@
 .signup-button,
 .logout-button,
 .button-containers> button,
-.pay-request-button-container > button{
+.pay-request-button-container > button,
+.card-buttons > :nth-child(2),
+.submit-new-card,
+.update-card{
   border: none;
   overflow: hidden;
   width: 100%;
@@ -55,4 +58,34 @@
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
+  border-radius: 40px;
+  box-shadow: 2px 2px 1px rgb(105, 239, 152);
+}
+
+.login-button:hover,
+.toggle-button:hover,
+.pay-request-button:hover,
+.signup-button:hover,
+.logout-button:hover,
+.button-containers> button:hover,
+.pay-request-button-container > button:hover,
+.card-buttons > :nth-child(2):hover,
+.submit-new-card:hover,
+.update-card:hover{
+  background-color:#0037ff;
+  color: white;
+}
+.login-button:active,
+.toggle-button:active,
+.pay-request-button:active,
+.signup-button:active,
+.logout-button:active,
+.button-containers> button:active,
+.pay-request-button-container > button:active,
+.card-buttons > :nth-child(2):active,
+.submit-new-card:active,
+.update-card:active{
+  background-color:#008cff4d;
+  box-shadow: 1px 1px 2px #049d6f;
+
 }
