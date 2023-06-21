@@ -1,11 +1,19 @@
-*{
-    margin: 0;
-    padding: 0;
-  }
+* {
+  margin: 0;
+  padding: 0;
+}
 
-.errors{
-  color:#d81159;
+html {
+  height: 100%
+}
+
+body {
+  min-height: 100%
+}
+
+.errors {
+  color: #d81159;
   font-size: 13px;
   text-decoration: none;
-  list-style:none;
+  list-style: none;
 }

@@ -55,7 +55,7 @@ function Incomplete({ setUserLoad }) {
           <div className="top-incomplete-cont trans-card">
             <div className="left-trans">
               <div className="top-trans">
-                {trans.payer.id === user.id ? "You owe" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} owes {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
+                {trans.payer.id === user.id ? "You owe" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} {trans.requester.id === user.id ? "owes You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
               </div>
               <div className="mid-trans">
                 {formatDate(trans.created_at)}

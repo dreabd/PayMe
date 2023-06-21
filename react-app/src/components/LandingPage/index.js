@@ -36,10 +36,10 @@ function LandingPage() {
       <div className="bottom-landing-container">
         <div className="motto-container">
           <h1>
-            Fast,Safe,Social Payments
+            Fast,safe,social payments
           </h1>
           <p>
-            Pay. Get paid. Shop. Share. Join tens of millions of people on Venmo.
+            Pay. Get paid. Shop. Share. Join tens of millions of people on Payme.
           </p>
           <button>
             <NavLink className="navlink motto-button-txt" exact to="/signup">
