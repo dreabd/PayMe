@@ -24,17 +24,20 @@ def seed_cards():
         card_number=5566513496375988,
     )
     card5 = Card(
-        owner_id=randint(1,10),
+        # owner_id=randint(1,10),
+        owner_id = 1,
         bank_name="AMEX",
         card_number=346865478562126,
     )
     card6 = Card(
-        owner_id=randint(1,10),
+        # owner_id=randint(1,10),
+        owner_id = 1,
         bank_name="AMEX",
         card_number=375290762317034,
     )
     card7 = Card(
-        owner_id=randint(1,10),
+        # owner_id=randint(1,10),
+        owner_id = 1,
         bank_name="DISCOVER",
         card_number=6011340895471351,
     )
