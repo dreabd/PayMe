@@ -56,7 +56,7 @@ function SignupFormPage() {
     if (hasWhiteSpace(password)) err["password"] = "Password can not include any white space."
 
     setErrors(err)
-  }, [firstName, lastName, email, phoneNumber, username, password])
+  }, [firstName, lastName, email, phoneNumber, username, password,confirmPassword])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
