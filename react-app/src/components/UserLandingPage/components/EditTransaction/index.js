@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import TransactionForm from "../TransactionForm";
-import { getSingleTransactionThunk } from "../../../../store/transactions";
 
 
 function EditTransaction(){

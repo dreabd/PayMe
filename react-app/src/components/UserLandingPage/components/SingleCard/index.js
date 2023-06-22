@@ -18,7 +18,7 @@ function SingleCard() {
 
     useEffect(() => {
         dispatch(getSingleCardThunk(id))
-    }, [dispatch])
+    }, [dispatch,id])
 
     const handleDelete = async (e) => {
         const data = await dispatch(deleteCardThunk(id))
@@ -51,6 +51,7 @@ function SingleCard() {
         <div className="single-card-details-container">
             {cards}
             <div className="card-buttons">
+                {/* {Object.values(errors).length && <span className="errors">{errors.errors}</span>} */}
                 <button onClick={handleDelete}> Remove Card</button>
                 <button onClick={editCard}>Update Card</button>
             </div>

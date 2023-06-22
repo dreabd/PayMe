@@ -34,7 +34,7 @@ function Navigation({ userLoad, setUserLoad }) {
           </h1>
         </NavLink>
         <p className="first-last-name">
-          <NavLink className="navlink important-navlinks" to="/user/:id">
+          <NavLink className="navlink important-navlinks" to={`/user/${user.id}`}>
             {user.first_name}, {user.last_name}
           </NavLink>
 

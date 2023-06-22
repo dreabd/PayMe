@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
 import { postPayTransactionsThunk, postReqTransactionsThunk,putSingleTransactionThunk} from "../../../../store/transactions";
@@ -157,6 +157,8 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
                   <option key={user.id} value={user.id}>
                     {user.first_name} {user.last_name}
                   </option>)
+              } else {
+                return (null)
               }
             })}
           </select>
@@ -175,7 +177,6 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
           <input
             type="checkbox"
             value={publics}
-            defaultValue={publics}
             checked={publics}
             onChange={e => { setPublics(!publics) }}
           />
