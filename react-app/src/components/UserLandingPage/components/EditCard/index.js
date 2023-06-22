@@ -19,7 +19,7 @@ function EditCard(){
   useEffect(() => {
       dispatch(getSingleCardThunk(id))
       setUpdate(true)
-  }, [dispatch])
+  }, [dispatch,id])
 
   // console.log("😊............................",user)
   // console.log("😊............................",singleCard)

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Route, Switch, BrowserRouter } from "react-router-dom";
-import { authenticate } from "../../store/session";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 import Navigation from "./components/Navigation";
@@ -13,11 +12,11 @@ import SingleCard from "./components/SingleCard";
 import CardForm from "./components/CardForm";
 import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
+import UserPage from "./components/UserPage";
 
 import "./UserLandingPage.css"
 
 function UserLandingPage() {
-  const dispatch = useDispatch()
 
   const user = useSelector(state => state.session.user)
   const [userLoad, setUserLoad] = useState(false);
@@ -30,7 +29,7 @@ function UserLandingPage() {
   return (
     <div className="user-landing-container">
       <BrowserRouter>
-      {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
+        {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
         {/* {isLoaded && */}
         <Switch>
           <Route exact path="/user">
@@ -40,28 +39,28 @@ function UserLandingPage() {
             <TransactionForm setUserLoad={setUserLoad} />
           </Route>
           <Route exact path="/user/transaction/:id/edit">
-            <EditTransaction/>
+            <EditTransaction />
           </Route>
           <Route exact path="/user/cards">
-            <ManageCards/>
+            <ManageCards />
           </Route>
           <Route exact path="/user/card/new">
-            <CardForm/>
+            <CardForm />
           </Route>
           <Route exact path="/user/card/:id">
-            <SingleCard/>
+            <SingleCard />
           </Route>
           <Route exact path="/user/card/:id/edit">
-            <EditCard/>
+            <EditCard />
           </Route>
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />
           </Route>
           <Route exact path="/user/:id">
-            {user.first_name}
+            <UserPage />
           </Route>
           <Route>
-            <Redirect to="/user"/>
+            <Redirect to="/user" />
           </Route>
         </Switch>
 

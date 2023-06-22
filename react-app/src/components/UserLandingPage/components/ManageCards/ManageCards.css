@@ -28,33 +28,48 @@
   border-radius: 20px;
 }
 
-.add-card-button > span:hover{
+.add-card-button>span:hover {
   background-color: #008cff;
   color: white;
 }
 
-.all-user-card-container{
+.all-user-card-container {
   display: flex;
   flex-direction: row;
   gap: 10px;
   flex-wrap: wrap;
+  gap: 1.5rem;
 }
+
 .card-info-container,
-.single-card-container{
+.single-card-container {
   display: flex;
-  width:17rem;
+  width: 17rem;
   height: 10rem;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
   border-radius: 10px;
+  box-shadow: 1px 1px 5px black;
+
+}
+.card-info-container{
+  cursor: pointer;
 }
 
-.all-user-card-container > div > *{
+.card-info-container:hover {
+  box-shadow: 2px 2px 6px black;
+  background: rgba(0, 140, 255, 0.063);
+}
+
+
+
+.all-user-card-container>div>* {
   font-size: 20px;
   overflow: hidden;
 }
-.card-info-bot{
+
+.card-info-bot {
   font-size: 15px;
   display: flex;
   flex-direction: row;

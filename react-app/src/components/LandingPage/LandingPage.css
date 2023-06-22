@@ -2,6 +2,13 @@
     color: black;
     text-decoration:none;
 }
+.navlink:active{
+    color:#008CFF
+}
+
+.navlink:current(p, span) {
+    background-color: yellow;
+  }
 
 .landing-container {
     display: flex;

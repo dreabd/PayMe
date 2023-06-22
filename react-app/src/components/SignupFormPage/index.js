@@ -56,7 +56,7 @@ function SignupFormPage() {
     if (hasWhiteSpace(password)) err["password"] = "Password can not include any white space."
 
     setErrors(err)
-  }, [firstName, lastName, email, phoneNumber, username, password])
+  }, [firstName, lastName, email, phoneNumber, username, password,confirmPassword])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,11 +82,8 @@ function SignupFormPage() {
     if (data) {
       const err = data.reduce((acc, cv) => {
         let split = cv.split(":")
-        // acc[split[0]] = split[1]
-        // console.log(split[0].trim(), split[1].trim())
         let key = split[0].trim()
         let property = split[1].trim()
-        // console.log({ key, property })
         acc[key] = property
         return acc
       }, {})
