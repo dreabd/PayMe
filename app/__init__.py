@@ -4,14 +4,17 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
+
 from .models import db, User
+from .seeds import seed_commands
+from .config import Config
+
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.transactions_routes import transactions_routes
 from .api.categories_routes import category_routes
 from .api.card_routes import card_routes
-from .seeds import seed_commands
-from .config import Config
+from .api.friends_routes import friend_routes
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -34,6 +37,7 @@ app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(transactions_routes, url_prefix='/api/transactions')
 app.register_blueprint(card_routes,url_prefix='/api/cards')
+app.register_blueprint(friend_routes,url_prefix='/api/friends')
 db.init_app(app)
 Migrate(app, db)
 
