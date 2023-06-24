@@ -4,7 +4,10 @@ import { normalizeObj } from "./helpers"
 const GET_PUBLIC_TRANSACTIONS = "transaction/getPublicTransactions"
 const GET_USER_TRANSACTIONS = "transaction/getUserTransactions"
 const GET_INCOMPLETE_USER_TRANSACTIONS = "transaction/getIncompleteUserTransactions"
-// const GET_SINGLE_TRANSACTION = "transaction/getSingleTransaction"
+
+const GET_USER_TRANSACTIONS_DETAILS = "transaction/getUserTransactionsDetails"
+const GET_FRIEND_TRANSACTIONS = "transaction/getFriendTransactions"
+const GET_OTHER_TRANSACTIONS = "transaction/getOtherTransactions"
 
 const POST_PAY_TRANSACTION = "transaction/postPayTransactions"
 const POST_REQ_TRANSACTION = "transaction/postReqTransactions"
@@ -33,6 +36,32 @@ const getIncompleteUserTransactions = (transactions) => {
     transactions
   }
 }
+
+const getUserTransactionsDetails = (transactions,allTransData,category) =>{
+  return{
+    type: GET_USER_TRANSACTIONS_DETAILS,
+    transactions,
+    allTransData,
+    category
+  }
+}
+const getFriendTransactions = (transactions,friendTransactions) =>{
+  return{
+    type: GET_FRIEND_TRANSACTIONS,
+    transactions,
+    friendTransactions
+  }
+}
+
+const getOtherTransactions = (transactions) =>{
+  return{
+    type:GET_OTHER_TRANSACTIONS, 
+    transactions
+  }
+}
+
+
+
 
 // const getSingleTransaction = (transaction) =>{
 //   return{
@@ -113,6 +142,29 @@ export const getIncompleteUserTransactionsThunk = () => async dispatch => {
     // console.log("Probelm with loading transaction")
   }
 }
+
+export const getUserTransactionsDetailsThunk = (id,user,friend) => async dispatch =>{
+  const res = await fetch(`/api/users/${id}`)
+
+  if(res.ok){
+    if(user){
+      const {transactions,allTransData,category} = await res.json()
+      dispatch(transactions,allTransData,category)
+      return
+    } 
+    if(friend){
+      const{transactions,friendTransactions} = await res.json()
+      dispatch(getFriendTransactions(transactions,friendTransactions))
+      return
+    }
+    else{
+      const {transactions} = await res.json()
+      dispatch(getOtherTransactions(transactions))
+      return
+    }
+  }
+}
+
 
 // export const getSingleTransactionThunk = (id) => async dispatch =>{
 //   const res = await fetch(`/api/transactions/`)
@@ -218,7 +270,17 @@ export const deleteTransactionThunk = (transId) => async dispatch => {
 
 
 //--------------------- Initial State ----------------------
-const initialState = { publicTransactions: {}, userTransactions: { completed: {}, incompleted: {} }, singleTransaction: {} }
+const initialState = { 
+  publicTransactions: {}, 
+  userTransactions: {
+    details:{},
+    completed: {}, 
+    incompleted: {} 
+  }, 
+  singleTransaction: {}, 
+  friendTransactions:{},
+    
+}
 //------------------------ Reducer -------------------------
 const transactionReducer = (state = initialState, action) => {
   let newState;
@@ -229,6 +291,9 @@ const transactionReducer = (state = initialState, action) => {
       return { ...state, userTransactions: { completed: { ...normalizeObj(action.transactions) } } }
     case GET_INCOMPLETE_USER_TRANSACTIONS:
       return { ...state, userTransactions: { incompleted: { ...normalizeObj(action.transactions) } } }
+
+    
+    
     case PUT_SINGLE_TRANSACTION:
       newState ={...state}
       newState.userTransactions.incompleted[action.transaction.id] = action.transaction
@@ -237,6 +302,7 @@ const transactionReducer = (state = initialState, action) => {
       newState = { ...state }
       delete newState.userTransactions.incompleted[action.transactionId]
       return newState
+    
     case DELETE_TRANSACTIONS:
       newState = { ...state }
       delete newState.publicTransactions[action.transactionId]

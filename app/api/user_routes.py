@@ -137,7 +137,9 @@ def get_user_transactions(id):
 
         print("friend_transaction..............................😀", friend_transaction )
 
-        return{"userTransactions": user_transaction,"friendTransactions": friend_transaction}    
+        return{
+            "transactions": user_transaction,
+            "friendTransactions": friend_transaction}    
     else: 
         user_trans = (
         Transaction.query.filter(

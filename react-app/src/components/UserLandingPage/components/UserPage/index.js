@@ -9,11 +9,28 @@ function UserPage() {
 
 
   const user = useSelector(state => state.session.user)
+  const friendTransactions = useSelector(state => state.transaction.friendTransactions)
+  const userTransactions = useSelector(state => state.transaction.userTransactions.completed)
+
+  console.log(userTransactions)
+
+  const user_friends = user && user.friends.map(friend => friend.id)
+  console.log(user_friends)
 
   useEffect(()=>{
-    // if it is a friend dipatch a thunk that gets the friends' public trans and trans between the user and the friend
     // if it is a random person just show transactions that are public 
+    if(!user_friends.includes(id)){
+      
+    }
     // if it is the user then dispatch a thunk that gets all the user's completed transaction 
+    if(id ==  user.id){
+      
+    }
+    
+    // if it is a friend dipatch a thunk that gets the friends' public trans and trans between the user and the friend
+    if(id in user_friends){
+
+    }
   },[dispatch])
 
 

@@ -125,7 +125,7 @@ descpt = [
 
 def seed_transactions():
     trans_list=[]
-    for i in range(0, 10000):
+    for i in range(0, 1000):
         users = [1,2,3,4,5,6,7,8,9,10]
         shuffle(users)
         trans = Transaction(
