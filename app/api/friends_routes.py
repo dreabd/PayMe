@@ -60,12 +60,12 @@ def delete_user_friend(id):
     if user_friend.id not in friends:
         return {"error": "User is not a friend"},400
     
-    delete_query = delete(Friend).where(
     ''' 
     Creates a query that looks in the Friend join table that looks for a coulmn where:
         - userA_id is equal to the current user's id or user friend's id
         - userB_id is equal to the user's id or current user's id
     '''
+    delete_query = delete(Friend).where(
     ((Friend.c.userA_id == current_user.id) & (Friend.c.userB_id == user_friend.id)) |
     ((Friend.c.userA_id == user_friend.id) & (Friend.c.userB_id == current_user.id)))
 

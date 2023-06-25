@@ -1,0 +1,50 @@
+.other-user-info-container{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    border-bottom: .2px solid rgba(0, 0, 0, 0.474);
+}
+
+.other-user-info-container > div > :nth-child(1){
+    font-size: 30px;
+}
+
+.other-user-info-container > div {
+    display: flex;
+    flex-direction: column;
+    gap:7px
+}
+
+
+.other-user-info-container > button{
+    width: 20%;
+    height: 40px;
+}
+
+.add-friend-button,
+.remove-friend-button{
+    /* width: %; */
+    /* font-size: smaller; */
+    max-width: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+.remove-friend-button{
+    background-color:#d81159;
+    border: 1px solid #d81159 ;
+}
+
+.remove-friend-button:hover{
+    background-color:#9d0c41;
+    border: 1px solid #9d0c41 ;
+}
+
+.remove-friend-button:active{
+    background-color:#d8115ab3;
+}

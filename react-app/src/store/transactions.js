@@ -1,4 +1,5 @@
 import { normalizeObj } from "./helpers"
+import { getOtherUsers } from "./session"
 
 //--------------------- Type Variables ---------------------
 const GET_PUBLIC_TRANSACTIONS = "transaction/getPublicTransactions"
@@ -37,31 +38,28 @@ const getIncompleteUserTransactions = (transactions) => {
   }
 }
 
-const getUserTransactionsDetails = (transactions,allTransData,category) =>{
-  return{
+const getUserTransactionsDetails = (transactions, allTransData, category) => {
+  return {
     type: GET_USER_TRANSACTIONS_DETAILS,
     transactions,
     allTransData,
     category
   }
 }
-const getFriendTransactions = (transactions,friendTransactions) =>{
-  return{
+const getFriendTransactions = (transactions, friendTransactions) => {
+  return {
     type: GET_FRIEND_TRANSACTIONS,
     transactions,
-    friendTransactions
+    friendTransactions,
   }
 }
 
-const getOtherTransactions = (transactions) =>{
-  return{
-    type:GET_OTHER_TRANSACTIONS, 
-    transactions
+const getOtherTransactions = (transactions,) => {
+  return {
+    type: GET_OTHER_TRANSACTIONS,
+    transactions,
   }
 }
-
-
-
 
 // const getSingleTransaction = (transaction) =>{
 //   return{
@@ -143,23 +141,30 @@ export const getIncompleteUserTransactionsThunk = () => async dispatch => {
   }
 }
 
-export const getUserTransactionsDetailsThunk = (id,user,friend) => async dispatch =>{
-  const res = await fetch(`/api/users/${id}`)
+export const getUserTransactionsDetailsThunk = (id, user, friend) => async dispatch => {
+  // console.log(id,user,friend)
+  const res = await fetch(`/api/users/${id}/transactions`)
 
-  if(res.ok){
-    if(user){
-      const {transactions,allTransData,category} = await res.json()
-      dispatch(transactions,allTransData,category)
-      return
-    } 
-    if(friend){
-      const{transactions,friendTransactions} = await res.json()
-      dispatch(getFriendTransactions(transactions,friendTransactions))
+  if (res.ok) {
+    if (user) {
+      // console.log("user details.................................")
+      const { transactions, allTransData, category } = await res.json()
+      dispatch(getUserTransactionsDetails(transactions, allTransData, category))
       return
     }
-    else{
-      const {transactions} = await res.json()
+    if (friend) {
+      // console.log("friends.................................")
+      const { user,transactions, friendTransactions } = await res.json()
+      console.log(user)
+      dispatch(getFriendTransactions(transactions, friendTransactions))
+      dispatch(getOtherUsers(user))
+      return
+    }
+    if(!friend && !user) {
+      // console.log("random.................................")
+      const { user,transactions } = await res.json()
       dispatch(getOtherTransactions(transactions))
+      dispatch(getOtherUsers(user))
       return
     }
   }
@@ -270,16 +275,16 @@ export const deleteTransactionThunk = (transId) => async dispatch => {
 
 
 //--------------------- Initial State ----------------------
-const initialState = { 
-  publicTransactions: {}, 
+const initialState = {
+  publicTransactions: {},
   userTransactions: {
-    details:{},
-    completed: {}, 
-    incompleted: {} 
-  }, 
-  singleTransaction: {}, 
-  friendTransactions:{},
-    
+    details: {},
+    completed: {},
+    incompleted: {}
+  },
+  singleTransaction: {},
+  friendTransactions: {},
+
 }
 //------------------------ Reducer -------------------------
 const transactionReducer = (state = initialState, action) => {
@@ -292,17 +297,39 @@ const transactionReducer = (state = initialState, action) => {
     case GET_INCOMPLETE_USER_TRANSACTIONS:
       return { ...state, userTransactions: { incompleted: { ...normalizeObj(action.transactions) } } }
 
-    
-    
+    case GET_USER_TRANSACTIONS_DETAILS:
+      return{
+        ...state,
+        userTransactions:{
+          details:{...action.allTransData,...action.category},
+          completed:{...normalizeObj(action.transactions)}
+        }
+      }
+    case GET_OTHER_TRANSACTIONS:
+      
+      return { ...state, userTransactions: { completed: { ...normalizeObj(action.transactions) } } }
+    case GET_FRIEND_TRANSACTIONS:
+      return {
+        ...state,
+        userTransactions: {
+          completed: {
+            ...normalizeObj(action.transactions)
+          }
+        },
+        friendTransactions: {
+          ...normalizeObj(action.friendTransactions)
+        }
+      }
+
     case PUT_SINGLE_TRANSACTION:
-      newState ={...state}
+      newState = { ...state }
       newState.userTransactions.incompleted[action.transaction.id] = action.transaction
       return newState
     case PUT_INCOMPLETE_TRANSACTION:
       newState = { ...state }
       delete newState.userTransactions.incompleted[action.transactionId]
       return newState
-    
+
     case DELETE_TRANSACTIONS:
       newState = { ...state }
       delete newState.publicTransactions[action.transactionId]

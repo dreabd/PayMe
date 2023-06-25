@@ -137,7 +137,14 @@ def get_user_transactions(id):
 
         print("friend_transaction..............................😀", friend_transaction )
 
+        user = user.to_dict()
+        del user["cards"]
+        del user["balance"]
+        del user["phone_number"]
+        del user["email"]
+
         return{
+            "user":user,
             "transactions": user_transaction,
             "friendTransactions": friend_transaction}    
     else: 
@@ -152,7 +159,11 @@ def get_user_transactions(id):
         )
 
         user_transaction = [trans.to_dict() for trans in user_trans]
+        user = user.to_dict()
+        del user["cards"]
+        del user["balance"]
+        del user["phone_number"]
+        del user["email"]
 
-
-        return{"transactions": user_transaction}
+        return{"user":user,"transactions": user_transaction}
 

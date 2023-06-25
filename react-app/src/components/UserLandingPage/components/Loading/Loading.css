@@ -1,0 +1,9 @@
+.loadingPage{
+    display: flex;
+    justify-content: center;
+    /* width: 10rem; */
+}
+
+.progress-bar{
+    width: 100rem;
+}
