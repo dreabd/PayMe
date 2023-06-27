@@ -298,16 +298,17 @@ const transactionReducer = (state = initialState, action) => {
       return { ...state, userTransactions: { incompleted: { ...normalizeObj(action.transactions) } } }
 
     case GET_USER_TRANSACTIONS_DETAILS:
+      console.log(action.category)
       return{
         ...state,
         userTransactions:{
-          details:{...action.allTransData,...action.category},
+          details:{...action.allTransData,category:{...action.category}},
           completed:{...normalizeObj(action.transactions)}
         }
       }
     case GET_OTHER_TRANSACTIONS:
       
-      return { ...state, userTransactions: { completed: { ...normalizeObj(action.transactions) } } }
+      return { ...state, userTransactions: { completed: {...action.transactions } } }
     case GET_FRIEND_TRANSACTIONS:
       return {
         ...state,

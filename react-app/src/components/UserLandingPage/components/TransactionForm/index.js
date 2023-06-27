@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
 import { postPayTransactionsThunk, postReqTransactionsThunk,putSingleTransactionThunk} from "../../../../store/transactions";
@@ -10,10 +10,11 @@ import "./TransactionForm.css"
 function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const dispatch = useDispatch();
   const history = useHistory()
+  const location = useLocation()
 
   const [description, setDescription] = useState(trans?.description || "")
   const [publics, setPublics] = useState(trans?.public || false)
-  const [name, setName] = useState(trans?.payer.id || "")
+  const [name, setName] = useState(trans?.payer.id || location.state.id || "")
   const [money, setMoney] = useState(trans?.money || 0)
   const [category, setCategory] = useState(trans?.category.id || "")
   const [errors, setErrors] = useState({})

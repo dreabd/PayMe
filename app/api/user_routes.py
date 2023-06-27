@@ -97,14 +97,14 @@ def get_user_transactions(id):
         return{
             "transactions": user_transaction,
             "allTransData":total_transaction_data,
-            "category":[
-            {"housing":Housing_Transactions},
-            {"transportion":Transportation_Transactions},
-            {"food":Food_Transactions},
-            {"personal":Personal_Transactions},
-            {"entertainment":Entertainment_Transactions},
-            {"saving":Saving_Transactions}
-            ],
+            "category":{
+            "housing":Housing_Transactions,
+            "transportion":Transportation_Transactions,
+            "food":Food_Transactions,
+            "personal":Personal_Transactions,
+            "entertainment":Entertainment_Transactions,
+            "saving":Saving_Transactions
+            },
             }
 
     if user.id in friends:

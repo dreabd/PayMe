@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min
 import { getUserTransactionsDetailsThunk } from "../../../../store/transactions";
 
 import { TransCard } from "../UserTransFeed/TransCard";
+import TransDetails from "./TransDetails";
 
 import "./UserPage.css"
 
@@ -94,26 +95,9 @@ function UserPage() {
 
   if (!otherUser.id && loading && !user.id) history.push('/user')
 
-  if (id == user.id) {
+  if (loading && id == user.id) {
     return (
-      <div>
-        {/* Here I want to show all of their transactions */}
-        {/* If it is the user's peronsal page then want to show the budget / spending habits */}
-
-        <div className="trans-feed-container">
-          <div className="other-user-info-container">
-            <p>{user.first_name}, {user.last_name}</p>
-            <p className="username">
-              @{user.username}
-            </p>
-
-          </div>
-          <div className="all-trans-container">
-            <h3>Transaction Details</h3>
-            {/* {TransCard(Object.values(userTransactions), user.id)} */}
-          </div>
-        </div>
-      </div>
+      <TransDetails trans={Object.values(userTransactions)} transDetails={userTransactionDetails}/>
     )
   }
 
@@ -140,9 +124,9 @@ function UserPage() {
             </button>}
         </div>
 
-        {/* <button onClick={() => { history.push("/user/transaction") }} className="pay-request-button">
+        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id }) }} className="pay-request-button">
           Pay / Request
-        </button> */}
+        </button>
       </div>
 
       {/* Here if want to show the name of the perosn, if they are a friend, their transactions, and the transactions between the current user and the friend */}
