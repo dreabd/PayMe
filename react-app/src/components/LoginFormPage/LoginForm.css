@@ -17,7 +17,7 @@
   background-color: white;
   border-radius: 30px;
   /* padding-bottom: 0; */
-  border: 3px solid rgba(0, 0, 0, 0.149)
+  border: 3px solid #00000026;
 
 }
 
@@ -47,7 +47,9 @@
 .pay-request-button-container > button,
 .card-buttons > :nth-child(2),
 .submit-new-card,
-.update-card{
+.update-card,
+.add-friend-button,
+.remove-friend-button{
   border: none;
   overflow: hidden;
   width: 100%;
@@ -71,7 +73,8 @@
 .pay-request-button-container > button:hover,
 .card-buttons > :nth-child(2):hover,
 .submit-new-card:hover,
-.update-card:hover{
+.update-card:hover,
+.add-friend-button:hover{
   background-color:#0037ff;
   color: white;
 }
@@ -84,7 +87,8 @@
 .pay-request-button-container > button:active,
 .card-buttons > :nth-child(2):active,
 .submit-new-card:active,
-.update-card:active{
+.update-card:active,
+.add-friend-button:active{
   background-color:#008cff4d;
   box-shadow: 1px 1px 2px #049d6f;
 

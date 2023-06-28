@@ -3,3 +3,4 @@ export const normalizeObj = (arr) => {
   arr.forEach((ele) => obj[ele.id] = ele );
   return obj;
 }
+

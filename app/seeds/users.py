@@ -96,8 +96,71 @@ def seed_users():
         email="weber@email.com",
         password="password",
     )
+    # No friends
+    user11 = User(
+        username="hold_on",
+        first_name="Maxwell",
+        last_name="Holden",
+        balance=0,
+        phone_number=1111111122,
+        email="wholden@email.com",
+        password="password",
+    )
+    user12 = User(
+        username="RoseSmiles",
+        first_name="Rosella",
+        last_name="Miles",
+        balance=10,
+        phone_number=1111111123,
+        email="rm@email.com",
+        password="password",
+    )
+    user13 = User(
+        username="lasfister",
+        first_name="Latisha",
+        last_name="Fischer",
+        balance=20,
+        phone_number=1111111124,
+        email="fischtme@email.com",
+        password="password",
+    )
+    user14 = User(
+        username="elly",
+        first_name="Elden",
+        last_name="Buchanan",
+        balance=45,
+        phone_number=1111111125,
+        email="elly@email.com",
+        password="password",
+    )
+    user15 = User(
+        username="SpamThis",
+        first_name="Pam",
+        last_name="Mathis",
+        balance=59,
+        phone_number=1111111126,
+        email="sapm.this@email.com",
+        password="password",
+    )
 
-    user_list = [user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,]
+    user_list = [
+        user1,
+        user2,
+        user3,
+        user4,
+        user5,
+        user6,
+        user7,
+        user8,
+        user9,
+        user10,
+        user11,
+        user12,
+        user13,
+        user14,
+        user15
+    ]
+
 
     [db.session.add(user) for user in user_list]
     db.session.commit()

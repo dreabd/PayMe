@@ -42,8 +42,8 @@ class Transaction(db.Model):
             "completed": self.completed,
             "created_at": self.created_at,
             "category": self.category.to_dict(),
-            "requester":self.requester.to_dict(),
-            "payer":self.payer.to_dict()
+            "requester":self.requester.trans_dict(),
+            "payer":self.payer.trans_dict()
         }
     def user_dict(self):
         return {
