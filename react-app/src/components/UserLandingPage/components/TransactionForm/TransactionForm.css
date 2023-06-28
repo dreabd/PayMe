@@ -13,10 +13,10 @@
   flex-direction: column;
   gap: 1rem;
   padding: 2rem 2rem ;
-  width: 30%;
+  width: 20rem;
   border: 2px  groove  rgba(0, 0, 0, 0.149);
   border-radius: 50px;
-}
+  box-shadow: 4px 0px 6px #008cff30;}
 
 
 

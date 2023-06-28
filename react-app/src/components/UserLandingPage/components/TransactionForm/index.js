@@ -16,7 +16,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   // console.log(trans)
   const [description, setDescription] = useState(trans?.description || "")
   const [publics, setPublics] = useState(trans?.public || false)
-  const [name, setName] = useState(trans?.payer.id || location.state?.id || "")
+  const [name, setName] = useState([trans?.payer.id] || [location.state?.id] || "")
   const [money, setMoney] = useState(trans?.money || 0)
   const [category, setCategory] = useState(trans?.category.id || "")
   const [errors, setErrors] = useState({})
@@ -140,6 +140,8 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
 
   const options = users && Object.values(users)
 
+
+  console.log(name)
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={!updated ? handleTransactionSubmit : updateTransaction}>
@@ -157,7 +159,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         <label style={{ display: "flex", flexDirection: "column" }} >
           To Who
           <Dropdown
-            // value={name}
+            value={name}
             onChange={(value) => setName(value)}
             current={current}
             options={options}
@@ -185,7 +187,8 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         </label>
         {submitted && <span className='errors'>{errors.description}</span>}
         <label style={{ display: "flex", flexDirection: "column" }}>
-          Description            <textarea
+          Description
+          <input
             type='text'
             value={description}
             placeholder='Project Description'
@@ -234,7 +237,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         {!updated && request &&
           <div className="pay-request-button-container">
             <button type="submit">
-              Request ${money} 
+              Request ${money}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel
