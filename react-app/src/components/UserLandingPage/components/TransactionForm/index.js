@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory,useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
-import { postPayTransactionsThunk, postReqTransactionsThunk,putSingleTransactionThunk} from "../../../../store/transactions";
+import { postPayTransactionsThunk, postReqTransactionsThunk, putSingleTransactionThunk } from "../../../../store/transactions";
+import Dropdown from "./Dropdown";
 
 import "./TransactionForm.css"
 
@@ -12,9 +13,10 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const history = useHistory()
   const location = useLocation()
 
+  // console.log(trans)
   const [description, setDescription] = useState(trans?.description || "")
   const [publics, setPublics] = useState(trans?.public || false)
-  const [name, setName] = useState(trans?.payer.id || location.state.id || "")
+  const [name, setName] = useState(trans?.payer.id || location.state?.id || "")
   const [money, setMoney] = useState(trans?.money || 0)
   const [category, setCategory] = useState(trans?.category.id || "")
   const [errors, setErrors] = useState({})
@@ -39,12 +41,13 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
     if (!description.trim().length) err["description"] = "Please provide a valid description"
     if (description.length > 50) err["description"] = "Descriptions are limited to 50 characters  "
     if (money <= 0) err["money"] = "Please provide a valid amout"
-    if (!name) err["name"] = "Please select a user"
+    if (!name.length) err["name"] = "Please select a user"
     if (!category) err["category"] = "Please select a category"
 
     setErrors(err)
 
-  }, [description, name, money, category,submitted])
+  }, [description, name, money, category, submitted])
+
 
   const handleTransactionSubmit = async (e) => {
     e.preventDefault()
@@ -53,44 +56,46 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
 
     if (Object.values(errors).length) return
 
-    const formData = new FormData()
+    for (let id of name) {
+      const formData = new FormData()
 
-    if (pay) {
-      formData.append("requester_id", name)
-      formData.append("payer_id", current.id)
-    }
-
-    if (request) {
-      formData.append("requester_id", current.id)
-      formData.append("payer_id", name)
-    }
-
-    formData.append("description", description)
-    formData.append("public", publics)
-    formData.append("money", money)
-    formData.append("category_id", category)
-
-    // for (let key of formData.entries()) {
-    //   console.log(key[0] + ' ----> ' + key[1])
-    // }
-
-
-    if (request) {
-      const data = await dispatch(postReqTransactionsThunk(formData))
-      if (data) {
-        return setErrors(data)
+      if (pay) {
+        formData.append("requester_id", id)
+        formData.append("payer_id", current.id)
       }
-      history.push("/user")
-    }
-    if (pay) {
-      setUserLoad(true)
-      const data = await dispatch(postPayTransactionsThunk(formData))
-      if (data) {
-        console.log(data)
-        return setErrors(data)
+
+      if (request) {
+        formData.append("requester_id", current.id)
+        formData.append("payer_id", id)
       }
-      history.push("/user")
+
+      formData.append("description", description)
+      formData.append("public", publics)
+      formData.append("money", money)
+      formData.append("category_id", category)
+
+      for (let key of formData.entries()) {
+        console.log(key[0] + ' ----> ' + key[1])
+      }
+
+      if (request) {
+        const data = await dispatch(postReqTransactionsThunk(formData))
+        if (data) {
+          return setErrors(data)
+        }
+      }
+      if (pay) {
+        setUserLoad(true)
+        const data = await dispatch(postPayTransactionsThunk(formData))
+        if (data) {
+          console.log(data)
+          return setErrors(data)
+        }
+      }
     }
+    history.push("/users")
+
+
 
 
   }
@@ -109,7 +114,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
     formData.append("money", money)
     formData.append("category_id", category)
 
-    const data = await dispatch(putSingleTransactionThunk(formData,trans?.id))
+    const data = await dispatch(putSingleTransactionThunk(formData, trans?.id))
     if (data) {
       return setErrors(data)
     }
@@ -133,21 +138,35 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
     setRequest(true)
   }
 
+  const options = users && Object.values(users)
 
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={!updated ? handleTransactionSubmit : updateTransaction}>
+        {submitted && <span className='errors'>{errors.money}</span>}
         <label style={{ display: "flex", flexDirection: "column" }}>
           Money
-          {submitted && <span className='errors'>{errors.money}</span>}
           <input
             type="number"
             value={money}
             onChange={e => setMoney(e.target.value)}
           />
         </label>
+
+        {submitted && <span className='errors'>{errors.name}</span>}
         <label style={{ display: "flex", flexDirection: "column" }} >
-          To Whom {submitted && <span className='errors'>{errors.name}</span>}
+          To Who
+          <Dropdown
+            // value={name}
+            onChange={(value) => setName(value)}
+            current={current}
+            options={options}
+            trans={trans}
+            name={name}
+            setName={setName}
+            updated={updated}
+            placeHolder="Select Users" />
+          {/* To Whom {submitted && <span className='errors'>{errors.name}</span>}
           <select
             value={name}
             onChange={(e) => setName(e.target.value)}>
@@ -162,11 +181,11 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
                 return (null)
               }
             })}
-          </select>
+          </select> */}
         </label>
+        {submitted && <span className='errors'>{errors.description}</span>}
         <label style={{ display: "flex", flexDirection: "column" }}>
-          Description  {submitted && <span className='errors'>{errors.description}</span>}
-          <textarea
+          Description            <textarea
             type='text'
             value={description}
             placeholder='Project Description'
@@ -183,9 +202,9 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
           />
         </label>
 
+        {submitted && (<span className='errors'>{errors.category}</span> || <span className='errors'>{errors.category_id}</span>)}
         <label style={{ display: "flex", flexDirection: "column" }}>
-          Category {submitted && <span className='errors'>{errors.category}</span>}
-          {submitted && <span className='errors'>{errors.category_id}</span>}
+          Category
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}>
@@ -204,7 +223,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         {!updated && pay &&
           <div className="pay-request-button-container">
             <button type="submit">
-              Pay {users[name]?.first_name} ${money}
+              Pay ${money}
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel
@@ -215,7 +234,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         {!updated && request &&
           <div className="pay-request-button-container">
             <button type="submit">
-              Request ${money} from {users[name]?.first_name}
+              Request ${money} 
             </button>
             <button onClick={transactionIsCanceled}>
               Cancel

@@ -124,7 +124,7 @@ function UserPage() {
             </button>}
         </div>
 
-        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id }) }} className="pay-request-button">
+        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id , friend: true}) }} className="pay-request-button">
           Pay / Request
         </button>
       </div>
