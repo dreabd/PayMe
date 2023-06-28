@@ -13,17 +13,20 @@
   flex-direction: column;
   gap: 1rem;
   padding: 2rem 2rem ;
-  width: 30%;
+  width: 20rem;
   border: 2px  groove  rgba(0, 0, 0, 0.149);
   border-radius: 50px;
-}
+  box-shadow: 4px 0px 6px #008cff30;}
 
 
 
 .trans-form > label > *,
 .card-form > label >* {
   width: 100%;
-  /* padding: 2 2; */
+  font-size: 15px;
+  border: 1px solid  rgba(0, 0, 0, 0.149);
+  border-radius: 5px;
+  padding: 2px 2px;
 }
 
 

@@ -4,6 +4,9 @@ import { getPublicTransactionsThunk, getUserTransactionsThunk } from "../../../.
 import "./UserTransFeed.css"
 import { NavLink } from "react-router-dom";
 
+// import Loading from "../Loading";
+import { TransCard } from "./TransCard";
+
 function UserTransFeed() {
   const dispatch = useDispatch()
 
@@ -14,11 +17,15 @@ function UserTransFeed() {
 
   // ---------State Variables---------
   const [personal, setPersonal] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   // --------- Use Effect---------
   useEffect(() => {
     dispatch(getPublicTransactionsThunk())
     dispatch(getUserTransactionsThunk())
+    setTimeout(() => {
+      setLoading(false)
+    }, 500);
   }, [dispatch])
 
   // ----------Helper Functions----------
@@ -29,70 +36,34 @@ function UserTransFeed() {
     return date.toLocaleString();
   }
 
-  const allTransactionsContainer = allTransactions && Object.values(allTransactions).reverse().map(trans => {
-    return (
-      <div className="trans-card">
-        <div className="left-trans">
-          <div className="top-trans">
-            {trans.payer.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} <span>paid</span> {trans.requester.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.requester.id}`}>{trans.requester.first_name} {trans.requester.last_name}</NavLink>}
-          </div>
-          <div className="mid-trans">
-            {formatDate(trans.created_at)}
-          </div>
-          <div className="bot-trans">
-            {trans.description}
-          </div>
-        </div>
 
-        <div className="right-trans">
-        {(trans.payer_id === user.id || trans.requester_id === user.id) ? trans.requester_id === user.id ? <span className="positive-trans">+${trans.money}</span> :  trans.payer_id === user.id ? <span className="negative-trans">-${trans.money}</span> : null : null}
-        </div>
-
-      </div>
-    )
-  })
+  const allTransactionsContainer = allTransactions && TransCard(Object.values(allTransactions),user.id)
 
   const togglePersonal = () => {
     setPersonal(!personal)
   }
 
-  const userTransactionsContainer = userTransactions && Object.values(userTransactions)?.map(trans => {
-    return (
-      <div className="trans-card">
-        <div className="left-trans">
-          <div className="top-trans">
-            {trans.payer.id === user.id ? "You" : <NavLink className="navlink important-navlinks"to={`/user/${trans.payer.id}`}>{trans.payer.first_name} {trans.payer.last_name}</NavLink>} <span>paid</span> {trans.requester.id === user.id ? "You" : `${trans.requester.first_name} ${trans.requester.last_name}`}
-          </div>
-          <div className="mid-trans">
-            {formatDate(trans.created_at)}
-          </div>
-          <div className="bot-trans">
-            {trans.description}
-          </div>
-        </div>
+  const userTransactionsContainer = userTransactions && TransCard(Object.values(userTransactions),user.id)
 
-        <div className="right-trans">
-          {(trans.payer_id === user.id || trans.requester_id === user.id) ? trans.requester_id === user.id ? <span className="positive-trans">+${trans.money}</span> :  trans.payer_id === user.id ? <span className="negative-trans">-${trans.money}</span> : null : null}
-        </div>
-
-      </div>
+  if (loading) {
+    return(
+      <h4 className="trans-feed-container">
+        Loading...
+      </h4>
     )
-  })
-
-
+    // return(<Loading/>)
+  }
 
   return (
     <div className="trans-feed-container">
       <button className="toggle-button" onClick={togglePersonal}>
         {personal ? "Checkout All Transactions" : "Checkout Your Transactions"}
       </button>
-      {(allTransactions && userTransactions) ?
-        <div className="all-trans-container">
-          <h3>{!personal ? "All Transactions" : "Personal Transactions"}</h3>
-          {!personal ? allTransactionsContainer : userTransactionsContainer}
-        </div> : <div className="all-trans-container"><h4>Loading...</h4></div>
-      }
 
+      <div className="all-trans-container">
+        <h3>{!personal ? "All Transactions" : "Personal Transactions"}</h3>
+        {!personal ? allTransactionsContainer : userTransactionsContainer}
+      </div>
 
     </div>
   )

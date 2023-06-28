@@ -4,6 +4,7 @@ import { normalizeObj } from "./helpers";
 // constants
 const SET_USER = "session/SET_USER";
 const GET_USERS = "session/getAllUsers";
+const GET_OTHER_USERS ="session/getOtherUsers"
 const REMOVE_USER = "session/REMOVE_USER";
 
 const setUser = (user) => ({
@@ -22,6 +23,12 @@ const getAllUsers=(users) =>{
 	}
 }
 
+export const getOtherUsers = (user) =>{
+	return{
+		type:GET_OTHER_USERS,
+		user
+	}
+}
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -116,7 +123,7 @@ export const signUp = (signUpInfo) => async (dispatch) => {
 	}
 };
 
-const initialState = { user: null,allUsers:{}};
+const initialState = { user: null,allUsers:{},otherUser:{}};
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -126,6 +133,8 @@ export default function reducer(state = initialState, action) {
 			return {...state,user: null };
 		case GET_USERS:
 			return {...state,allUsers:{...normalizeObj(action.users)}}
+		case GET_OTHER_USERS:
+			return {...state,otherUser:action.user}
 		default:
 			return state;
 	}
