@@ -16,7 +16,10 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   // console.log(trans)
   const [description, setDescription] = useState(trans?.description || "")
   const [publics, setPublics] = useState(trans?.public || false)
-  const [name, setName] = useState([trans?.payer.id] || [location.state?.id] || "")
+  const [name, setName] = useState(
+    (updated && [trans?.payer.id]) ||
+    (location.state?.friend && [location.state.id]) ||
+    "")
   const [money, setMoney] = useState(trans?.money || 0)
   const [category, setCategory] = useState(trans?.category.id || "")
   const [errors, setErrors] = useState({})
