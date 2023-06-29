@@ -13,6 +13,7 @@ import CardForm from "./components/CardForm";
 import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
 import UserPage from "./components/UserPage";
+import ChartData from "./components/UserPage/ChartData";
 
 import "./UserLandingPage.css"
 
@@ -55,6 +56,9 @@ function UserLandingPage() {
           </Route>
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />
+          </Route>
+          <Route exact path="/user/test">
+            <ChartData/>
           </Route>
           <Route exact path="/user/:id">
             <UserPage />
