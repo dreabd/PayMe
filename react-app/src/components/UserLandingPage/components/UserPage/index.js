@@ -26,6 +26,7 @@ function UserPage() {
   const friendTransactions = useSelector(state => state.transaction.friendTransactions)
   const userTransactions = useSelector(state => state.transaction.userTransactions.completed)
   const userTransactionDetails = useSelector(state => state.transaction.userTransactions.details)
+  const userTransactionStats = useSelector(state => state.transaction.userTransactions.details?.stats)
 
   const user_friends = user && user.friends.map(friend => {
     // console.log(friend.id === Number(id))
@@ -53,7 +54,7 @@ function UserPage() {
       isFriend(true)
       return
     }
-    // if it is a random person just show transactions that are public 
+    // if it is a random person just show transactions that are public
     else {
       console.log("Not friend....................")
       return dispatch(getUserTransactionsDetailsThunk(id, false, false))
@@ -97,7 +98,7 @@ function UserPage() {
 
   if (loading && id == user.id) {
     return (
-      <TransDetails trans={Object.values(userTransactions)} transDetails={userTransactionDetails}/>
+      <TransDetails stats={userTransactionStats}trans={Object.values(userTransactions)} transDetails={userTransactionDetails}/>
     )
   }
 

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const formatDate = (dateString) => {
+export const formatDate = (dateString) => {
     if (!dateString) return;
     const date = new Date(dateString)
     return date.toLocaleString();

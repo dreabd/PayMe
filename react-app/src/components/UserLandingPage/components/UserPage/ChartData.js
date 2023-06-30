@@ -2,60 +2,91 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
+import { formatDate } from "../UserTransFeed/TransCard";
 import { Line } from 'react-chartjs-2'
 
-export default function ChartData(){
+export default function ChartData({color}) {
+
+    const paid = useSelector(state => state.transaction.userTransactions.details.stats.trans_paid)
+    const requested = useSelector(state => state.transaction.userTransactions.details.stats.trans_requested)
+    const user = useSelector(state => state.session.user)
+
+    const userTransactionStats = [...paid, ...requested]
+    console.log(userTransactionStats.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.date) - new Date(a.date);
+    }))
+
+    const label = []
+    const data = []
+    const reducer = []
+
+    console.log(user.balance)
+
+    userTransactionStats && userTransactionStats
+        .sort(function (a, b) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.date) - new Date(a.date);
+        })
+        .forEach(trans => {
+            /*
+            Pushing in the data into labels and the difference in the balances into reducer
+            - Date ==> Data Obj ==> push(Month Day, Year)
+            */
+            let date = trans["date"]
+            const dateString = new Date(date)
+            const months = ["Jan.", "Feb.", "March", "April", "May", "June",
+                "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+
+            let cumilation = data.length ? (data.reduce((a,b)=>{
+                return a+b
+            })+trans["money"] ) : trans["money"]
+            console.log(`${months[dateString.getMonth()]} ${dateString.getDate()+1} ,${dateString.getFullYear()}`,trans["money"])
+            reducer.push(cumilation)
+            data.push(trans["money"])
+            label.push(`${months[dateString.getMonth()]} ${dateString.getDate()+1} ,${dateString.getFullYear()}`)
+        })
+
+
+    // console.log(reducer)
     return (
         <div>
             <Line
                 data={{
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: label.reverse(),
                     datasets: [
                         {
-                            label: '# of votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)',
-                            ],
-                            borderWidth:1,
+                            label: 'Balance',
+                            data: reducer,
+                            backgroundColor:
+                                `${color}`,
+                            borderColor:
+                                `${color}`,
+                            borderWidth: 1,
                         },
-                        // {
-                        //   label: 'Quantity',
-                        //   data: [47, 52, 67, 58, 9, 50],
-                        //   backgroundColor: 'orange',
-                        //   borderColor: 'red',
-                        // },
                     ],
                 }}
                 height={400}
                 width={600}
                 options={{
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     scales: {
-                        yAxes: [
-                            {
-                                ticks: {
-                                    beginAtZero: true,
-                                },
+                        y: {
+                            beginAtZero: false,
+                        },
+                        x: {
+                            ticks: {
+                                display: true,
+                                maxTicksLimit: 6,
                             },
-                        ],
+                        }
                     },
+
                     legend: {
                         labels: {
-                            fontSize: 25,
+                            fontSize: 100,
                         },
                     },
                 }}
