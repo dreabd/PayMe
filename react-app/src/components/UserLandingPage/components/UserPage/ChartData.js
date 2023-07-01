@@ -1,61 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 
-import { formatDate } from "../UserTransFeed/TransCard";
 import { Line } from 'react-chartjs-2'
 
-export default function ChartData({color}) {
-
-    const paid = useSelector(state => state.transaction.userTransactions.details.stats.trans_paid)
-    const requested = useSelector(state => state.transaction.userTransactions.details.stats.trans_requested)
-    const user = useSelector(state => state.session.user)
+function ChartData({ stats, color }) {
+    // ----------------------Constants----------------------
+    const paid = stats.trans_paid
+    const requested = stats.trans_requested
 
     const userTransactionStats = [...paid, ...requested]
-    console.log(userTransactionStats.sort(function (a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.date) - new Date(a.date);
-    }))
+
+
 
     const label = []
     const data = []
     const reducer = []
 
-    console.log(user.balance)
-
     userTransactionStats && userTransactionStats
         .sort(function (a, b) {
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
             return new Date(b.date) - new Date(a.date);
         })
-        .forEach(trans => {
+        .reverse().forEach(trans => {
             /*
             Pushing in the data into labels and the difference in the balances into reducer
             - Date ==> Data Obj ==> push(Month Day, Year)
+            - Culmination:
+                - All the transactions in data added together
+            - Reducer is the collection of Culmination => Collection of how balance has changed
             */
             let date = trans["date"]
             const dateString = new Date(date)
             const months = ["Jan.", "Feb.", "March", "April", "May", "June",
                 "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 
-            let cumilation = data.length ? (data.reduce((a,b)=>{
-                return a+b
-            })+trans["money"] ) : trans["money"]
-            console.log(`${months[dateString.getMonth()]} ${dateString.getDate()+1} ,${dateString.getFullYear()}`,trans["money"])
+            let cumilation = data.length ? (data.reduce((a, b) => {
+                return a + b
+            }) + trans["money"]) : trans["money"]
+            // console.log(`${months[dateString.getMonth()]} ${dateString.getDate()+1} ,${dateString.getFullYear()}`,cumilation)
             reducer.push(cumilation)
             data.push(trans["money"])
-            label.push(`${months[dateString.getMonth()]} ${dateString.getDate()+1} ,${dateString.getFullYear()}`)
+            label.push(`${months[dateString.getMonth()]} ${dateString.getDate() + 1} ,${dateString.getFullYear()}`)
         })
 
 
-    // console.log(reducer)
+    if (!paid || !requested) return (<h3>Loading...</h3>)
     return (
         <div>
+            <p> Change in Balance </p>
             <Line
                 data={{
-                    labels: label.reverse(),
+                    labels: label,
                     datasets: [
                         {
                             label: 'Balance',
@@ -67,9 +61,10 @@ export default function ChartData({color}) {
                             borderWidth: 1,
                         },
                     ],
+
                 }}
                 height={400}
-                width={600}
+                width={550}
                 options={{
                     maintainAspectRatio: true,
                     scales: {
@@ -79,7 +74,7 @@ export default function ChartData({color}) {
                         x: {
                             ticks: {
                                 display: true,
-                                maxTicksLimit: 6,
+                                maxTicksLimit: 5,
                             },
                         }
                     },
@@ -94,3 +89,5 @@ export default function ChartData({color}) {
         </div>
     )
 }
+
+export default ChartData

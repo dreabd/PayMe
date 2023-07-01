@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 import { getUserTransactionsDetailsThunk } from "../../../../store/transactions";
+import { authenticate } from "../../../../store/session";
 
 import { TransCard } from "../UserTransFeed/TransCard";
 import TransDetails from "./TransDetails";
@@ -68,6 +69,7 @@ function UserPage() {
     })
     if (res.ok) {
       dispatch(getUserTransactionsDetailsThunk(id, false, true))
+      dispatch(authenticate())
       isFriend(true)
       return
     }
@@ -83,6 +85,7 @@ function UserPage() {
     })
     if (res.ok) {
       dispatch(getUserTransactionsDetailsThunk(id, false, false))
+      dispatch(authenticate())
       isFriend(false)
       return
     }
@@ -104,7 +107,6 @@ function UserPage() {
 
   return (
     <div className="trans-feed-container">
-
       <div className="other-user-info-container">
         <div>
           <p>{otherUser.first_name}, {otherUser.last_name}</p>

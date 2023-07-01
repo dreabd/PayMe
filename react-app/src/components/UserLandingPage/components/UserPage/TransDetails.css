@@ -1,0 +1,44 @@
+.trans-details-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  /* align-items: center; */
+  justify-content: center;
+  width:fit-content;
+  padding-top: 1rem;
+}
+
+.trans-details-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: center; */
+  width: 100%;
+}
+
+.trans-details-button-container>button {
+  width: 10rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px;
+}
+
+.chart-trans-details-contianer {
+  min-width: 100%;
+  width: 30rem;
+  max-width: 40rem;
+}
+
+.friends-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: fit-content;
+  /* padding: 0rem 2rem; */
+}
+
+.friends-list > li{
+  font-size: 1rem;
+}
