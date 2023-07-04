@@ -1,7 +1,7 @@
 from app.models import db, Transaction, environment, SCHEMA
 from sqlalchemy.sql import text
 from random import randint, choice,shuffle
-from datetime import date
+from datetime import datetime
 
 descpt = [
     "Food😫😫😫😫",
@@ -125,7 +125,7 @@ descpt = [
 
 def seed_transactions():
     trans_list=[]
-    for i in range(0, 500):
+    for i in range(0, 1000):
         users = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
         shuffle(users)
         trans = Transaction(
@@ -135,7 +135,7 @@ def seed_transactions():
             public=True,
             money=randint(5,50),
             completed=choice([True,False]),
-            created_at = date(choice([2023, 2022]), randint(1,6), randint(1, 28)),
+            created_at = datetime(choice([2023, 2022]), randint(1,6), randint(1, 28),randint(0,23),randint(0,59),randint(0,59)),
             category_id=choice([1,2,3,4,5,6]),
         )
         trans_list.append(trans)
