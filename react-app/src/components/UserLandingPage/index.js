@@ -36,12 +36,21 @@ function UserLandingPage() {
           <Route exact path="/user">
             <UserTransFeed />
           </Route>
+
           <Route exact path="/user/transaction">
             <TransactionForm setUserLoad={setUserLoad} />
           </Route>
           <Route exact path="/user/transaction/:id/edit">
             <EditTransaction />
           </Route>
+
+          <Route exact path="/user/groups">
+            Group Place Holder
+          </Route>
+          <Route exact path="/user/budgets">
+            Budget Place Holder
+          </Route>
+
           <Route exact path="/user/cards">
             <ManageCards />
           </Route>
@@ -54,15 +63,15 @@ function UserLandingPage() {
           <Route exact path="/user/card/:id/edit">
             <EditCard />
           </Route>
+
           <Route exact path="/user/incomplete">
             <Incomplete setUserLoad={setUserLoad} />
           </Route>
-          <Route exact path="/user/test">
-            <ChartData/>
-          </Route>
+
           <Route exact path="/user/:id">
             <UserPage />
           </Route>
+
           <Route>
             <Redirect to="/user" />
           </Route>

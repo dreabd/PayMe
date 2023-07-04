@@ -95,15 +95,20 @@ function UserPage() {
     }
 
   }
+
+  console.log(otherUser.id)
+  console.log(user.id)
   if (!loading) return (<h4 className="trans-feed-container">Loading...</h4>)
 
-  if (!otherUser.id && loading && !user.id) history.push('/user')
+  // if (!otherUser.id && loading && !user.id) history.push('/user')
 
   if (loading && id == user.id) {
     return (
-      <TransDetails stats={userTransactionStats}trans={Object.values(userTransactions)} transDetails={userTransactionDetails}/>
+      <TransDetails stats={userTransactionStats} trans={Object.values(userTransactions)} transDetails={userTransactionDetails} />
     )
   }
+  
+  if ((!otherUser.id || !user.id) && loading) history.push('/user')
 
   return (
     <div className="trans-feed-container">
@@ -127,7 +132,7 @@ function UserPage() {
             </button>}
         </div>
 
-        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id , friend: true}) }} className="pay-request-button">
+        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id, friend: true }) }} className="pay-request-button">
           Pay / Request
         </button>
       </div>

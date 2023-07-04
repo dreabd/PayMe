@@ -49,7 +49,10 @@ function TransDetails({ stats, trans, transDetails }) {
     }
 
     // ----- Components ------
-    const friends = user && Object.values(user.friends).map(friend => {
+    const friends = user && Object.values(user.friends).sort((a,b)=> {
+        if (a.las < b.las )return-1
+        else return 1
+    }).map(friend => {
         return (
             <li style={{ "listStyleType": "none" }}>
                 <NavLink className="navlink important-navlinks" to={`/user/${friend.id}`}>{friend.first_name} {friend.last_name}</NavLink>
@@ -61,11 +64,11 @@ function TransDetails({ stats, trans, transDetails }) {
     let color = stats && stats.money_total < 0 ? " #d81159" : "#008cff"
     if (!stats || !trans || !transDetails) return (<h4 className="trans-feed-container">Loading.....</h4>)
     return (
-        <>
+        <div className="user-trans-details">
             {/* Here I want to show all of their transactions */}
             {/* If it is the user's peronsal page then want to show the budget / spending habits */}
 
-            <div className="trans-feed-container">
+            <div className="trans-feed-container ">
                 <div className="other-user-info-container">
                     <p>{user.first_name}, {user.last_name}</p>
                     <p className="username">
@@ -75,12 +78,14 @@ function TransDetails({ stats, trans, transDetails }) {
 
                 <div className="trans-details-container">
                     <div className="left-trans-details-container">
-                        <div className="trans-details-button-container">
-                            <button onClick={balDispClick}>Total Balance Changes</button>
+                        <nav className="trans-details-button-container">
+                            <button onClick={balDispClick}>Balance Changes</button>
                             <button onClick={onCatDispClick}>Categories</button>
                             <button onClick={allTransClick}>Your Transactions</button>
                             <button onClick={friendsDispClick}> My Friends</button>
-                        </div>
+                            <button onClick={()=>alert("Feature Coming Soon")}> My Bugets</button>
+                            <button onClick={()=>alert("Feature Coming Soon")}> My Groups</button>
+                        </nav>
                     </div>
                     <div className="right-trans-details-conatiner">
                         {(catDisp || balDisp) ?
@@ -117,7 +122,7 @@ function TransDetails({ stats, trans, transDetails }) {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
