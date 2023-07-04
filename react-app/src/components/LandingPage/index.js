@@ -4,6 +4,16 @@ import { NavLink } from "react-router-dom";
 import "./LandingPage.css"
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
+import flask from "../assets/flask.png"
+import css from "../assets/css.png"
+import html from "../assets/html.png"
+import react from "../assets/react.png"
+import postgres from "../assets/postgres.png"
+import redux from "../assets/redux.png"
+import sqlalchemy from "../assets/sqlalchemy.png"
+import python from "../assets/python.png"
+
+
 function LandingPage() {
   const sessionUser = useSelector(state => state.session.user);
 
@@ -49,7 +59,22 @@ function LandingPage() {
         </div>
         <img src="https://images.ctfassets.net/gkyt4bl1j2fs/alUHU4ShZNyUjxh5Y9354/4df5f66d626d8bc524e1b1e29ce6cd78/homepage_phone1_desktop.png?w=1157&h=1388&q=50&fm=webp&bg=transparent" alt="" />
       </div>
+      <div className="technology-container">
+        <p>
+          Technologies Used:
+        </p>
+        <div className="technology-icons">
+          <img src={flask} alt="" />
+          <img src={css} alt="" />
+          <img src={html} alt="" />
+          <img src={react} alt="" />
+          <img src={sqlalchemy} alt="" />
+          <img src={redux} alt="" />
+          <img src={postgres} alt="" />
+          <img src={python} alt="" />
 
+        </div>
+      </div>
     </div>
   )
 }

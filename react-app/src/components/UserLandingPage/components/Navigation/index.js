@@ -58,12 +58,12 @@ function Navigation({ userLoad, setUserLoad }) {
       <NavLink className="navlink important-navlinks" to="/user/incomplete">
         Pending Transacations
       </NavLink>
-      <NavLink className="navlink important-navlinks" to="/user/groups">
+      {/* <NavLink className="navlink important-navlinks" to="/user/groups">
         Groups
       </NavLink>
       <NavLink className="navlink important-navlinks" to="/user/budgets">
         Budgets
-      </NavLink>
+      </NavLink> */}
       <button className="logout-button" onClick={handleLogout}>
         Log Out
       </button>

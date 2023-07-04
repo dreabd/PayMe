@@ -110,4 +110,38 @@
     font-weight:400;
 }
 
+svg{
+    transform: scale(0.25);
 
+}
+.technology-container{
+    border-top: 3px solid #00000026;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+.technology-container > p{
+    padding-top: 4px;
+    font-size: 100%;
+    color:#0000009f;
+    font-weight: bolder;
+    font-style: oblique;
+
+}
+
+.technology-icons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size:1rem
+}
+
+.technology-icons > img{
+    width: 3%;
+    height: 3%;
+    padding:1rem 1rem ;
+}
