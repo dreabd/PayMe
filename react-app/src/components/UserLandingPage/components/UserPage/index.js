@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 import { getUserTransactionsDetailsThunk } from "../../../../store/transactions";
+import { authenticate } from "../../../../store/session";
 
 import { TransCard } from "../UserTransFeed/TransCard";
 import TransDetails from "./TransDetails";
@@ -26,6 +27,7 @@ function UserPage() {
   const friendTransactions = useSelector(state => state.transaction.friendTransactions)
   const userTransactions = useSelector(state => state.transaction.userTransactions.completed)
   const userTransactionDetails = useSelector(state => state.transaction.userTransactions.details)
+  const userTransactionStats = useSelector(state => state.transaction.userTransactions.details?.stats)
 
   const user_friends = user && user.friends.map(friend => {
     // console.log(friend.id === Number(id))
@@ -53,7 +55,7 @@ function UserPage() {
       isFriend(true)
       return
     }
-    // if it is a random person just show transactions that are public 
+    // if it is a random person just show transactions that are public
     else {
       console.log("Not friend....................")
       return dispatch(getUserTransactionsDetailsThunk(id, false, false))
@@ -67,6 +69,7 @@ function UserPage() {
     })
     if (res.ok) {
       dispatch(getUserTransactionsDetailsThunk(id, false, true))
+      dispatch(authenticate())
       isFriend(true)
       return
     }
@@ -82,6 +85,7 @@ function UserPage() {
     })
     if (res.ok) {
       dispatch(getUserTransactionsDetailsThunk(id, false, false))
+      dispatch(authenticate())
       isFriend(false)
       return
     }
@@ -91,19 +95,23 @@ function UserPage() {
     }
 
   }
+
+  console.log(otherUser.id)
+  console.log(user.id)
   if (!loading) return (<h4 className="trans-feed-container">Loading...</h4>)
 
-  if (!otherUser.id && loading && !user.id) history.push('/user')
+  // if (!otherUser.id && loading && !user.id) history.push('/user')
 
   if (loading && id == user.id) {
     return (
-      <TransDetails trans={Object.values(userTransactions)} transDetails={userTransactionDetails}/>
+      <TransDetails stats={userTransactionStats} trans={Object.values(userTransactions)} transDetails={userTransactionDetails} />
     )
   }
+  
+  if ((!otherUser.id || !user.id) && loading) history.push('/user')
 
   return (
     <div className="trans-feed-container">
-
       <div className="other-user-info-container">
         <div>
           <p>{otherUser.first_name}, {otherUser.last_name}</p>
@@ -124,7 +132,7 @@ function UserPage() {
             </button>}
         </div>
 
-        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id , friend: true}) }} className="pay-request-button">
+        <button onClick={() => { history.push("/user/transaction", { id: otherUser.id, friend: true }) }} className="pay-request-button">
           Pay / Request
         </button>
       </div>

@@ -34,11 +34,11 @@ def get_user_transactions(id):
             - That will then use the frontend to determine the chart JS stuff
         - If it is the friend of the user
             - Return all PUBLIC COMPLETED transactions AND COMPLETED TRANSACTIONS between the user and their friend
-        - If it is NOT a friend, return all PUBLIC COMPLETED TRANSACTIONS 
+        - If it is NOT a friend, return all PUBLIC COMPLETED TRANSACTIONS
     '''
 
     user = User.query.get(id)
-    
+
     # Getting all the friends of the current user
     friends = [friend.id for friend in current_user.friends]
     if user is None:
@@ -62,8 +62,10 @@ def get_user_transactions(id):
         def transaction_obj(list1):
             return{
             "money_requested": sum([trans["money"] for trans in list1 if trans["requester_id"] == current_user.id]),
-            "money_paid":  sum([trans["money"] for trans in list1 if trans["payer_id"] == current_user.id ]),
+            "money_paid":  -sum([trans["money"] for trans in list1 if trans["payer_id"] == current_user.id ]),
             "money_total": sum([trans["money"] if trans["requester_id"] == current_user.id else -trans["money"] for trans in list1]),
+            "trans_requested":[{"money":trans["money"],"date":trans["created_at"]} for trans in list1 if trans["requester_id"] == current_user.id],
+            "trans_paid":[{"money":-trans["money"],"date":trans["created_at"]} for trans in list1 if trans["payer_id"] == current_user.id ],
             "list":list1
             }
         total_transaction_data = transaction_obj(user_transaction)
@@ -72,31 +74,31 @@ def get_user_transactions(id):
         Housing = filter(lambda x:(x["category"]["id"] == 1),user_transaction)
         housing_list = list(Housing)
         Housing_Transactions = transaction_obj(housing_list)
-    
+
         Transportation = filter(lambda x:(x["category"]["id"]==2),user_transaction)
         transportation_list = list(Transportation)
         Transportation_Transactions = transaction_obj(transportation_list)
-        
+
         Food = filter(lambda x:(x["category"]["id"]==3),user_transaction)
         food_list = list(Food)
         Food_Transactions = transaction_obj(food_list)
-        
+
         Personal = filter(lambda x:(x["category"]["id"]==4),user_transaction)
         personal_list = list(Personal)
         Personal_Transactions = transaction_obj(personal_list)
-            
-        
+
+
         Entertainment = filter(lambda x:(x["category"]["id"]==5),user_transaction)
         entertainment_list = list(Entertainment)
         Entertainment_Transactions = transaction_obj(entertainment_list)
-        
+
         Saving = filter(lambda x:(x["category"]["id"]==6),user_transaction)
         saving_list = list(Saving)
         Saving_Transactions = transaction_obj(saving_list)
 
         return{
             "transactions": user_transaction,
-            "allTransData":total_transaction_data,
+            "allTransData":transaction_obj(user_transaction),
             "category":{
             "housing":Housing_Transactions,
             "transportion":Transportation_Transactions,
@@ -121,7 +123,7 @@ def get_user_transactions(id):
         user_transaction = [trans.to_dict() for trans in user_trans]
 
         # I want to return all the transactions between the user's id and the current user's id
-        #  
+        #
         # def filter_1(x):
         #     # print("something..................",x)
         #     # print("true or false......................", x["payer_id"] == current_user.id or x["requester_id"] == current_user.id)
@@ -146,8 +148,8 @@ def get_user_transactions(id):
         return{
             "user":user,
             "transactions": user_transaction,
-            "friendTransactions": friend_transaction}    
-    else: 
+            "friendTransactions": friend_transaction}
+    else:
         user_trans = (
         Transaction.query.filter(
             (Transaction.payer_id == user.id)
@@ -166,4 +168,3 @@ def get_user_transactions(id):
         del user["email"]
 
         return{"user":user,"transactions": user_transaction}
-

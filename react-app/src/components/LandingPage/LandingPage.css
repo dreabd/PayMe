@@ -6,9 +6,9 @@
     color:#008CFF
 }
 
-.navlink:current(p, span) {
+/* .navlink:current(p, span) {
     background-color: yellow;
-  }
+  } */
 
 .landing-container {
     display: flex;
@@ -18,6 +18,8 @@
     width:  100%;
     background-color: #008cff1a;
     height: 100%;
+    background-size: cover;
+
 }
 
 .top-landing-container {
@@ -107,3 +109,5 @@
     font-size: 4rem;
     font-weight:400;
 }
+
+

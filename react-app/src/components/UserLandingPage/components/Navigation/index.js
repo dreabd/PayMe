@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { authenticate, logout } from "../../../../store/session";
 import "./Navigation.css"
+import AboutMe from "../../../AboutMe";
 
 function Navigation({ userLoad, setUserLoad }) {
   const dispatch = useDispatch()
@@ -45,7 +46,9 @@ function Navigation({ userLoad, setUserLoad }) {
         <p className="balance-container">
           Balance: <span className="user-balance">${user.balance}</span>
         </p>
+
       </div>
+
       <button onClick={payRequestRouting} className="pay-request-button">
         Pay / Request
       </button>
@@ -55,9 +58,16 @@ function Navigation({ userLoad, setUserLoad }) {
       <NavLink className="navlink important-navlinks" to="/user/incomplete">
         Pending Transacations
       </NavLink>
+      <NavLink className="navlink important-navlinks" to="/user/groups">
+        Groups
+      </NavLink>
+      <NavLink className="navlink important-navlinks" to="/user/budgets">
+        Budgets
+      </NavLink>
       <button className="logout-button" onClick={handleLogout}>
         Log Out
       </button>
+      <AboutMe/>
     </nav>
   )
 }

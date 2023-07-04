@@ -83,7 +83,7 @@ const Dropdown = ({ trans, current, options, updated, placeHolder,onChange}) => 
     }
 
     const isSelected = (user) => {
-        return selectedValue.filter((o) => o.id === user.id).length > 0
+        return selectedValue.filter((users) => users.id === user.id).length > 0
     }
     const handleInputClick = (e) => {
         e.stopPropagation();

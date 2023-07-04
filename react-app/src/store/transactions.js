@@ -154,15 +154,15 @@ export const getUserTransactionsDetailsThunk = (id, user, friend) => async dispa
     }
     if (friend) {
       // console.log("friends.................................")
-      const { user,transactions, friendTransactions } = await res.json()
+      const { user, transactions, friendTransactions } = await res.json()
       console.log(user)
       dispatch(getFriendTransactions(transactions, friendTransactions))
       dispatch(getOtherUsers(user))
       return
     }
-    if(!friend && !user) {
+    if (!friend && !user) {
       // console.log("random.................................")
-      const { user,transactions } = await res.json()
+      const { user, transactions } = await res.json()
       dispatch(getOtherTransactions(transactions))
       dispatch(getOtherUsers(user))
       return
@@ -278,7 +278,11 @@ export const deleteTransactionThunk = (transId) => async dispatch => {
 const initialState = {
   publicTransactions: {},
   userTransactions: {
-    details: {},
+    details: {
+      stats: {},
+
+      category: {}
+    },
     completed: {},
     incompleted: {}
   },
@@ -299,16 +303,20 @@ const transactionReducer = (state = initialState, action) => {
 
     case GET_USER_TRANSACTIONS_DETAILS:
       console.log(action.category)
-      return{
+      return {
         ...state,
-        userTransactions:{
-          details:{...action.allTransData,category:{...action.category}},
-          completed:{...normalizeObj(action.transactions)}
+        userTransactions: {
+          details: {
+            stats: { ...action.allTransData },
+            category: { ...action.category },
+
+          },
+          completed: { ...normalizeObj(action.transactions) }
         }
       }
     case GET_OTHER_TRANSACTIONS:
-      
-      return { ...state, userTransactions: { completed: {...action.transactions } } }
+
+      return { ...state, userTransactions: { completed: { ...action.transactions } } }
     case GET_FRIEND_TRANSACTIONS:
       return {
         ...state,

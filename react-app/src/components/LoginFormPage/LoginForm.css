@@ -49,7 +49,8 @@
 .submit-new-card,
 .update-card,
 .add-friend-button,
-.remove-friend-button{
+.remove-friend-button,
+.trans-details-button-container > button{
   border: none;
   overflow: hidden;
   width: 100%;
@@ -74,7 +75,8 @@
 .card-buttons > :nth-child(2):hover,
 .submit-new-card:hover,
 .update-card:hover,
-.add-friend-button:hover{
+.add-friend-button:hover,
+.trans-details-button-container > button:hover{
   background-color:#0037ff;
   color: white;
 }
@@ -88,7 +90,8 @@
 .card-buttons > :nth-child(2):active,
 .submit-new-card:active,
 .update-card:active,
-.add-friend-button:active{
+.add-friend-button:active,
+.trans-details-button-container > button:active{
   background-color:#008cff4d;
   box-shadow: 1px 1px 2px #049d6f;
 
