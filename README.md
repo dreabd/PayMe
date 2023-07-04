@@ -4,7 +4,7 @@ PayMe is a soft clone of the popular app Venmo. Over the past few years, Venmo's
 
 This clone intends on improving that functionality by adding groups and group budgets. Additonally, a visualization of your tranasactions and a budget creator have been implemented as well to further improve application.
 
-## Check out <a href="http://payme-ksng.onrender.com/">PayMe</a>
+## Check out <a href="http://payme-ksng.onrender.com/" target="_blank">PayMe</a>
 
 ## Getting started
 1. Clone this repository
