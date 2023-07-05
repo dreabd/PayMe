@@ -83,8 +83,8 @@ function TransDetails({ stats, trans, transDetails }) {
                             <button onClick={onCatDispClick}>Categories</button>
                             <button onClick={allTransClick}>Your Transactions</button>
                             <button onClick={friendsDispClick}> My Friends</button>
-                            {/* <button onClick={()=>alert("Feature Coming Soon")}> My Bugets</button>
-                            <button onClick={()=>alert("Feature Coming Soon")}> My Groups</button> */}
+                            <button onClick={()=>alert("Feature Coming Soon")}> My Bugets</button>
+                            <button onClick={()=>alert("Feature Coming Soon")}> My Groups</button>
                         </nav>
                     </div>
                     <div className="right-trans-details-conatiner">

@@ -43,13 +43,13 @@ function UserLandingPage() {
           <Route exact path="/user/transaction/:id/edit">
             <EditTransaction />
           </Route>
-{/* 
+
           <Route exact path="/user/groups">
             Group Place Holder
           </Route>
           <Route exact path="/user/budgets">
             Budget Place Holder
-          </Route> */}
+          </Route>
 
           <Route exact path="/user/cards">
             <ManageCards />
