@@ -50,7 +50,7 @@ function TransDetails({ stats, trans, transDetails }) {
 
     // ----- Components ------
     const friends = user && Object.values(user.friends).sort((a,b)=> {
-        if (a.las < b.las )return-1
+        if (a.last_name < b.last_name )return-1
         else return 1
     }).map(friend => {
         return (
