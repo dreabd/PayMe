@@ -102,7 +102,7 @@ function UserPage() {
 
   // if (!otherUser.id && loading && !user.id) history.push('/user')
 
-  if (loading && id == user.id) {
+  if (loading && id == user.id && userTransactions) {
     return (
       <TransDetails stats={userTransactionStats} trans={Object.values(userTransactions)} transDetails={userTransactionDetails} />
     )
