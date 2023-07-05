@@ -4,4 +4,6 @@ from .categories import Category
 from .transactions import Transaction
 from .cards import Card
 from .friends import Friend
+from .memberships import Membership
+from .groups import Group
 from .db import environment, SCHEMA

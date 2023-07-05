@@ -4,7 +4,6 @@ from sqlalchemy import insert
 
 
 
-# Adds a demo user, you can add other users here if you want
 def seed_friends():
     friends_seed = [
         {"userA_id": 1, "userB_id": 6},

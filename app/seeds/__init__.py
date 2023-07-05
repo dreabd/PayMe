@@ -4,6 +4,8 @@ from .categories import seed_categories,undo_categories
 from .transactions import seed_transactions, undo_transactions
 from .card import seed_cards,undo_cards
 from .friends import seed_friends,undo_friends
+from .groups import seed_groups,undo_groups
+from .memberships import seed_memberships,undo_memberships
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -19,6 +21,8 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
+        undo_memberships()
+        undo_groups()
         undo_friends()
         undo_cards()
         undo_transactions()
@@ -29,12 +33,16 @@ def seed():
     seed_transactions()
     seed_cards()
     seed_friends()
+    seed_groups()
+    seed_memberships()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_memberships()
+    undo_groups()
     undo_friends()
     undo_cards()
     undo_transactions()
