@@ -5,5 +5,5 @@ from .transactions import Transaction
 from .cards import Card
 from .friends import Friend
 from .memberships import Membership
-from .groups import Group
+from .groups import Group,Membership
 from .db import environment, SCHEMA

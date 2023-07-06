@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .friends import Friend
+from .memberships import Membership
 from sqlalchemy import or_
 
 
@@ -28,6 +29,12 @@ class User(db.Model, UserMixin):
         secondaryjoin=or_(Friend.c.userA_id == id, Friend.c.userB_id == id),
         back_populates="friends",
         cascade="all, delete",
+    )
+
+    user_memberships = db.relationship(
+        "Group",
+        secondary=Membership,
+        back_populates="group_memberships"
     )
 
     @property

@@ -9,8 +9,20 @@ def seed_groups():
         owner_id = 1,
         name = "Best Group",
     )
+    group_2  = Group(
+        owner_id = 2,
+        name = "The Bitches",
+    )
+    group_3  = Group(
+        owner_id = 3,
+        name = "Foodies",
+    )
+    group_4  = Group(
+        owner_id = 1,
+        name = "Vacayyyy",
+    )
 
-    group_list = [group_1]
+    group_list = [group_1,group_2,group_3,group_4,]
     [db.session.add(group) for group in group_list]
     db.session.commit()
 
