@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import "./Dropdown.css";

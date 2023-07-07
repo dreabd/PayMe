@@ -8,21 +8,31 @@ def seed_groups():
     group_1  = Group(
         owner_id = 1,
         name = "Best Group",
+        isPublic = True
     )
     group_2  = Group(
         owner_id = 2,
         name = "The Bitches",
+        isPublic = True
+
     )
     group_3  = Group(
         owner_id = 3,
         name = "Foodies",
+        isPublic = True
     )
     group_4  = Group(
         owner_id = 1,
         name = "Vacayyyy",
+        isPublic = False
+    )
+    group_5  = Group(
+        owner_id = 13,
+        name = "Loners",
+        isPublic = False
     )
 
-    group_list = [group_1,group_2,group_3,group_4,]
+    group_list = [group_1,group_2,group_3,group_4,group_5]
     [db.session.add(group) for group in group_list]
     db.session.commit()
 

@@ -45,7 +45,7 @@ function UserPage() {
       isLoading(true)
     }, 500)
     // if it is the user then dispatch a thunk that gets all the user's completed transaction \
-    if (id == user.id) {
+    if (id === user.id) {
       return dispatch(getUserTransactionsDetailsThunk(id, true, false))
     }
     // if it is a friend dipatch a thunk that gets the friends' public trans and trans between the user and the friend
@@ -75,7 +75,7 @@ function UserPage() {
     }
     else {
       const { error } = await res.json()
-      console.log("an error occured")
+      console.log(error)
     }
   }
 
@@ -91,7 +91,7 @@ function UserPage() {
     }
     else {
       const { error } = await res.json()
-      console.log("an error occured")
+      console.log(error)
     }
 
   }
@@ -102,7 +102,7 @@ function UserPage() {
 
   // if (!otherUser.id && loading && !user.id) history.push('/user')
 
-  if (loading && id == user.id && userTransactions) {
+  if (loading && id === user.id && userTransactions) {
     return (
       <TransDetails stats={userTransactionStats} trans={Object.values(userTransactions)} transDetails={userTransactionDetails} />
     )

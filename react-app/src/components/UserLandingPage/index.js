@@ -13,7 +13,7 @@ import CardForm from "./components/CardForm";
 import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
 import UserPage from "./components/UserPage";
-import ChartData from "./components/UserPage/ChartData";
+import Groups from "./components/Groups";
 
 import "./UserLandingPage.css"
 
@@ -45,7 +45,7 @@ function UserLandingPage() {
           </Route>
 
           <Route exact path="/user/groups">
-            Group Place Holder
+            <Groups/>
           </Route>
           <Route exact path="/user/budgets">
             Budget Place Holder

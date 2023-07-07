@@ -20,7 +20,7 @@ function Navigation({ userLoad, setUserLoad }) {
   useEffect(() => {
     setUserLoad(false)
     dispatch(authenticate())
-  }, [userLoad])
+  }, [dispatch,userLoad])
 
   const payRequestRouting = e => {
     history.push("/user/transaction")

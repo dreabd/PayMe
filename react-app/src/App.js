@@ -8,7 +8,6 @@ import { authenticate } from "./store/session";
 // import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import UserLandingPage from "./components/UserLandingPage";
-import AboutMe from "./components/AboutMe";
 import "./index.css"
 
 function App() {

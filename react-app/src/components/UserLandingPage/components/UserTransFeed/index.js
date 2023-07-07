@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicTransactionsThunk, getUserTransactionsThunk } from "../../../../store/transactions";
 import "./UserTransFeed.css"
-import { NavLink } from "react-router-dom";
 
 // import Loading from "../Loading";
 import { TransCard } from "./TransCard";
@@ -29,14 +28,6 @@ function UserTransFeed() {
   }, [dispatch])
 
   // ----------Helper Functions----------
-
-  const formatDate = (dateString) => {
-    if (!dateString) return;
-    const date = new Date(dateString)
-    return date.toLocaleString();
-  }
-
-
   const allTransactionsContainer = allTransactions && TransCard(Object.values(allTransactions),user.id)
 
   const togglePersonal = () => {

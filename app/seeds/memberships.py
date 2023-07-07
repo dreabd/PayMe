@@ -32,6 +32,10 @@ def seed_memberships():
         {"user_id":3, "group_id":4},
         {"user_id":4, "group_id":4},
         {"user_id":5, "group_id":4},
+        {"user_id":13, "group_id":5},
+        {"user_id":14, "group_id":5},
+        {"user_id":15, "group_id":5},
+        # {"user_id":13, "group_id":5},
     ]
 
     for membership_data in memberships_seed:

@@ -58,7 +58,9 @@ class User(db.Model, UserMixin):
             "username": self.username,
             "email": self.email,
             "cards": [card.to_dict() for card in self.card],
-            'friends':[friend.friend_dict() for friend in self.friends if self.id != friend.id]
+            'friends':[friend.friend_dict() for friend in self.friends if self.id != friend.id],
+            'groups': [group.one_dict() for group in self.user_memberships],
+            "my_groups":[group.to_dict() for group in self.user_memberships if group.owner_id == self.id]
         }
 
     def trans_dict(self):

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import { TransCard } from "../UserTransFeed/TransCard";
