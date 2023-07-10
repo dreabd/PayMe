@@ -1,8 +1,10 @@
-from flask import Blueprint, jsonify,session,request
+from flask import Blueprint,request
 from flask_login import current_user, login_required
 from app.models import db,Group,Membership,Transaction,User
 from sqlalchemy import insert
-from ..forms.group_form import GroupForm 
+from ..forms.group_form import GroupForm,GroupEditForm
+from sqlalchemy import insert,delete,or_
+
 
 group_routes = Blueprint('groups', __name__)
 
@@ -40,7 +42,7 @@ def post_new_group():
         data = form.data 
 
         new_group = Group(
-            owner_id = current_user.id,
+            owner_id = data["owner_id"],
             name=data["name"],
             isPublic=data["isPublic"]
         )
@@ -170,10 +172,10 @@ def post_new_membership(id):
     if user.id in members_id:
         return {"errors":"User already added"},401
     
-    friends_id = [friends["id"]for friends in current_user.to_dict()["friends"]]
+    Memberships_id = [Memberships["id"]for Memberships in current_user.to_dict()["Memberships"]]
     
-    if user.id not in friends_id:
-        return {"errors":"Unauthorized, Owner must be friends with all prospective members"},401
+    if user.id not in Memberships_id:
+        return {"errors":"Unauthorized, Owner must be Memberships with all prospective members"},401
 
     membership = insert(Membership).values(user_id=user.id, group_id=group.id)
     db.session.execute(membership)
@@ -183,7 +185,42 @@ def post_new_membership(id):
 
 
 # -------- DELETE MEMBERSHIP ROUTE --------
+@group_routes.route("/<int:id>/members", methods=["DELETE"])
+@login_required
+def delete_member(id):
+    '''
+    Anyone could leave the group but OWNER CAN NOT REMOVE THEMSELVES FROM THE GROUP ( Would need to transfer ownership)
+    When current user wants to leave a group: 
+        - Get the current user's id
+        - Check if they are the owner or if they are a part of the group
+        - will be removed from the group
+    '''
 
+    group = Group.query.get(id)
+
+    if group is None: 
+        return {"errors": "Group Not Found"},404
+    
+    if group.owner_id == current_user.id:
+        return {"errors":"Unauthorized, Need to transfer ownership before leaving"},401
+    
+    members_id = [members["id"]for members in group.to_dict()["members"]]
+
+    if current_user.id not in members_id:
+        return {"errors": "User Not Found in Group"},404
+    
+    delete_query = delete(Membership).where(
+    ((Membership.c.user_id == current_user.id) & (Membership.c.group_id == group.id)))
+
+    db.session.execute(delete_query)
+
+    db.session.commit()
+
+    return {"message": "Succesfully Deleted"},200
+
+
+    
+    
 
 # -------- PUT GROUP ROUTE --------
 @group_routes.route('/<int:id>',methods=["PUT"])
@@ -191,7 +228,7 @@ def post_new_membership(id):
 def put_group(id):
     '''
     ONLY THE OWNER CAN EDIT THE NAME / ISPUBLIC OF THE GROUP
-    if the user is the owne then the group will be adjust accordingly
+    if the user is the owner then the group will be adjust accordingly
     '''
 
     updated_group = Group.query.get(id)
@@ -202,7 +239,7 @@ def put_group(id):
     if updated_group.owner_id != current_user.id:
         return {"errors":"Unauthorized"},400
     
-    form = GroupForm()
+    form = GroupEditForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
 
@@ -213,6 +250,8 @@ def put_group(id):
             updated_group.name = data["name"]
         if data["isPublic"]:
             updated_group.isPublic = data["isPublic"]
+        if data["owner_id"]:
+            updated_group.owner_id = data["owner_id"]
 
         db.session.commit()
         return{"group": updated_group.to_dict()}
