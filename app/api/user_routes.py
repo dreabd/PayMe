@@ -4,7 +4,7 @@ from app.models import User,Transaction
 
 user_routes = Blueprint('users', __name__)
 
-
+# -------- GET ALL ROUTE --------
 @user_routes.route('/')
 @login_required
 def users():
@@ -14,7 +14,7 @@ def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
 
-
+# -------- GET SINGLE ROUTE --------
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):
@@ -25,6 +25,7 @@ def user(id):
 
     return user.to_dict()
 
+# -------- GET SINGLE ROUTE --------
 @user_routes.route('/<int:id>/transactions')
 @login_required
 def get_user_transactions(id):
@@ -137,7 +138,7 @@ def get_user_transactions(id):
         friend_trans = filter(lambda x: (x["payer_id"] == current_user.id or x["requester_id"] == current_user.id), user_transaction)
         friend_transaction = list(friend_trans)
 
-        print("friend_transaction..............................😀", friend_transaction )
+        # print("friend_transaction..............................😀", friend_transaction )
 
         user = user.to_dict()
         del user["cards"]

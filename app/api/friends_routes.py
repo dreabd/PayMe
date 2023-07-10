@@ -5,6 +5,7 @@ from sqlalchemy import insert,delete,or_
 
 friend_routes = Blueprint('friends', __name__)
 
+# -------- POST ROUTE --------
 @friend_routes.route("/<int:id>",methods=["POST"])
 @login_required
 def post_new_friend(id):
@@ -36,7 +37,7 @@ def post_new_friend(id):
 
     return {"res":new_friend.friend_dict()}
 
-
+# -------- DELETE ROUTE --------
 @friend_routes.route("/<int:id>",methods=["DELETE"])
 @login_required
 def delete_user_friend(id):

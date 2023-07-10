@@ -23,7 +23,6 @@ class Group(db.Model):
         "User",
         secondary=Membership,
         back_populates="user_memberships",
-        cascade="all, delete",
     )
 
     def to_dict(self):

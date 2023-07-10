@@ -6,6 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 card_routes = Blueprint("cards", __name__)
 
+# -------- GET ALL ROUTE --------
 @card_routes.route("/user")
 @login_required
 def get_all_user_cards():
@@ -18,7 +19,7 @@ def get_all_user_cards():
     cards = Card.query.all()
     return {"cards": res}
 
-
+# -------- POST ROUTE --------
 @card_routes.route("/new",methods=["POST"])
 @login_required
 def post_new_card():
@@ -53,6 +54,7 @@ def post_new_card():
         print("There were some form errors", form.errors)
         return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
 
+# -------- GET SINGLE ROUTE --------
 @card_routes.route("/<int:id>")
 @login_required
 def get_single_card(id):
@@ -65,6 +67,7 @@ def get_single_card(id):
 
     return {"card": single_card.to_dict()}
 
+# -------- PUT ROUTE --------
 @card_routes.route("/<int:id>",methods=["PUT"])
 @login_required
 def update_card(id):
@@ -97,11 +100,9 @@ def update_card(id):
         return {"card": updated_card.to_dict()}
     if form.errors:
         print("There were some errors")
-        return{"errors":form.errors},400,
+        return{"errors":form.errors},400
 
-
-    pass
-
+# -------- DELETE ROUTE --------
 @card_routes.route("/<int:id>",methods=["DELETE"])
 @login_required
 def delete_card(id):

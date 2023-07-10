@@ -17,6 +17,7 @@ function TransDetails({ stats, trans, transDetails }) {
     const [balDisp, setBalDisp] = useState(false)
     const [allTrans, setAllTrans] = useState(true)
     const [friendsDisp, setFriendsDisp] = useState(false)
+    const [groupsDisp, setGroupsDisp] = useState(false)
 
     // ----- Button Logic for Displaying -----
     const onCatDispClick = (e) => {
@@ -24,6 +25,7 @@ function TransDetails({ stats, trans, transDetails }) {
         setBalDisp(false)
         setAllTrans(false)
         setFriendsDisp(false)
+        setGroupsDisp(false)
 
     }
     const balDispClick = (e) => {
@@ -31,6 +33,7 @@ function TransDetails({ stats, trans, transDetails }) {
         setBalDisp(true)
         setAllTrans(false)
         setFriendsDisp(false)
+        setGroupsDisp(false)
 
     }
     const allTransClick = (e) => {
@@ -38,6 +41,7 @@ function TransDetails({ stats, trans, transDetails }) {
         setBalDisp(false)
         setAllTrans(true)
         setFriendsDisp(false)
+        setGroupsDisp(false)
 
     }
     const friendsDispClick = e => {
@@ -45,11 +49,20 @@ function TransDetails({ stats, trans, transDetails }) {
         setBalDisp(false)
         setAllTrans(false)
         setFriendsDisp(true)
+        setGroupsDisp(false)
+    }
+
+    const groupsDispClick = e => {
+        setCatDisp(false)
+        setBalDisp(false)
+        setAllTrans(false)
+        setFriendsDisp(false)
+        setGroupsDisp(true)
     }
 
     // ----- Components ------
-    const friends = user && Object.values(user.friends).sort((a,b)=> {
-        if (a.las < b.las )return-1
+    const friends = user && Object.values(user.friends).sort((a, b) => {
+        if (a.last_name < b.last_name) return -1
         else return 1
     }).map(friend => {
         return (
@@ -58,7 +71,18 @@ function TransDetails({ stats, trans, transDetails }) {
             </li>
         )
     })
-    console.log(user.friends)
+    // console.log(user.friends)
+
+    const groups = user && Object.values(user.my_groups).sort((a, b) => {
+        if (a.name < b.name) return -1
+        else return 1
+    }).map(group => {
+        return (
+            <li style={{ "listStyleType": "none" }}>
+                <NavLink className="navlink important-navlinks" to={`/user/groups/${group.id}`}>{group.name}</NavLink>
+            </li>
+        )
+    })
 
     let color = stats && stats.money_total < 0 ? " #d81159" : "#008cff"
     if (!stats || !trans || !transDetails) return (<h4 className="trans-feed-container">Loading.....</h4>)
@@ -82,8 +106,8 @@ function TransDetails({ stats, trans, transDetails }) {
                             <button onClick={onCatDispClick}>Categories</button>
                             <button onClick={allTransClick}>Your Transactions</button>
                             <button onClick={friendsDispClick}> My Friends</button>
-                            <button onClick={()=>alert("Feature Coming Soon")}> My Bugets</button>
-                            <button onClick={()=>alert("Feature Coming Soon")}> My Groups</button>
+                            <button onClick={() => alert("Feature Coming Soon")}> My Bugets</button>
+                            <button onClick={groupsDispClick}> My Groups</button>
                         </nav>
                     </div>
                     <div className="right-trans-details-conatiner">
@@ -111,6 +135,13 @@ function TransDetails({ stats, trans, transDetails }) {
                                 {friends}
                             </ul> :
                             "No Friends...")
+                        }
+                        {groupsDisp && (groups.length ?
+                            <ul className="groups-list">
+                                {groups}
+                            </ul>:
+                            "No Groups...")
+
                         }
                         <div className="chart-trans-details-contianer">
                             {catDisp && <PieData transDetails={transDetails} />}

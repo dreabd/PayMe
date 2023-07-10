@@ -47,6 +47,10 @@ function UserLandingPage() {
           <Route exact path="/user/groups">
             <Groups/>
           </Route>
+          <Route exact path="/user/groups/:id">
+            Woop
+          </Route>
+
           <Route exact path="/user/budgets">
             Budget Place Holder
           </Route>
