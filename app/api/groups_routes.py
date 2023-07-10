@@ -219,9 +219,6 @@ def delete_member(id):
     return {"message": "Succesfully Deleted"},200
 
 
-    
-    
-
 # -------- PUT GROUP ROUTE --------
 @group_routes.route('/<int:id>',methods=["PUT"])
 @login_required
