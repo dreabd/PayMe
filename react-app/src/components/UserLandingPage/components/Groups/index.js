@@ -1,27 +1,41 @@
 import React from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { getAllGroupsThunk } from "../../../../store/groups";
 
 import GroupCard from "./components/helpers/GroupCard";
 
-function Groups(){
+function Groups() {
     const dispatch = useDispatch()
     const groups = useSelector(state => state.group.allGroups)
 
     const user = useSelector(state => state.session.user)
 
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllGroupsThunk())
-    },[dispatch])
+    }, [dispatch])
 
 
     return (
         <div>
-            <h2>Public Groups</h2>
-            {Object.values(groups).length && GroupCard(groups,user)}
+            <div className="public-groups-container">
+                <h2>Public Groups</h2>
+                {Object.values(groups).length && GroupCard(groups, user)}
+            </div>
+
+            <div className="user-groups-container">
+                <h2>My Groups</h2>
+                {Object.values(user).length ? GroupCard(Object.values(user.groups), user) : null}
+            </div>
+
+
+            <div>
+                <button>
+                    <i class="fa-solid fa-plus"></i>Create Your Own Group
+                </button>
+            </div>
         </div>
     )
 }

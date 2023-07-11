@@ -76,9 +76,9 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
       formData.append("money", money)
       formData.append("category_id", category)
 
-      // for (let key of formData.entries()) {
-      //   console.log(key[0] + ' ----> ' + key[1])
-      // }
+      for (let key of formData.entries()) {
+        console.log(key[0] + ' ----> ' + key[1])
+      }
 
       if (request) {
         const data = await dispatch(postReqTransactionsThunk(formData))

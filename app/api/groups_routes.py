@@ -181,7 +181,7 @@ def post_new_membership(id):
     db.session.execute(membership)
     db.session.commit()
 
-    return {"message":"Sucessfully Added"},200
+    return {"message":"Sucessfully Added","newMember":user.to_dict()},200
 
 
 # -------- DELETE MEMBERSHIP ROUTE --------

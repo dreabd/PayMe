@@ -22,8 +22,9 @@ function ManageCards() {
     // console.log("stuf...............", last_four)
     if (card.bank_name === "AMEX") {
       return (
-        <div onClick={()=> history.push(`/user/card/${card.id}`)}key={card.id} className="card-info-container">
-          <NavLink className="navlink" to={`/user/card/${card.id}`}>
+        <div onClick={() => history.push(`/user/card/${card.id}`)} key={card.id} className="card-info-container">
+          {/* <NavLink className="navlink" to={`/user/card/${card.id}`}> */}
+          <div>
             <div className="card-info-top">
               <p>{card.bank_name}</p>
             </div>
@@ -31,13 +32,16 @@ function ManageCards() {
               <span>credit</span>
               <p>&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022; {last_five}</p>
             </div>
-          </NavLink>
+
+          </div>
+          {/* </NavLink> */}
         </div>
       )
     }
     return (
-      <div onClick={()=> history.push(`/user/card/${card.id}`)}key={card.id} className="card-info-container">
-        <NavLink className="navlink" to={`/user/card/${card.id}`}>
+      <div onClick={() => history.push(`/user/card/${card.id}`)} key={card.id} className="card-info-container">
+        {/* <NavLink className="navlink" to={`/user/card/${card.id}`}> */}
+        <div>
           <div className="card-info-top">
             <p>{card.bank_name}</p>
           </div>
@@ -46,7 +50,9 @@ function ManageCards() {
             <span>credit</span>
             <p>&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; {last_four}</p>
           </div>
-        </NavLink>
+
+        </div>
+        {/* </NavLink> */}
       </div >
     )
   })
@@ -59,10 +65,10 @@ function ManageCards() {
     <>
       <div className="manage-payment-container">
         <h2>Payment Methods</h2>
-        {cards ? cards.length?<div className="all-user-card-container">{cards}</div> :null : <h3>Loading...</h3>}
+        {cards ? cards.length ? <div className="all-user-card-container">{cards}</div> : null : <h3>Loading...</h3>}
 
-        <button  onClick={addCardRedirect} className="add-card-button">
-          <span  onClick={addCardRedirect} >+</span> Add a Card
+        <button onClick={addCardRedirect} className="add-card-button">
+          <span onClick={addCardRedirect} >+</span> Add a Card
         </button>
       </div>
 

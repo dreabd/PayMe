@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useHistory,useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useState } from "react"
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min"
 
-import { getAllUsersThunk } from "../../../../../../store/session"
 
 import { useModal } from "../../../../../../context/Modal"
+
+import { getAllUsersThunk} from "../../../../../../store/session"
+import { getSingleGroupThunk,postGroupMember } from "../../../../../../store/groups"
 
 import "./AddMemberModal.css"
 
 const AddMemberModal = ({ members,group_id }) => {
     const dispatch = useDispatch()
-    const {id} = useParams()
     const { closeModal } = useModal();
 
     const [error,setError] = useState({})
@@ -24,16 +25,20 @@ const AddMemberModal = ({ members,group_id }) => {
         dispatch(getAllUsersThunk())
     }
 
-    const potential_members = Object.values(users).length &&
+    const member_id = members && Object.keys(members)
+
+
+    const potential_members = Object.values(users).length ?
         Object.values(users)
-            .filter(user => !members.includes(String(user.id)))
+            .filter(user => !member_id.includes(String(user.id)))
             .map(user => {
                 return (
                     <li className="potential-members-list"style={{listStyle:"none"}}>
-                        <span onClick={() => {addNewMember({"user_id":user.id})}}><i class="fa-sharp fa-solid fa-plus"></i></span><p>{user.first_name} {user.last_name}</p> 
+                        <span onClick={() => {addNewMember({"user_id":user.id})}}><i class="fa-sharp fa-solid fa-plus"></i></span><p>{user.first_name} {user.last_name}</p>
                     </li>
                 )
             })
+        : null
 
     
 
@@ -46,6 +51,9 @@ const AddMemberModal = ({ members,group_id }) => {
         })
 
         if(res.ok){
+            const {newMember} = await res.json()
+            dispatch(postGroupMember(newMember))
+            dispatch(getSingleGroupThunk(group_id))
             closeModal()
         }
         else{

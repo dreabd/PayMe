@@ -46,6 +46,7 @@ function UserLandingPage() {
           </Route>
 
           <Route exact path="/user/groups">
+            {console.log("woop")}
             <Groups/>
           </Route>
           <Route exact path="/user/groups/:id">

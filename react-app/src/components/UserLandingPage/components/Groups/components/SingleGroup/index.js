@@ -8,7 +8,7 @@ import { GroupTransCard } from "../../../UserTransFeed/TransCard"
 
 import OpenModalButton from "../../../../../OpenModalButton";
 import AddMemberModal from "../AddMemberModal";
-
+import LeaveGroupModal from "../LeaveGroupModal";
 import './SingleGroup.css'
 
 function GroupPage() {
@@ -19,7 +19,8 @@ function GroupPage() {
     // ----------------- State Variable  -----------------
     const [showMenu, setShowMenu] = useState(false);
     const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [updated, setUpdated] = useState(false)
 
 
     // ----------------- Use Selectors -----------------
@@ -33,12 +34,12 @@ function GroupPage() {
 
     // ----------------- Use Effects -----------------
     useEffect(async () => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000);
+        setTimeout(()=>{
+            setLoading(true)
+        },1000)
         let group = await dispatch(getSingleGroupThunk(id))
         group && setErrors({ group })
-    }, [id, dispatch])
+    }, [id, dispatch, updated])
 
     useEffect(() => {
         if (!showMenu) return;
@@ -58,7 +59,7 @@ function GroupPage() {
         setShowMenu(true);
     };
 
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+    const ulClassName = "setting-dropdown" + (showMenu ? "" : " hidden");
 
     if (Object.values(errors).length) {
         history.push("/user/groups")
@@ -67,7 +68,7 @@ function GroupPage() {
     const member_id = members && Object.keys(members)
 
 
-    if (loading && !Object.values(singleGroup).length) return (<h4 className="trans-feed-container">Loading...</h4>)
+    if (!loading ) return (<h4 className="trans-feed-container">Loading...</h4>)
 
     return (
         <div className="trans-feed-container">
@@ -77,19 +78,45 @@ function GroupPage() {
                     <p className="username">
                         Owner: {singleGroup.owner_id?.first_name} {singleGroup.owner_id?.last_name}
                     </p>
-                    <button className="members-button" onClick={openMenu}>
-                        <i className="fas fa-user-circle" /> {singleGroup.memberCount} Members
+                    <button className="members-button" style={{ cursor: "auto" }}>
+                        <i className="fas fa-user-circle" />{singleGroup.memberCount} Members
                     </button>
-                    <ul className={ulClassName} >
+
+                </div>
+                {singleGroup.owner_id.id === user.id ?
+                    <div className="group-settings-container">
+                        <i onClick={openMenu} class="fa-solid fa-ellipsis"></i>
+                        <ul className={ulClassName}>
+                            <li>Update</li>
+                            <li>Delete</li>
+                        </ul>
+                    </div> 
+                    : null}
+
+            </div>
+            <div style={{ justifyContent: "space-between" }} className="trans-details-container">
+                {
+                    member_id.includes(String(user.id)) ?
+                        <div className="all-trans-container">
+                            {Object.values(groupTransactions).length ? GroupTransCard(Object.values(groupTransactions), user.id) : "No Transactions"}
+                        </div>
+                        :
+                        <div>
+                            Only Members Could View Transacitons
+                        </div>
+                }
+                <div className="member-container">
+                    <p>Members</p>
+                    <ul >
                         {
                             Object.values(singleGroup).length &&
-                            Object.values(singleGroup.members).map(member => {
+                            Object.values(members).map(member => {
                                 return (
                                     <li>
                                         <NavLink
                                             className="navlink important-navlinks"
                                             to={`/user/${member.id}`}>
-                                            {member.id === singleGroup.owner_id.id && "*"}{member.id === user.id ? "You": <span>{member.first_name} {member.last_name}</span>}
+                                            {member.id === singleGroup.owner_id.id && "*"}{member.id === user.id ? "You" : <span>{member.first_name} {member.last_name}</span>}
                                         </NavLink>
                                     </li>
                                 )
@@ -99,27 +126,26 @@ function GroupPage() {
                             <li className="add-member-container">
                                 <OpenModalButton
                                     buttonText={<span><i class="fa-sharp fa-solid fa-plus"></i> Add Member</span>}
-                                    modalComponent={<AddMemberModal members={member_id} group_id={id} />}
-                                    className="members-button"
+                                    modalComponent={<AddMemberModal members={members} group_id={id} />}
+                                />
+                            </li>
+                        }
+                        {
+                            member_id.includes(String(user.id)) && user.id !== singleGroup.owner_id.id &&
+
+                            <li className="leave-group-container">
+                                <OpenModalButton
+                                    buttonText="Leave Group"
+                                    modalComponent={<LeaveGroupModal setUpdated={setUpdated} group={singleGroup} />}
                                 />
                             </li>
                         }
                     </ul>
                 </div>
 
-
-
-
             </div>
 
-            {
-                member_id.includes(String(user.id)) ?
-                    <div className="all-trans-container">
-                        {Object.values(groupTransactions).length && GroupTransCard(Object.values(groupTransactions), user.id)}
-                    </div>
-                    :
-                    "Must be Member to View "
-            }
+
         </div>
     )
 }

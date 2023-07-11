@@ -292,7 +292,6 @@ const initialState = {
   userTransactions: {
     details: {
       stats: {},
-
       category: {}
     },
     completed: {},

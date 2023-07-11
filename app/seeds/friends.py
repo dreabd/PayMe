@@ -25,6 +25,9 @@ def seed_friends():
         {"userA_id": 4, "userB_id": 6},
         {"userA_id": 1, "userB_id": 3},
         {"userA_id": 1, "userB_id": 5},
+        {"userA_id": 1, "userB_id": 13},
+        {"userA_id": 1, "userB_id": 14},
+        {"userA_id": 1, "userB_id": 15},
     ]
 
     for friend_data in friends_seed:
