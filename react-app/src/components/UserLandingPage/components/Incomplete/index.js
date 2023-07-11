@@ -85,7 +85,7 @@ function Incomplete({ setUserLoad }) {
   // console.log(incompleteTransactions)
 
 
-  if (!user) return <Redirect exact to="/user" />
+  if (!user) return <Redirect to="/user" />
   return (
     <div className="all-trans-container">
       <h1>I am incomplete :c</h1>

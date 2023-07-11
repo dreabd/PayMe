@@ -73,16 +73,17 @@ function TransDetails({ stats, trans, transDetails }) {
     })
     // console.log(user.friends)
 
-    const groups = user && Object.values(user.my_groups).sort((a, b) => {
+    const groups = user && Object.values(user.groups).sort((a, b) => {
         if (a.name < b.name) return -1
         else return 1
     }).map(group => {
         return (
             <li style={{ "listStyleType": "none" }}>
-                <NavLink className="navlink important-navlinks" to={`/user/groups/${group.id}`}>{group.name}</NavLink>
+                <NavLink className="navlink important-navlinks" to={`/user/groups/${group.id}`}>{group.owner_id.id === user.id && "*"}{group.name}</NavLink>
             </li>
         )
     })
+
 
     let color = stats && stats.money_total < 0 ? " #d81159" : "#008cff"
     if (!stats || !trans || !transDetails) return (<h4 className="trans-feed-container">Loading.....</h4>)

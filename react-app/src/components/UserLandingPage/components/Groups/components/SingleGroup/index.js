@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { getSingleGroupThunk } from "../../../../../../store/groups";
@@ -15,7 +15,6 @@ function GroupPage() {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-    const ulRef = useRef();
 
     // ----------------- State Variable  -----------------
     const [showMenu, setShowMenu] = useState(false);
@@ -67,7 +66,6 @@ function GroupPage() {
 
     const member_id = members && Object.keys(members)
 
-    console.log(member_id)
 
     if (loading && !Object.values(singleGroup).length) return (<h4 className="trans-feed-container">Loading...</h4>)
 
@@ -101,7 +99,7 @@ function GroupPage() {
                             <li className="add-member-container">
                                 <OpenModalButton
                                     buttonText={<span><i class="fa-sharp fa-solid fa-plus"></i> Add Member</span>}
-                                    modalComponent={<AddMemberModal />}
+                                    modalComponent={<AddMemberModal members={member_id} group_id={id} />}
                                     className="members-button"
                                 />
                             </li>

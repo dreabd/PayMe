@@ -16,6 +16,7 @@ function UserTransFeed() {
 
   // ---------State Variables---------
   const [personal, setPersonal] = useState(false)
+  const [isPublic, setIsPublic] = useState(true)
   const [loading, setLoading] = useState(true)
 
   // --------- Use Effect---------
@@ -28,16 +29,25 @@ function UserTransFeed() {
   }, [dispatch])
 
   // ----------Helper Functions----------
-  const allTransactionsContainer = allTransactions && TransCard(Object.values(allTransactions),user.id)
+  const allTransactionsContainer = allTransactions && TransCard(Object.values(allTransactions), user.id)
 
   const togglePersonal = () => {
-    setPersonal(!personal)
+    setPersonal(true)
+    setIsPublic(false)
   }
 
-  const userTransactionsContainer = userTransactions && TransCard(Object.values(userTransactions),user.id)
+  const toggglePublic = () => {
+    setPersonal(false)
+    setIsPublic(true)
+  }
+
+  const publicClassName = "toggle-button" + (personal ? " " : " current");
+  const personClassName = "toggle-button" + (isPublic ? " " : " current");
+
+  const userTransactionsContainer = userTransactions && TransCard(Object.values(userTransactions), user.id)
 
   if (loading) {
-    return(
+    return (
       <h4 className="trans-feed-container">
         Loading...
       </h4>
@@ -45,11 +55,16 @@ function UserTransFeed() {
     // return(<Loading/>)
   }
 
+
+
   return (
     <div className="trans-feed-container">
-      <button className="toggle-button" onClick={togglePersonal}>
-        {personal ? "Checkout All Transactions" : "Checkout Your Transactions"}
-      </button>
+
+      <div className="toggle-button-container">
+        <button className={publicClassName} onClick={toggglePublic}><i class="fa-solid fa-globe"></i></button>
+        <button className={personClassName} onClick={togglePersonal}><i class="fa-solid fa-user"></i></button>
+      </div>
+
 
       <div className="all-trans-container">
         <h3>{!personal ? "All Transactions" : "Personal Transactions"}</h3>

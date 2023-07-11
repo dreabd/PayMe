@@ -172,10 +172,10 @@ def post_new_membership(id):
     if user.id in members_id:
         return {"errors":"User already added"},401
     
-    Memberships_id = [Memberships["id"]for Memberships in current_user.to_dict()["Memberships"]]
+    friend_id = [friends["id"]for friends in current_user.to_dict()["friends"]]
     
-    if user.id not in Memberships_id:
-        return {"errors":"Unauthorized, Owner must be Memberships with all prospective members"},401
+    if user.id not in friend_id:
+        return {"errors":"Unauthorized, Owner must be friends with all prospective members"},401
 
     membership = insert(Membership).values(user_id=user.id, group_id=group.id)
     db.session.execute(membership)

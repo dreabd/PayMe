@@ -19,6 +19,7 @@ function UserPage() {
   const [friend, isFriend] = useState(false)
   const [between, setBetween] = useState(false)
   const [loading, isLoading] = useState(false)
+  const [error,setErrors] = useState({})
 
 
   // -----------------Use Selectors------------------
@@ -40,25 +41,30 @@ function UserPage() {
   // console.log(Number(id) in user_friends)
   // console.log(user_friends)
 
-  useEffect(() => {
-    setTimeout(() => {
+  useEffect(async () => {
+    const timer =setTimeout(() => {
       isLoading(true)
     }, 1200)
     // if it is the user then dispatch a thunk that gets all the user's completed transaction \
     if (id == user.id) {
-      return dispatch(getUserTransactionsDetailsThunk(id, true, false))
+      let user = await dispatch(getUserTransactionsDetailsThunk(id, true, false))
+      user && setErrors({user})
+      return
     }
     // if it is a friend dipatch a thunk that gets the friends' public trans and trans between the user and the friend
     if (user_friends.includes(Number(id))) {
       // console.log("friend....................")
-      dispatch(getUserTransactionsDetailsThunk(id, false, true))
+      let user = await dispatch(getUserTransactionsDetailsThunk(id, false, true))
+      user && setErrors({user})
       isFriend(true)
       return
     }
     // if it is a random person just show transactions that are public
     else {
       // console.log("Not friend....................")
-      return dispatch(getUserTransactionsDetailsThunk(id, false, false))
+      let user = await dispatch(getUserTransactionsDetailsThunk(id, false, false))
+      user && setErrors({user})
+      return 
     }
   }, [dispatch, id,loading])
 
@@ -77,6 +83,7 @@ function UserPage() {
       const { error } = await res.json()
       console.log(error)
     }
+
   }
 
   const removeFriend = async e => {
@@ -106,7 +113,8 @@ function UserPage() {
     )
   }
   
-  if ((!otherUser.id || !user.id) && loading) {
+  // THERE IS A BUG HERE
+  if (Object.values(error).length) {
     history.push('/user')
   }
 

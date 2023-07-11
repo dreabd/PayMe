@@ -176,6 +176,9 @@ export const getUserTransactionsDetailsThunk = (id, user, friend) => async dispa
       dispatch(getOtherUsers(user))
       return
     }
+  } else{
+    const {error} = await res.json()
+    return error
   }
 }
 

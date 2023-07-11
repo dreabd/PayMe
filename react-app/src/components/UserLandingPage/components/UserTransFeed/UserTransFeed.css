@@ -10,13 +10,28 @@
   align-items: center;
   width: 30%;
   border-radius: 20px;
-  margin: 2rem 2rem;
+  margin: 4px 10px;
 }
 .button-containers{
   width: 5rem;
   min-width: 11%;
   padding: 0rem 1rem ;
-  /* max-width: 70%; */
+  max-width: 70%;
+}
+
+.toggle-button-container{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #00000033;
+  border-radius: 1150px;
+  gap: none;
+  margin-top: 1rem;
+}
+
+
+.current{
+  background-color:#049d6f;
+  color: white;
 }
 
 .all-trans-container {

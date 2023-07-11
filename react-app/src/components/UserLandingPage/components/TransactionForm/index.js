@@ -76,9 +76,9 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
       formData.append("money", money)
       formData.append("category_id", category)
 
-      for (let key of formData.entries()) {
-        console.log(key[0] + ' ----> ' + key[1])
-      }
+      // for (let key of formData.entries()) {
+      //   console.log(key[0] + ' ----> ' + key[1])
+      // }
 
       if (request) {
         const data = await dispatch(postReqTransactionsThunk(formData))
@@ -90,15 +90,12 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
         setUserLoad(true)
         const data = await dispatch(postPayTransactionsThunk(formData))
         if (data) {
-          console.log(data)
+          // console.log(data)
           return setErrors(data)
         }
       }
     }
-    history.push("/users")
-
-
-
+    history.push("/user")
 
   }
 
@@ -143,7 +140,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const options = users && Object.values(users)
 
 
-  console.log(name)
+  // console.log(name)
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={!updated ? handleTransactionSubmit : updateTransaction}>
