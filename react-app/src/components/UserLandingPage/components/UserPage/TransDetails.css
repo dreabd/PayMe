@@ -10,9 +10,16 @@
   flex-direction: row;
   gap: 5rem;
   /* align-items: center; */
-  justify-content: center;
-  width:fit-content;
+  /* justify-content: center; */
+  width:80%;
   padding-top: 1rem;
+}
+.left-trans-details-container{
+  width: 20%;
+}
+
+.right-trans-details-conatiner{
+  width: 70%;
 }
 
 .trans-details-button-container {
@@ -20,7 +27,7 @@
   flex-direction: column;
   align-items: flex-start;
   /* justify-content: center; */
-  width: 100%;
+  width: 80%;
   /* height: 1%; */
   padding: none;
   background-color: #008cff14;

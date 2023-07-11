@@ -14,6 +14,7 @@ import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
 import UserPage from "./components/UserPage";
 import Groups from "./components/Groups";
+import GroupPage from "./components/Groups/components/SingleGroup";
 
 import "./UserLandingPage.css"
 
@@ -48,7 +49,7 @@ function UserLandingPage() {
             <Groups/>
           </Route>
           <Route exact path="/user/groups/:id">
-            Woop
+            <GroupPage/>
           </Route>
 
           <Route exact path="/user/budgets">

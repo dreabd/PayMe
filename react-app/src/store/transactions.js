@@ -10,6 +10,8 @@ const GET_USER_TRANSACTIONS_DETAILS = "transaction/getUserTransactionsDetails"
 const GET_FRIEND_TRANSACTIONS = "transaction/getFriendTransactions"
 const GET_OTHER_TRANSACTIONS = "transaction/getOtherTransactions"
 
+const GET_GROUP_TRANSACTIONS = 'transaction/getGroupTransactions'
+
 const POST_PAY_TRANSACTION = "transaction/postPayTransactions"
 const POST_REQ_TRANSACTION = "transaction/postReqTransactions"
 
@@ -58,6 +60,13 @@ const getOtherTransactions = (transactions,) => {
   return {
     type: GET_OTHER_TRANSACTIONS,
     transactions,
+  }
+}
+
+export const getGroupTransactions = (transactions) =>{
+  return { 
+    type: GET_GROUP_TRANSACTIONS,
+    transactions
   }
 }
 
@@ -288,6 +297,7 @@ const initialState = {
   },
   singleTransaction: {},
   friendTransactions: {},
+  groupTransactions:{}
 
 }
 //------------------------ Reducer -------------------------
@@ -315,8 +325,8 @@ const transactionReducer = (state = initialState, action) => {
         }
       }
     case GET_OTHER_TRANSACTIONS:
-
       return { ...state, userTransactions: { completed: { ...action.transactions } } }
+
     case GET_FRIEND_TRANSACTIONS:
       return {
         ...state,
@@ -329,7 +339,9 @@ const transactionReducer = (state = initialState, action) => {
           ...normalizeObj(action.friendTransactions)
         }
       }
-
+    
+    case GET_GROUP_TRANSACTIONS:
+      return{...state,groupTransactions:{...normalizeObj(action.transactions)}}
     case PUT_SINGLE_TRANSACTION:
       newState = { ...state }
       newState.userTransactions.incompleted[action.transaction.id] = action.transaction

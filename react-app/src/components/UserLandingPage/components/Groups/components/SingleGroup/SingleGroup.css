@@ -1,0 +1,54 @@
+.header-dropdown-button {
+  align-items: center;
+  border: none;
+  background: none;
+  display: flex;
+  height: 35px;
+  font-size: 16px;
+  justify-content: center;
+  padding: 10px;
+  top: 20px;
+  width: 80px;
+  /* margin-top: 5px; */
+}
+
+
+.hidden {
+  display: none;
+}
+
+.profile-dropdown {
+  position: absolute;
+  grid-gap: 10px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 10px;
+  list-style-type: none;
+  padding: 20px 20px 10px 20px;
+  position: absolute;
+  top: 105px;
+  /* right: 289px; */
+  /* left: 518px; */
+  background-color: white;
+  min-width: 1rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  /* max-height:15rem; */
+  /* overflow-y:scroll; */
+
+}
+
+.profile-dropdown.hidden {
+  display: none;
+}
+
+.add-member-container > *{
+  display: flex;
+  height: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

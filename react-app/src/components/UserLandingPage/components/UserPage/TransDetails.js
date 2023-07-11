@@ -87,68 +87,68 @@ function TransDetails({ stats, trans, transDetails }) {
     let color = stats && stats.money_total < 0 ? " #d81159" : "#008cff"
     if (!stats || !trans || !transDetails) return (<h4 className="trans-feed-container">Loading.....</h4>)
     return (
-        <div className="user-trans-details">
+
+        <div className="trans-feed-container ">
             {/* Here I want to show all of their transactions */}
             {/* If it is the user's peronsal page then want to show the budget / spending habits */}
-
-            <div className="trans-feed-container ">
-                <div className="other-user-info-container">
+            <div className="other-user-info-container">
+                <div>
                     <p>{user.first_name}, {user.last_name}</p>
                     <p className="username">
                         @{user.username}
                     </p>
                 </div>
+            </div>
 
-                <div className="trans-details-container">
-                    <div className="left-trans-details-container">
-                        <nav className="trans-details-button-container">
-                            <button onClick={balDispClick}>Balance Changes</button>
-                            <button onClick={onCatDispClick}>Categories</button>
-                            <button onClick={allTransClick}>Your Transactions</button>
-                            <button onClick={friendsDispClick}> My Friends</button>
-                            <button onClick={() => alert("Feature Coming Soon")}> My Bugets</button>
-                            <button onClick={groupsDispClick}> My Groups</button>
-                        </nav>
-                    </div>
-                    <div className="right-trans-details-conatiner">
-                        {(catDisp || balDisp) ?
-                            <div className="top-trans-details-container">
-                                <h3>{balDisp && "Balance Details"}</h3>
-                                <h3>{catDisp && "Catgeory Details"}</h3>
-                            </div>
-                            : null
-                        }
-                        {balDisp &&
-                            <ul className="user-transaction-details">
-                                <li style={{ listStyleType: "none" }} >
-                                    Money paid: ${stats.money_paid}
-                                </li>
-                                <li style={{ listStyleType: "none" }} >
-                                    Money requested: ${stats.money_requested}
-                                </li>
-                                <li style={{ listStyleType: "none" }} >
-                                    Total: ${stats.money_total}
-                                </li>
-                            </ul>}
-                        {friendsDisp && (friends.length ?
-                            <ul className="friends-list">
-                                {friends}
-                            </ul> :
-                            "No Friends...")
-                        }
-                        {groupsDisp && (groups.length ?
-                            <ul className="groups-list">
-                                {groups}
-                            </ul>:
-                            "No Groups...")
-
-                        }
-                        <div className="chart-trans-details-contianer">
-                            {catDisp && <PieData transDetails={transDetails} />}
-                            {balDisp && <ChartData stats={stats} color={color} />}
-                            {allTrans && <div className="trans-feed-container">{TransCard(trans, user.id)}</div>}
-                            {/* {friendsDisp && null} */}
+            <div className="trans-details-container">
+                <div className="left-trans-details-container">
+                    <nav className="trans-details-button-container">
+                        <button onClick={balDispClick}>Balance Changes</button>
+                        <button onClick={onCatDispClick}>Categories</button>
+                        <button onClick={allTransClick}>Your Transactions</button>
+                        <button onClick={friendsDispClick}> My Friends</button>
+                        <button onClick={() => alert("Feature Coming Soon")}> My Bugets</button>
+                        <button onClick={groupsDispClick}> My Groups</button>
+                    </nav>
+                </div>
+                <div className="right-trans-details-conatiner">
+                    {(catDisp || balDisp) ?
+                        <div className="top-trans-details-container">
+                            <h3>{balDisp && "Balance Details"}</h3>
+                            <h3>{catDisp && "Catgeory Details"}</h3>
                         </div>
+                        : null
+                    }
+                    {balDisp &&
+                        <ul className="user-transaction-details">
+                            <li style={{ listStyleType: "none" }} >
+                                Money paid: ${stats.money_paid}
+                            </li>
+                            <li style={{ listStyleType: "none" }} >
+                                Money requested: ${stats.money_requested}
+                            </li>
+                            <li style={{ listStyleType: "none" }} >
+                                Total: ${stats.money_total}
+                            </li>
+                        </ul>}
+                    {friendsDisp && (friends.length ?
+                        <ul className="friends-list">
+                            {friends}
+                        </ul> :
+                        "No Friends...")
+                    }
+                    {groupsDisp && (groups.length ?
+                        <ul className="groups-list">
+                            {groups}
+                        </ul> :
+                        "No Groups...")
+
+                    }
+                    <div className="chart-trans-details-contianer">
+                        {catDisp && <PieData transDetails={transDetails} />}
+                        {balDisp && <ChartData stats={stats} color={color} />}
+                        {allTrans && <div className="trans-feed-container">{TransCard(trans, user.id)}</div>}
+                        {/* {friendsDisp && null} */}
                     </div>
                 </div>
             </div>

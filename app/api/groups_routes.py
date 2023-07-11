@@ -135,7 +135,7 @@ def get_single_group(id):
             r = l+1
         
         
-        return{"group":respone,"transaction":transactions}
+        return{"group":respone,"transactions":transactions}
 
 
 # -------- POST MEMBERSHIP ROUTE --------
@@ -217,7 +217,7 @@ def delete_member(id):
     db.session.commit()
 
     return {"message": "Succesfully Deleted"},200
-
+    
 
 # -------- PUT GROUP ROUTE --------
 @group_routes.route('/<int:id>',methods=["PUT"])

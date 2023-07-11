@@ -43,24 +43,24 @@ function UserPage() {
   useEffect(() => {
     setTimeout(() => {
       isLoading(true)
-    }, 500)
+    }, 1200)
     // if it is the user then dispatch a thunk that gets all the user's completed transaction \
     if (id == user.id) {
       return dispatch(getUserTransactionsDetailsThunk(id, true, false))
     }
     // if it is a friend dipatch a thunk that gets the friends' public trans and trans between the user and the friend
     if (user_friends.includes(Number(id))) {
-      console.log("friend....................")
+      // console.log("friend....................")
       dispatch(getUserTransactionsDetailsThunk(id, false, true))
       isFriend(true)
       return
     }
     // if it is a random person just show transactions that are public
     else {
-      console.log("Not friend....................")
+      // console.log("Not friend....................")
       return dispatch(getUserTransactionsDetailsThunk(id, false, false))
     }
-  }, [dispatch, id])
+  }, [dispatch, id,loading])
 
 
   const addFriend = async (e) => {
@@ -106,7 +106,9 @@ function UserPage() {
     )
   }
   
-  if ((!otherUser.id || !user.id) && loading) history.push('/user')
+  if ((!otherUser.id || !user.id) && loading) {
+    history.push('/user')
+  }
 
   return (
     <div className="trans-feed-container">

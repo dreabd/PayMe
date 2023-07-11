@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 transactions_routes = Blueprint("transactions", __name__)
 
-# -------- GET ALL ROUTE --------
+# -------- GET ALL USER COMPLETE TRANSACTION ROUTE --------
 @transactions_routes.route("/user")
 @login_required
 def get_user_transactions():
@@ -28,7 +28,7 @@ def get_user_transactions():
 
     return {"transactions": user_transaction}
 
-# -------- GET ALL ROUTE --------
+# -------- GET ALL USER INCOMPLETED TRANSACTION ROUTE --------
 @transactions_routes.route("/user/incomplete")
 @login_required
 def get_incomplete_user_transactions():
@@ -45,7 +45,7 @@ def get_incomplete_user_transactions():
 
     return {"transactions": user_transaction}
 
-# -------- GET ALL ROUTE --------
+# -------- GET ALL TRANSACTIONS ROUTE --------
 @transactions_routes.route("/")
 @login_required
 def get_all_transaction():
@@ -63,7 +63,7 @@ def get_all_transaction():
 
     return {"transactions": transactions}
 
-# -------- POST ROUTE --------
+# -------- POST PAY TRANSACTION ROUTE --------
 @transactions_routes.route("/pay", methods=["POST"])
 @login_required
 def post_pay_transaction():
@@ -140,7 +140,7 @@ def post_pay_transaction():
         print("There were some form errors", form.errors)
         return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
 
-# -------- PUT ROUTE --------
+# -------- PUT PAYER TRANSACTION ROUTE --------
 @transactions_routes.route("/<int:id>/pay", methods=["PUT"])
 @login_required
 def put_pay_transaction(id):
@@ -184,7 +184,7 @@ def put_pay_transaction(id):
             }
         }, 400
 
-# -------- POST ROUTE --------
+# -------- POST REQUEST TRANSACTION ROUTE --------
 @transactions_routes.route("/req", methods=["POST"])
 @login_required
 def post_req_transaction():
@@ -222,7 +222,7 @@ def post_req_transaction():
         print("There were some form errors", form.errors)
         return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
 
-# -------- GET SINGLE ROUTE --------
+# -------- GET SINGLE TRANSACTION ROUTE --------
 @transactions_routes.route("/<int:id>", methods=["GET"])
 @login_required
 def get_single_transaction(id):
@@ -237,7 +237,7 @@ def get_single_transaction(id):
     response = single_transaction.to_dict()
     return {"transaction": response}
 
-# -------- PUT ROUTE --------
+# -------- PUT TRANSACTION ROUTE --------
 @transactions_routes.route("/<int:id>", methods=["PUT"])
 @login_required
 def put_single_transaction(id):
@@ -282,7 +282,7 @@ def put_single_transaction(id):
         print("There were some form errors", form.errors)
         return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
 
-# -------- DELETE ROUTE --------
+# -------- DELETE TRANSACTION ROUTE --------
 @transactions_routes.route("/<int:id>", methods=["DELETE"])
 @login_required
 def delete_single_transaction(id):
@@ -294,7 +294,7 @@ def delete_single_transaction(id):
     if single_transaction.completed:
         print("There were some errors")
         return (
-            {"errors": "User's can not delete a transaction that has been completed"},
+            {"errors": "User can not delete a transaction that has been completed"},
             400,
             {"Content-Type": "application/json"},
         )
