@@ -12,7 +12,7 @@ const GroupCard = (groups, user) => {
         return (
             <div
                 key={group.id}
-                onClick={() => history.push(`/user/groups/${group.id}`)}
+                onClick={() => history.push(`/user/group/${group.id}`)}
             >
                 <h3>
                     {group.name}

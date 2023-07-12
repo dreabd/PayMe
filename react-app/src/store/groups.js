@@ -9,7 +9,10 @@ const GET_GROUP_MEMBERS = 'groups/getGroupMembers'
 const POST_GROUP_MEMBER = "group/postGroupMember"
 const POST_NEW_GROUP = "group/postNewGroup"
 
+const PUT_GROUP = "group/putGroup"
+
 const DELETE_GROUP_MEMBER = "group/deleteGroupMember"
+const DELETE_GROUP = "group/deleteGroup"
 //--------------------- Action Creators --------------------
 const getAllGroups = (groups) => {
     return {
@@ -46,10 +49,23 @@ const postNewGroup = (group) => {
     }
 }
 
+const putGroup = (group) =>{
+    return{
+        type: PUT_GROUP,
+        group
+    }
+}
+
 const deleteGroupMember = (member_id) => {
     return {
         type: DELETE_GROUP_MEMBER,
         member_id
+    }
+}
+const deleteGroup = (groupId) => {
+    return {
+        type: DELETE_GROUP,
+        groupId
     }
 }
 
@@ -95,9 +111,12 @@ export const postNewGroupThunk = (groupData) => async dispatch => {
     }
     else {
         const { errors } = await res.json()
+        console.log(errors)
         return errors
     }
 }
+
+// export const putGroupThunk = () =>
 
 export const deleteGroupMemberThunk = (id, user_id) => async dispatch => {
     console.log(user_id)
@@ -111,18 +130,29 @@ export const deleteGroupMemberThunk = (id, user_id) => async dispatch => {
     }
     else {
         const { errors } = await res.json()
-        console.log(errors)
-
         return errors
     }
 }
 
+export const deleteGroupThunk = (groupId) => async dispatch => {
+    const res = await fetch(`/api/groups/${groupId}`, {
+        method: "DELETE"
+    })
+
+    if (res.ok) {
+        dispatch(deleteGroup(groupId))
+        return
+    } else {
+        const { errors } = await res.json()
+        return errors
+    }
+}
 
 //--------------------- Initial State ----------------------
 const initialState = {
     allGroups: {},
     groupMembers: {},
-    singleGroup: {}
+    singleGroup: null
 }
 //------------------------ Reducer -------------------------
 const groupReducer = (state = initialState, action) => {
@@ -146,9 +176,12 @@ const groupReducer = (state = initialState, action) => {
 
         case DELETE_GROUP_MEMBER:
             newState = { ...state }
-            //  
             delete newState.groupMembers[action.member_id]
             delete newState.singleGroup.members[action.member_id]
+            return newState
+        case DELETE_GROUP:
+            newState = { ...state }
+            delete newState.allGroups[action.groupId]
             return newState
         default:
             return state

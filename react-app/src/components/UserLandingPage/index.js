@@ -45,11 +45,11 @@ function UserLandingPage() {
             <EditTransaction />
           </Route>
 
+          <Route exact path="/user/group/:id">
+            <GroupPage/>
+          </Route>
           <Route exact path="/user/groups">
             <Groups/>
-          </Route>
-          <Route exact path="/user/groups/:id">
-            <GroupPage/>
           </Route>
 
           <Route exact path="/user/budgets">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { getCategoriesThunk } from "../../../../store/categories";
 import { getAllUsersThunk } from "../../../../store/session";
 import { postPayTransactionsThunk, postReqTransactionsThunk, putSingleTransactionThunk } from "../../../../store/transactions";
@@ -49,7 +49,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
 
     setErrors(err)
 
-  }, [description, name, money, category,submitted])
+  }, [description, name, money, category, submitted])
 
   const handleTransactionSubmit = async (e) => {
     e.preventDefault()

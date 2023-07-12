@@ -41,7 +41,7 @@ function CardForm({update,card}) {
 
     const data = await dispatch(postNewCardThunk(formData))
     if(data){
-      console.log("some errors occured.............",data)
+      // console.log("some errors occured.............",data)
       setErrors(data)
     } else{
       history.push("/user/cards")

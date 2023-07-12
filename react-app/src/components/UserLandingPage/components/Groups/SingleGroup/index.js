@@ -9,6 +9,9 @@ import { GroupTransCard } from "../../UserTransFeed/TransCard";
 import OpenModalButton from "../../../../OpenModalButton";
 import AddMemberModal from "../AddMemberModal";
 import LeaveGroupModal from "../LeaveGroupModal";
+import DeleteGroupModal from "../DeleteGroupModal";
+import UpdateGroupModal from "../UpdateGroupModal";
+
 
 import './SingleGroup.css'
 
@@ -35,10 +38,10 @@ function GroupPage() {
 
     // ----------------- Use Effects -----------------
     useEffect(() => {
-        setTimeout(()=>{
+        setTimeout(() => {
             setLoading(true)
-        },1000)
-        
+        }, 1000)
+
         const fetchData = async () => {
             setTimeout(() => {
                 setLoading(true);
@@ -77,7 +80,7 @@ function GroupPage() {
     const member_id = members && Object.keys(members)
 
 
-    if (!loading ) return (<h4 className="trans-feed-container">Loading...</h4>)
+    if (!loading) return (<h4 className="trans-feed-container">Loading...</h4>)
 
     return (
         <div className="trans-feed-container">
@@ -96,10 +99,16 @@ function GroupPage() {
                     <div className="group-settings-container">
                         <i onClick={openMenu} class="fa-solid fa-ellipsis"></i>
                         <ul className={ulClassName}>
-                            <li>Update</li>
-                            <li>Delete</li>
+                            <OpenModalButton
+                                buttonText={"Update"}
+                                modalComponent={<UpdateGroupModal/>}
+                            />
+                            <OpenModalButton
+                                buttonText={"Delete"}
+                                modalComponent={<DeleteGroupModal group={singleGroup} />}
+                            />
                         </ul>
-                    </div> 
+                    </div>
                     : null}
 
             </div>

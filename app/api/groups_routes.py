@@ -30,7 +30,7 @@ def post_new_group():
         - Group Name
         - Owner ID
         - isPublic
-    Based off those fields will then post the new group AND add the owner's id as the first member of that group 
+    Based off those fields will then post the new group AND add the owner's id as the first member of that group
 
     '''
 
@@ -39,7 +39,7 @@ def post_new_group():
     print(form.data)
 
     if form.validate_on_submit():
-        data = form.data 
+        data = form.data
 
         new_group = Group(
             owner_id = data["owner_id"],
@@ -78,14 +78,14 @@ def get_single_group(id):
     - Person is not part of group and group is public
         - Able to see members
     - Person is not part of group and group not is public
-        - Will See Nothing 
+        - Will See Nothing
     '''
-    
+
     one_group = Group.query.get(id)
 
     if one_group is None:
         return {"errors": "Group not Found"}, 404
-    
+
     respone = one_group.to_dict()
 
     members_id = [member["id"] for member in respone["members"]]
@@ -93,11 +93,11 @@ def get_single_group(id):
     # Checks if the grup is public and if the current user is in the group
     if current_user.id not in members_id and not one_group.isPublic:
         return{"errors":"Unauthorized"},400
-    
-    
+
+
     if current_user.id not in members_id and one_group.isPublic:
         return{"group":respone}
-    
+
     if current_user.id in members_id:
         # [1,2,3,4,5]
         #  ^ ^----->
@@ -116,9 +116,9 @@ def get_single_group(id):
 
                 curr_mem_transaction = (Transaction.query
                 .filter(
-                    (Transaction.payer_id == curr_mem) 
+                    (Transaction.payer_id == curr_mem)
                     | (Transaction.requester_id == curr_mem)
-                )        
+                )
                 .filter(Transaction.completed == True)
                 .filter(Transaction.public == True)
                 .all()
@@ -133,8 +133,8 @@ def get_single_group(id):
                 r+=1
             l+=1
             r = l+1
-        
-        
+
+
         return{"group":respone,"transactions":transactions}
 
 
@@ -159,21 +159,21 @@ def post_new_membership(id):
 
     if group is None:
         return {"errors":"Group Not Found"},404
-    
-    if user is None: 
+
+    if user is None:
         return {"errors":"User not found"},404
-    
+
 
     if current_user.id != group.owner_id:
         return {"errors":"Unauthorized, Only the owner could add new members to the group"},401
-    
+
     members_id = [member["id"] for member in group.to_dict()["members"]]
 
     if user.id in members_id:
         return {"errors":"User already added"},401
-    
+
     friend_id = [friends["id"]for friends in current_user.to_dict()["friends"]]
-    
+
     if user.id not in friend_id:
         return {"errors":"Unauthorized, Owner must be friends with all prospective members"},401
 
@@ -190,7 +190,7 @@ def post_new_membership(id):
 def delete_member(id):
     '''
     Anyone could leave the group but OWNER CAN NOT REMOVE THEMSELVES FROM THE GROUP ( Would need to transfer ownership)
-    When current user wants to leave a group: 
+    When current user wants to leave a group:
         - Get the current user's id
         - Check if they are the owner or if they are a part of the group
         - will be removed from the group
@@ -198,17 +198,17 @@ def delete_member(id):
 
     group = Group.query.get(id)
 
-    if group is None: 
+    if group is None:
         return {"errors": "Group Not Found"},404
-    
+
     if group.owner_id == current_user.id:
         return {"errors":"Unauthorized, Need to transfer ownership before leaving"},401
-    
+
     members_id = [members["id"]for members in group.to_dict()["members"]]
 
     if current_user.id not in members_id:
         return {"errors": "User Not Found in Group"},404
-    
+
     delete_query = delete(Membership).where(
     ((Membership.c.user_id == current_user.id) & (Membership.c.group_id == group.id)))
 
@@ -217,7 +217,7 @@ def delete_member(id):
     db.session.commit()
 
     return {"message": "Succesfully Deleted"},200
-    
+
 
 # -------- PUT GROUP ROUTE --------
 @group_routes.route('/<int:id>',methods=["PUT"])
@@ -235,7 +235,7 @@ def put_group(id):
 
     if updated_group.owner_id != current_user.id:
         return {"errors":"Unauthorized"},400
-    
+
     form = GroupEditForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -252,7 +252,7 @@ def put_group(id):
 
         db.session.commit()
         return{"group": updated_group.to_dict()}
-    
+
     if form.errors:
         print("There were some errors")
         return{"errors":form.errors},400,
@@ -275,13 +275,8 @@ def delete_group(id):
 
     if group.owner_id != current_user.id:
         return {"errors":"Unauthorized"},400
-    
+
     db.session.delete(group)
     db.session.commit()
 
     return {"message": "Successfully Deleted"}
-
-    
-    
-
-

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import OpenModalButton from "../../../OpenModalButton";
@@ -10,15 +10,22 @@ import NewGroupModal from "./NewGroupModal";
 
 function Groups() {
     const dispatch = useDispatch()
-    const groups = useSelector(state => state.group.allGroups)
 
+    const [loading,setLoading] = useState(false)
+
+    const groups = useSelector(state => state.group.allGroups)
     const user = useSelector(state => state.session.user)
 
 
     useEffect(() => {
+        setTimeout(()=>{
+            setLoading(true)
+        },1000)
+
         dispatch(getAllGroupsThunk())
     }, [dispatch])
 
+    if(!loading || !Object.values(groups).length ) return  (<h4 className="trans-feed-container">Loading...</h4>)
 
     return (
         <div>
