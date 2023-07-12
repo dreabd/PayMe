@@ -14,7 +14,7 @@ import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
 import UserPage from "./components/UserPage";
 import Groups from "./components/Groups";
-import GroupPage from "./components/Groups/components/SingleGroup";
+import GroupPage from "./components/Groups/SingleGroup";
 
 import "./UserLandingPage.css"
 

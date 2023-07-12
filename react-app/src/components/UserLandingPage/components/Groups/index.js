@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { getAllGroupsThunk } from "../../../../store/groups";
 
-import GroupCard from "./components/helpers/GroupCard";
+import GroupCard from "./helpers/GroupCard";
 
 function Groups() {
     const dispatch = useDispatch()

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { getSingleGroupThunk } from "../../../../../../store/groups";
-import { GroupTransCard } from "../../../UserTransFeed/TransCard"
+import { getSingleGroupThunk } from "../../../../../store/groups";
+import { GroupTransCard } from "../../UserTransFeed/TransCard";
 
-import OpenModalButton from "../../../../../OpenModalButton";
+import OpenModalButton from "../../../../OpenModalButton";
 import AddMemberModal from "../AddMemberModal";
 import LeaveGroupModal from "../LeaveGroupModal";
 import './SingleGroup.css'
@@ -33,12 +33,20 @@ function GroupPage() {
     // console.log("🐽..................................", groupTransactions)
 
     // ----------------- Use Effects -----------------
-    useEffect(async () => {
+    useEffect(() => {
         setTimeout(()=>{
             setLoading(true)
         },1000)
-        let group = await dispatch(getSingleGroupThunk(id))
-        group && setErrors({ group })
+        
+        const fetchData = async () => {
+            setTimeout(() => {
+                setLoading(true);
+            }, 1000);
+            let group = await dispatch(getSingleGroupThunk(id));
+            group && setErrors({ group });
+        };
+        fetchData()
+
     }, [id, dispatch, updated])
 
     useEffect(() => {
@@ -112,7 +120,7 @@ function GroupPage() {
                             Object.values(singleGroup).length &&
                             Object.values(members).map(member => {
                                 return (
-                                    <li>
+                                    <li key={member.id}>
                                         <NavLink
                                             className="navlink important-navlinks"
                                             to={`/user/${member.id}`}>
@@ -125,7 +133,7 @@ function GroupPage() {
                         {singleGroup.owner_id.id === user.id &&
                             <li className="add-member-container">
                                 <OpenModalButton
-                                    buttonText={<span><i class="fa-sharp fa-solid fa-plus"></i> Add Member</span>}
+                                    buttonText={<span><i className="fa-sharp fa-solid fa-plus"></i> Add Member</span>}
                                     modalComponent={<AddMemberModal members={members} group_id={id} />}
                                 />
                             </li>

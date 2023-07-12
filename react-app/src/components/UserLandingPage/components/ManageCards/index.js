@@ -13,7 +13,7 @@ function ManageCards() {
 
   useEffect(() => {
     dispatch(getUserCardsThunk())
-  }, [dispatch])
+  }, [])
 
   const cards = userCards && Object.values(userCards).map(card => {
     // console.log(String(card.card_number))
