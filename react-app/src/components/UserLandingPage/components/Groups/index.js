@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import OpenModalButton from "../../../OpenModalButton";
 
 import { getAllGroupsThunk } from "../../../../store/groups";
 
 import GroupCard from "./helpers/GroupCard";
+import NewGroupModal from "./NewGroupModal";
 
 function Groups() {
     const dispatch = useDispatch()
@@ -27,14 +29,15 @@ function Groups() {
 
             <div className="user-groups-container">
                 <h2>My Groups</h2>
-                {Object.values(user).length ? GroupCard(Object.values(user.groups), user) : null}
+                {Object.values(user).length ? GroupCard(Object.values(user.groups), user) : "No Groups"}
             </div>
 
 
             <div>
-                <button>
-                    <i class="fa-solid fa-plus"></i>Create Your Own Group
-                </button>
+                <OpenModalButton
+                    buttonText={<span><i class="fa-solid fa-plus"></i>Create Your Own Group</span>}
+                    modalComponent={<NewGroupModal/>}
+                />
             </div>
         </div>
     )

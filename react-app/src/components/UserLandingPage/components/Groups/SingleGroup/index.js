@@ -9,6 +9,7 @@ import { GroupTransCard } from "../../UserTransFeed/TransCard";
 import OpenModalButton from "../../../../OpenModalButton";
 import AddMemberModal from "../AddMemberModal";
 import LeaveGroupModal from "../LeaveGroupModal";
+
 import './SingleGroup.css'
 
 function GroupPage() {

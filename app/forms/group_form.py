@@ -15,6 +15,8 @@ def group_exists(form, field):
 class GroupForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(),group_exists])
     isPublic = BooleanField("Public",default=False)
+    owner_id = IntegerField("Owner ID",validators=[DataRequired()])
+
 
 class GroupEditForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(),group_exists])
