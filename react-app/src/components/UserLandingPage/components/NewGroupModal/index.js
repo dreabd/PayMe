@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { postNewGroupThunk } from "../../../../../store/groups"
 import { useHistory } from "react-router-dom"
-import { useModal } from "../../../../../context/Modal"
+// import { useModal } from "../../../../../context/Modal"
+import { useModal } from "../../../../context/Modal"
 
-import { getAllUsersThunk } from "../../../../../store/session"
+// import { getAllUsersThunk } from "../../../../../store/session"
+import { getAllUsersThunk } from "../../../../store/session"
+import { postNewGroupThunk } from "../../../../store/groups"
 
 const NewGroupModal = ({ group }) => {
     const dispatch = useDispatch()

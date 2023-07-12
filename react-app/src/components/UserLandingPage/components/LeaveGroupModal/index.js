@@ -2,9 +2,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { useState } from "react"
 
-import { useModal } from "../../../../../context/Modal"
+// import { useModal } from "../../../../../context/Modal"
 
-import { deleteGroupMemberThunk, deleteGroupThunk, getAllGroupsThunk } from "../../../../../store/groups"
+// import { deleteGroupMemberThunk, deleteGroupThunk, getAllGroupsThunk } from "../../../../../store/groups"
+
+import { useModal } from "../../../../context/Modal"
+
+import { deleteGroupMemberThunk,deleteGroupThunk,getAllGroupsThunk } from "../../../../store/groups"
 
 import "./LeaveGroupModal.css"
 

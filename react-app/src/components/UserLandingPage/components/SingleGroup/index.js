@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { getSingleGroupThunk } from "../../../../../store/groups";
-import { GroupTransCard } from "../../UserTransFeed/TransCard";
+// import { getSingleGroupThunk } from "../../../../../store/groups";
+// import { GroupTransCard } from "../../UserTransFeed/TransCard";
+import { getSingleGroupThunk } from "../../../../store/groups";
+import {GroupTransCard} from '../UserTransFeed/TransCard'
 
-import OpenModalButton from "../../../../OpenModalButton";
+import OpenModalButton from "../../../OpenModalButton"
 import AddMemberModal from "../AddMemberModal";
 import LeaveGroupModal from "../LeaveGroupModal";
 import DeleteGroupModal from "../DeleteGroupModal";

@@ -2,10 +2,15 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min"
 
-import { useModal } from "../../../../../context/Modal"
+// import { useModal } from "../../../../../context/Modal"
 
-import { getAllUsersThunk } from "../../../../../store/session"
-import { getSingleGroupThunk, postGroupMember } from "../../../../../store/groups"
+// import { getAllUsersThunk } from "../../../../../store/session"
+// import { getSingleGroupThunk, postGroupMember } from "../../../../../store/groups"
+
+import { useModal } from "../../../../context/Modal"
+
+import { getAllUsersThunk } from "../../../../store/session"
+import { getSingleGroupThunk ,postGroupMember} from "../../../../store/groups"
 
 import "./AddMemberModal.css"
 

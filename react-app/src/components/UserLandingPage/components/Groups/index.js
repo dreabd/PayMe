@@ -5,8 +5,10 @@ import OpenModalButton from "../../../OpenModalButton";
 
 import { getAllGroupsThunk } from "../../../../store/groups";
 
-import GroupCard from "./helpers/GroupCard";
-import NewGroupModal from "./NewGroupModal";
+// import GroupCard from "./helpers/GroupCard";
+// import NewGroupModal from "./NewGroupModal";
+import GroupCard from "../helpers/GroupCard";
+import NewGroupModal from "../NewGroupModal"
 
 function Groups() {
     const dispatch = useDispatch()

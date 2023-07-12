@@ -13,8 +13,8 @@ import CardForm from "./components/CardForm";
 import EditCard from "./components/EditCard";
 import EditTransaction from "./components/EditTransaction";
 import UserPage from "./components/UserPage";
-import Groups from "./components/Groups";
-import GroupPage from "./components/Groups/SingleGroup";
+import Groups from "./components/Groups"
+import GroupPage from "./components/SingleGroup";
 
 import "./UserLandingPage.css"
 
@@ -25,7 +25,7 @@ function UserLandingPage() {
 
 
 
-  if (!user) {
+  if (!user) {  
     return <Redirect exact to="/" />
   }
   return (

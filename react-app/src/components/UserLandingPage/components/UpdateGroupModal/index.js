@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 
 import NewGroupModal from "../NewGroupModal"
 
-import { getSingleGroupThunk } from "../../../../../store/groups"
+import { getSingleGroupThunk } from "../../../../store/groups"
 
 const UpdateGroupModal = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
-  
+
   const singleGroup = useSelector(state => state.group.singleGroup)
 
   useEffect(() => {
