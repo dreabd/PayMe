@@ -126,6 +126,7 @@ export const putGroupThunk = (groudId, groupData) => async dispatch => {
     if (res.ok) {
         const { group } = await res.json()
         dispatch(putGroup(group))
+        
         return
     }
     else {

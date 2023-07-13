@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { useModal } from "../../../../../context/Modal"
 
-import { getAllUsersThunk } from "../../../../../store/session"
+import { getAllUsersThunk,authenticate } from "../../../../../store/session"
 import { postNewGroupThunk, putGroupThunk } from "../../../../../store/groups"
 
 
@@ -68,6 +68,7 @@ const NewGroupModal = ({ group }) => {
                 setError({ "name": data.name[0] })
                 return
             }
+            dispatch(authenticate(current.id))
             closeModal()
         }
 

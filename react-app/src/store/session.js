@@ -7,6 +7,7 @@ const GET_USERS = "session/getAllUsers";
 const GET_OTHER_USERS = "session/getOtherUsers"
 const REMOVE_USER = "session/REMOVE_USER";
 const DELETE_MY_GROUP = "session/deleteMyGroup"
+// const PUT_MY_GROUP = "session/putMyGroup"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -37,6 +38,14 @@ export const getOtherUsers = (user) => {
 		user
 	}
 }
+
+// export const putMyGroup = (group) => {
+// 	return {
+// 		type: PUT_MY_GROUP,
+// 		group
+// 	}
+// }
+
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -144,14 +153,16 @@ export default function reducer(state = initialState, action) {
 			return { ...state, allUsers: { ...normalizeObj(action.users) } }
 		case GET_OTHER_USERS:
 			return { ...state, otherUser: action.user }
+
+			return {...state,user:{...state.user}}
 		case DELETE_MY_GROUP:
-			newState = {...state}
+			newState = { ...state }
 			const groupFilter = newState.user.my_groups.filter(group => {
 				// console.log("group.........................",group.id)
 				// console.log("group.........................",action.groupId)
 				// console.log("group.........................",group.id !== action.groupId)
 				return group.id !== action.groupId
-			}) 
+			})
 			// console.log("😀.....................",groupFilter)
 			newState.user.my_groups = groupFilter
 			return newState

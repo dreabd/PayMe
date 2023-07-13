@@ -24,7 +24,7 @@ function Groups() {
         },1000)
 
         dispatch(getAllGroupsThunk())
-    }, [dispatch])
+    }, [])
 
     if(!loading || !Object.values(groups).length ) return  (<h4 className="trans-feed-container">Loading...</h4>)
 
