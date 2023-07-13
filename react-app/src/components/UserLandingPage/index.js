@@ -30,59 +30,57 @@ function UserLandingPage() {
   }
   return (
     <div className="user-landing-container">
-      <BrowserRouter>
-        {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
-        {/* {isLoaded && */}
-        <Switch>
-          <Route exact path="/user">
-            <UserTransFeed />
-          </Route>
+      {<Navigation userLoad={userLoad} setUserLoad={setUserLoad} />}
+      {/* {isLoaded && */}
+      <Switch>
+        <Route exact path="/user">
+          <UserTransFeed />
+        </Route>
 
-          <Route exact path="/user/transaction">
-            <TransactionForm setUserLoad={setUserLoad} />
-          </Route>
-          <Route exact path="/user/transaction/:id/edit">
-            <EditTransaction />
-          </Route>
+        <Route exact path="/user/transaction">
+          <TransactionForm setUserLoad={setUserLoad} />
+        </Route>
+        <Route exact path="/user/transaction/:id/edit">
+          <EditTransaction />
+        </Route>
 
-          <Route exact path="/user/group/:id">
-            <GroupPage/>
-          </Route>
-          <Route exact path="/user/groups">
-            <Groups/>
-          </Route>
+        <Route exact path="/user/group/:id">
+          <GroupPage />
+        </Route>
+        <Route exact path="/user/groups">
+          <Groups />
+        </Route>
 
-          <Route exact path="/user/budgets">
-            Budget Place Holder
-          </Route>
+        <Route exact path="/user/budgets">
+          Budget Place Holder
+        </Route>
 
-          <Route exact path="/user/cards">
-            <ManageCards />
-          </Route>
-          <Route exact path="/user/card/new">
-            <CardForm />
-          </Route>
-          <Route exact path="/user/card/:id">
-            <SingleCard />
-          </Route>
-          <Route exact path="/user/card/:id/edit">
-            <EditCard />
-          </Route>
+        <Route exact path="/user/cards">
+          <ManageCards />
+        </Route>
+        <Route exact path="/user/card/new">
+          <CardForm />
+        </Route>
+        <Route exact path="/user/card/:id">
+          <SingleCard />
+        </Route>
+        <Route exact path="/user/card/:id/edit">
+          <EditCard />
+        </Route>
 
-          <Route exact path="/user/incomplete">
-            <Incomplete setUserLoad={setUserLoad} />
-          </Route>
+        <Route exact path="/user/incomplete">
+          <Incomplete setUserLoad={setUserLoad} />
+        </Route>
 
-          <Route exact path="/user/:id">
-            <UserPage />
-          </Route>
+        <Route exact path="/user/:id">
+          <UserPage />
+        </Route>
 
-          <Route>
-            <Redirect to="/user" />
-          </Route>
-        </Switch>
+        <Route>
+          <Redirect to="/user" />
+        </Route>
+      </Switch>
 
-      </BrowserRouter>
 
     </div>
   )

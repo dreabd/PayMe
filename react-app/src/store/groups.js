@@ -1,5 +1,6 @@
 import { normalizeObj } from './helpers';
 import { getGroupTransactions } from './transactions';
+import { deleteMyGroup } from './session';
 
 //--------------------- Type Variables ---------------------
 const GET_ALL_GROUPS = 'groups/getAllGroups'
@@ -49,8 +50,8 @@ const postNewGroup = (group) => {
     }
 }
 
-const putGroup = (group) =>{
-    return{
+const putGroup = (group) => {
+    return {
         type: PUT_GROUP,
         group
     }
@@ -116,7 +117,22 @@ export const postNewGroupThunk = (groupData) => async dispatch => {
     }
 }
 
-// export const putGroupThunk = () =>
+export const putGroupThunk = (groudId, groupData) => async dispatch => {
+    const res = await fetch(`/api/groups/${groudId}`, {
+        method: "PUT",
+        body: groupData
+    })
+
+    if (res.ok) {
+        const { group } = await res.json()
+        dispatch(putGroup(group))
+        return
+    }
+    else {
+        const { errors } = await res.json()
+        return errors
+    }
+}
 
 export const deleteGroupMemberThunk = (id, user_id) => async dispatch => {
     console.log(user_id)
@@ -141,6 +157,7 @@ export const deleteGroupThunk = (groupId) => async dispatch => {
 
     if (res.ok) {
         dispatch(deleteGroup(groupId))
+        dispatch(deleteMyGroup(groupId))
         return
     } else {
         const { errors } = await res.json()
@@ -173,6 +190,9 @@ const groupReducer = (state = initialState, action) => {
             newState = { ...state }
             newState.groupMembers[action.member.id] = action.member
             return newState
+
+        case PUT_GROUP:
+            return { ...state, singleGroup: { ...action.group } }
 
         case DELETE_GROUP_MEMBER:
             newState = { ...state }

@@ -14,6 +14,7 @@ function Groups() {
     const [loading,setLoading] = useState(false)
 
     const groups = useSelector(state => state.group.allGroups)
+    const userGroups = useSelector(state => state.session.user.my_groups)
     const user = useSelector(state => state.session.user)
 
 
@@ -36,7 +37,7 @@ function Groups() {
 
             <div className="user-groups-container">
                 <h2>My Groups</h2>
-                {Object.values(user).length ? GroupCard(Object.values(user.groups), user) : "No Groups"}
+                {userGroups.length ? GroupCard(userGroups, user) : "No Groups"}
             </div>
 
 

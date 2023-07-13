@@ -4,8 +4,9 @@ import { normalizeObj } from "./helpers";
 // constants
 const SET_USER = "session/SET_USER";
 const GET_USERS = "session/getAllUsers";
-const GET_OTHER_USERS ="session/getOtherUsers"
+const GET_OTHER_USERS = "session/getOtherUsers"
 const REMOVE_USER = "session/REMOVE_USER";
+const DELETE_MY_GROUP = "session/deleteMyGroup"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -16,16 +17,23 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-const getAllUsers=(users) =>{
-	return{
-		type:GET_USERS,
+const getAllUsers = (users) => {
+	return {
+		type: GET_USERS,
 		users
 	}
 }
 
-export const getOtherUsers = (user) =>{
-	return{
-		type:GET_OTHER_USERS,
+export const deleteMyGroup = (groupId) => {
+	return {
+		type: DELETE_MY_GROUP,
+		groupId
+	}
+}
+
+export const getOtherUsers = (user) => {
+	return {
+		type: GET_OTHER_USERS,
 		user
 	}
 }
@@ -46,15 +54,15 @@ export const authenticate = () => async (dispatch) => {
 	}
 };
 
-export const getAllUsersThunk = () => async dispatch =>{
+export const getAllUsersThunk = () => async dispatch => {
 	const res = await fetch("/api/users/")
 
-	if(res.ok){
-		const {users} = await res.json()
+	if (res.ok) {
+		const { users } = await res.json()
 		dispatch(getAllUsers(users))
 		return
 	}
-	else{
+	else {
 		console.log("There were some errors")
 	}
 }
@@ -123,18 +131,30 @@ export const signUp = (signUpInfo) => async (dispatch) => {
 	}
 };
 
-const initialState = { user: null,allUsers:{},otherUser:{}};
+const initialState = { user: null, allUsers: {}, otherUser: {} };
 
 export default function reducer(state = initialState, action) {
+	let newState;
 	switch (action.type) {
 		case SET_USER:
-			return {...state,user: action.payload };
+			return { ...state, user: action.payload };
 		case REMOVE_USER:
-			return {...state,user: null };
+			return { ...state, user: null };
 		case GET_USERS:
-			return {...state,allUsers:{...normalizeObj(action.users)}}
+			return { ...state, allUsers: { ...normalizeObj(action.users) } }
 		case GET_OTHER_USERS:
-			return {...state,otherUser:action.user}
+			return { ...state, otherUser: action.user }
+		case DELETE_MY_GROUP:
+			newState = {...state}
+			const groupFilter = newState.user.my_groups.filter(group => {
+				// console.log("group.........................",group.id)
+				// console.log("group.........................",action.groupId)
+				// console.log("group.........................",group.id !== action.groupId)
+				return group.id !== action.groupId
+			}) 
+			// console.log("😀.....................",groupFilter)
+			newState.user.my_groups = groupFilter
+			return newState
 		default:
 			return state;
 	}

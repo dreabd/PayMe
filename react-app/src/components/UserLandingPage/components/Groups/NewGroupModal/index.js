@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { postNewGroupThunk } from "../../../../../store/groups"
 import { useHistory } from "react-router-dom"
 import { useModal } from "../../../../../context/Modal"
 
 import { getAllUsersThunk } from "../../../../../store/session"
+import { postNewGroupThunk, putGroupThunk } from "../../../../../store/groups"
+
 
 const NewGroupModal = ({ group }) => {
     const dispatch = useDispatch()
@@ -54,20 +55,26 @@ const NewGroupModal = ({ group }) => {
             const data = await dispatch(postNewGroupThunk(formData))
             if (isNaN(Number(data))) {
                 console.log("some errors occured.............", data)
-                setError({"name":data.name[0]})
+                setError({ "name": data.name[0] })
                 return
             }
             closeModal()
             history.push(`/user/group/${data}`)
         }
         else {
-
+            const data = await dispatch(putGroupThunk(group.id, formData))
+            if (data) {
+                console.log("some errors occured.............", data)
+                setError({ "name": data.name[0] })
+                return
+            }
+            closeModal()
         }
 
     }
 
     // console.log(Object.values(errors).length && errors.name)
-    console.log(errors.name)
+    // console.log(errors.name)
 
     return (
         <div className="group-form-container">
@@ -96,7 +103,6 @@ const NewGroupModal = ({ group }) => {
                 {group &&
                     <label >
                         New Owner
-                        {submitted && <span className='errors'>{errors.name}</span>}
                         <select
                             value={ownerId}
                             onChange={(e) => setOwnerId(e.target.value)}>
