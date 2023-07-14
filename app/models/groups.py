@@ -30,6 +30,7 @@ class Group(db.Model):
             "id":self.id,
             "owner_id": User.query.get(self.owner_id).trans_dict(),
             "name": self.name,
+            "isPublic":self.isPublic,
             "created_at": self.created_at,
             'members': [user.friend_dict() for user in self.group_memberships],
             'memberCount':len(self.group_memberships)

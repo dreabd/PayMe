@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { useModal } from "../../../../../context/Modal"
 
-import { getAllUsersThunk,authenticate } from "../../../../../store/session"
+import { getAllUsersThunk, authenticate } from "../../../../../store/session"
 import { postNewGroupThunk, putGroupThunk } from "../../../../../store/groups"
 
+import AddMemberModal from "../AddMemberModal"
+
+import "./NewGroupModal.css"
 
 const NewGroupModal = ({ group }) => {
     const dispatch = useDispatch()
@@ -50,6 +53,9 @@ const NewGroupModal = ({ group }) => {
         formData.append("owner_id", ownerId || current.id)
         formData.append("isPublic", isPublic)
 
+        for (let key of formData.entries()) {
+            console.log(key[0] + ' ----> ' + key[1])
+        }
 
         if (!group) {
             const data = await dispatch(postNewGroupThunk(formData))
@@ -64,8 +70,7 @@ const NewGroupModal = ({ group }) => {
         else {
             const data = await dispatch(putGroupThunk(group.id, formData))
             if (data) {
-                console.log("some errors occured.............", data)
-                setError({ "name": data.name[0] })
+                setError({ "name": data })
                 return
             }
             dispatch(authenticate(current.id))
@@ -79,30 +84,20 @@ const NewGroupModal = ({ group }) => {
 
     return (
         <div className="group-form-container">
-            {!group ? <h2> Create A New Group</h2> : <h2>Update Group</h2>}
+            {!group ? <p> Create A New Group</p> : <p>Update Group</p>}
             <form onSubmit={newGroup}>
+                {submitted && Object.values(errors).length ? <span className='errors'>{errors.groupName}</span> : null}
+                {submitted && Object.values(errors).length ? <span className='errors'>{errors.name}</span> : null}
                 <label style={{ display: "flex", flexDirection: "column" }}>
                     Group Name
-                    {submitted && <span className='errors'>{errors.groupName}</span>}
-                    {submitted && <span className='errors'>{errors.name}</span>}
                     <input
                         type="text"
                         value={groupName}
                         onChange={e => setGroupName(e.target.value)}
                     />
                 </label>
-
-                <label className="public-checkbox">
-                    Public
-                    <input
-                        type="checkbox"
-                        value={isPublic}
-                        checked={isPublic}
-                        onChange={e => { setIsPublic(!isPublic) }}
-                    />
-                </label>
                 {group &&
-                    <label >
+                    <label style={{ display: "flex", flexDirection: "column" }} >
                         New Owner
                         <select
                             value={ownerId}
@@ -118,9 +113,25 @@ const NewGroupModal = ({ group }) => {
                                     return (null)
                                 }
                             })}
+
                         </select>
                     </label>}
-                <button className="submit-new-card" >Submit</button>
+                <label className="public-checkbox">
+                    Public
+                    <input
+                        type="checkbox"
+                        value={isPublic}
+                        checked={isPublic}
+                        onChange={e => { setIsPublic(!isPublic) }}
+                    />
+                </label>
+                {/* 
+                Future want to add the abilty to add your group members before creating the group
+                {
+                    !group &&
+                    <AddMemberModal/>
+                } */}
+                <button className="new-group-button" >Submit</button>
 
             </form>
         </div>

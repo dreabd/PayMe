@@ -19,7 +19,8 @@ class GroupForm(FlaskForm):
 
 
 class GroupEditForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired(),group_exists])
+    name = StringField("Name", validators=[DataRequired()])
     isPublic = BooleanField("Public",default=False)
     owner_id = IntegerField("Owner ID",validators=[DataRequired()])
 
+ 

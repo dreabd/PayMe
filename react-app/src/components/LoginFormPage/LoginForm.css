@@ -53,7 +53,9 @@
 .remove-friend-button,
 .trans-details-button-container > button,
 .add-member-container > *,
-.leave-group-container > *{
+.leave-group-container > *,
+.setting-dropdown > *,
+.new-group-button{
   border: none;
   overflow: hidden;
   width: 100%;
@@ -85,7 +87,9 @@
 .update-card:hover,
 .leave-button-container > button:hover,
 .add-friend-button:hover,
-.trans-details-button-container > button:hover{
+.trans-details-button-container > button:hover,
+.setting-dropdown > *:hover,
+.new-group-button :hover{
   background-color:#0037ff;
   color: white;
 }
@@ -101,7 +105,9 @@
 .update-card:active,
 .add-friend-button:active,
 .leave-button-container > button:active,
-.trans-details-button-container > button:active{
+.setting-dropdown > * :active,
+.trans-details-button-container > button:active,
+.new-group-button :active{
   background-color:#008cff4d;
   box-shadow: 1px 1px 2px #049d6f;
 

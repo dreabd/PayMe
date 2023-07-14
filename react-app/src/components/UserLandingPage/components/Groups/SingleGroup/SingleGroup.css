@@ -53,7 +53,6 @@
   padding: 20px 20px 10px 20px;
   position: absolute;
   top: 60px;
-  /* right: px; */
   background-color: white;
   min-width: 1rem;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -63,7 +62,6 @@
 
 .add-member-container > *{
   display: flex;
-  height: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

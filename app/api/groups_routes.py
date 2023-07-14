@@ -244,11 +244,19 @@ def put_group(id):
         data = form.data
 
         if data["name"]:
+            group_exists = Group.query.filter(Group.name == data["name"]).first()
+            # print("🐀..........................",str(group_exists.name))
+            # print("🐀..........................",str(updated_group.name))
+            # print("🐀..........................",data["name"])
+            # print("🐀..........................",str(group_exists.name) == data["name"])
+            if group_exists and str(updated_group.name) != data["name"]:
+                return {"errors":"Group name already in use."},400
             updated_group.name = data["name"]
-        if data["isPublic"]:
+        if data["isPublic"] in [True,False]:
             updated_group.isPublic = data["isPublic"]
         if data["owner_id"]:
             updated_group.owner_id = data["owner_id"]
+
 
         db.session.commit()
         return{"group": updated_group.to_dict()}

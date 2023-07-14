@@ -1,6 +1,5 @@
 .leave-group-modal{
     background-color: white;
-    width: 30rem;
     height: 15rem;
     border:3px solid black;
     border-radius: 10px;
@@ -12,7 +11,14 @@
 }
 
 .leave-group-modal > p{
-    font-size: 24px;
+    display: flex;
+    justify-content: baseline;
+    color: rgba(0, 0, 0, 0.713);
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.391);
+    width: 100%;
 }
 
 .leave-button-container{

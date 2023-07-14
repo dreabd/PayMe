@@ -1,20 +1,27 @@
 .potential-members-container {
     display: flex;
     flex-direction: column;
-    width: 14rem;
-    height: 15rem;
-    border: 3px solid rgba(0, 0, 0, 0.391);
-    padding: 2rem 2rem;
-    border-radius: 30px;
     background-color: white;
-    box-shadow: 1px 1px 1px black;
+    width: 18rem;
+    height: 20rem;
+    border: 3px solid rgba(0, 0, 0, 0.391);
+    justify-content: center;
+    align-items:center;
+    padding: 3rem 2.5rem;
+    border-radius: 50px;
+    box-shadow: 3px 3px 4px black;
+
 }
 
 .potential-members-container>p {
-    font-size: 20px;
-    font-weight: bold;
-    font-style: italic;
+    display: flex;
+    justify-content: baseline;
+    color: rgba(0, 0, 0, 0.713);
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.391);
+    width: 100%;
 }
 
 .potential-members-container>ul {
@@ -22,8 +29,13 @@
     flex-direction: column;
     gap: 1rem;
     padding-top: 1rem;
-    overflow-y:scroll;
-
+    overflow-y: scroll;
+    width: 100%;
+    scrollbar-color: #008cff;
+    scrollbar-width: thin;
+}
+.potential-members-container>ul >li >*{
+    font-size: 1.3rem;
 }
 
 .potential-members-list {
