@@ -8,10 +8,12 @@ import { getAllGroupsThunk } from "../../../../store/groups";
 import GroupCard from "./helpers/GroupCard";
 import NewGroupModal from "./NewGroupModal";
 
+import "./Group.css"
+
 function Groups() {
     const dispatch = useDispatch()
 
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const groups = useSelector(state => state.group.allGroups)
     const userGroups = useSelector(state => state.session.user.my_groups)
@@ -19,32 +21,37 @@ function Groups() {
 
 
     useEffect(() => {
-        setTimeout(()=>{
+        setTimeout(() => {
             setLoading(true)
-        },1000)
+        }, 1000)
 
         dispatch(getAllGroupsThunk())
     }, [])
 
-    if(!loading || !Object.values(groups).length ) return  (<h4 className="trans-feed-container">Loading...</h4>)
+    if (!loading || !Object.values(groups).length) return (<h4 className="trans-feed-container">Loading...</h4>)
 
     return (
-        <div>
+        <div className="groups-container">
             <div className="public-groups-container">
-                <h2>Public Groups</h2>
-                {Object.values(groups).length && GroupCard(groups, user)}
+                <p>Public Groups</p>
+                <ul>
+                    {Object.values(groups).length && GroupCard(groups, user)}
+                </ul>
             </div>
 
             <div className="user-groups-container">
-                <h2>My Groups</h2>
-                {userGroups.length ? GroupCard(userGroups, user) : "No Groups"}
+                <p>My Groups</p>
+                <ul>
+                    {userGroups.length ? GroupCard(userGroups, user) : "No Groups"}
+                </ul>
+
             </div>
 
 
-            <div>
+            <div className="add-group-button">
                 <OpenModalButton
-                    buttonText={<span><i class="fa-solid fa-plus"></i>Create Your Own Group</span>}
-                    modalComponent={<NewGroupModal/>}
+                    buttonText={"Create Your Own Group"}
+                    modalComponent={<NewGroupModal />}
                 />
             </div>
         </div>

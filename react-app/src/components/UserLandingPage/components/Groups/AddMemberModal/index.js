@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min"
 
 import { useModal } from "../../../../../context/Modal"
 
-import { getAllUsersThunk } from "../../../../../store/session"
+import { authenticate, getAllUsersThunk } from "../../../../../store/session"
 import { getSingleGroupThunk, postGroupMember } from "../../../../../store/groups"
 
 import "./AddMemberModal.css"
@@ -36,6 +36,7 @@ const AddMemberModal = ({ members, group_id }) => {
             const { newMember } = await res.json()
             dispatch(postGroupMember(newMember))
             dispatch(getSingleGroupThunk(group_id))
+            dispatch(authenticate())
             closeModal()
         } else {
             const errors = await res.json()

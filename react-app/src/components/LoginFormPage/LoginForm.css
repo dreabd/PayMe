@@ -55,7 +55,8 @@
 .add-member-container > *,
 .leave-group-container > *,
 .setting-dropdown > *,
-.new-group-button{
+.new-group-button,
+.add-group-button>*{
   border: none;
   overflow: hidden;
   width: 100%;
@@ -89,7 +90,8 @@
 .add-friend-button:hover,
 .trans-details-button-container > button:hover,
 .setting-dropdown > *:hover,
-.new-group-button :hover{
+.new-group-button :hover,
+.add-group-button>*:hover{
   background-color:#0037ff;
   color: white;
 }
@@ -107,6 +109,7 @@
 .leave-button-container > button:active,
 .setting-dropdown > * :active,
 .trans-details-button-container > button:active,
+.add-group-button>*:active
 .new-group-button :active{
   background-color:#008cff4d;
   box-shadow: 1px 1px 2px #049d6f;

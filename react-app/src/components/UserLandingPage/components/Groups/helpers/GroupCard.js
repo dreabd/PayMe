@@ -10,20 +10,26 @@ const GroupCard = (groups, user) => {
     const card = Object.values(groups).map(group => {
         // console.log(group.owner_id.id)
         return (
-            <div
+            <li
                 key={group.id}
                 onClick={() => history.push(`/user/group/${group.id}`)}
+                className="group-card"
+                style={{listStyle:"none"}}
             >
-                <h3>
-                    {group.name}
-                </h3>
-                <p>
-                    {group.memberCount} Members
-                </p>
-                <p>
-                    Owner: {group.owner_id.id == user.id ? "You" : group.owner_id.username}
-                </p>
-            </div>
+                <div className="group-card-top">
+                    <p>
+                        {group.name}
+                    </p>
+                    <p>
+                        {group.memberCount > 1 ? <span>{group.memberCount}<i class="fa-solid fa-users"></i></span> : <span>{group.memberCount} <i class="fa-solid fa-user"></i></span>}
+                    </p>
+                </div>
+                <div className="group-card-bot">
+                    <p className="username">
+                        Owner: {group.owner_id.id == user.id ? "You" : group.owner_id.username}
+                    </p>
+                </div>
+            </li>
         )
     })
     return (

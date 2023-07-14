@@ -79,7 +79,7 @@ function TransDetails({ stats, trans, transDetails }) {
     }).map(group => {
         return (
             <li style={{ "listStyleType": "none" }}>
-                <NavLink className="navlink important-navlinks" to={`/user/groups/${group.id}`}>{group.owner_id.id === user.id && "*"}{group.name}</NavLink>
+                <NavLink className="navlink important-navlinks" to={`/user/group/${group.id}`}>{group.owner_id.id === user.id && "*"}{group.name}</NavLink>
             </li>
         )
     })

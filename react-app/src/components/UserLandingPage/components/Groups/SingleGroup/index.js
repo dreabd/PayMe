@@ -91,7 +91,7 @@ function GroupPage() {
                         Owner: {singleGroup.owner_id?.first_name} {singleGroup.owner_id?.last_name}
                     </p>
                     <button className="members-button" style={{ cursor: "auto" }}>
-                        <i className="fas fa-user-circle" />{singleGroup.memberCount} Members
+                    <i class="fa-solid fa-users"></i>{singleGroup.memberCount} Members
                     </button>
 
                 </div>

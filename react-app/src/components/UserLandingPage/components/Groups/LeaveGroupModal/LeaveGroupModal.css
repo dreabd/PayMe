@@ -1,13 +1,15 @@
 .leave-group-modal{
     background-color: white;
     height: 15rem;
-    border:3px solid black;
+    border: 3px solid rgba(0, 0, 0, 0.391);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1rem 1rem;
+    box-shadow: 3px 3px 4px black;
+
 }
 
 .leave-group-modal > p{

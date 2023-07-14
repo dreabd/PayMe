@@ -140,7 +140,7 @@ export const signUp = (signUpInfo) => async (dispatch) => {
 	}
 };
 
-const initialState = { user: null, allUsers: {}, otherUser: {} };
+const initialState = { user: null, allUsers: {}, otherUser: {},userGroups:{}};
 
 export default function reducer(state = initialState, action) {
 	let newState;

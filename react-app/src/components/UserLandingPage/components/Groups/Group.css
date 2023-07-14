@@ -1,0 +1,106 @@
+.groups-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%;
+}
+
+.public-groups-container,
+.user-groups-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.public-groups-container>ul,
+.user-groups-container>ul {
+    padding: 1rem 1rem;
+    width: 80%;
+}
+
+.public-groups-container>ul>*,
+.user-groups-container>ul>* {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.public-groups-container > p,
+.user-groups-container > p
+{
+    font-size: 2.3rem;
+    font-weight:700 ;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.713);
+}
+
+.group-card {
+    width: 85%;
+    padding: 2rem 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.391);
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px black;
+    background-color: white;
+    cursor: pointer;
+    /* transition: background-color 2s ease-out;
+    transition: color 2s ease-out; */
+    transition: color .5s ease-out; 
+    background: linear-gradient(to left, white 50%, #008CFF 50%) right;
+    background-size: 200%;
+    transition: .5s ease-out;
+}
+
+.group-card:hover {
+    color: rgb(255, 255, 255);
+    background-position: left;
+
+}
+
+.group-card-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.group-card-top > :nth-child(1){
+    font-size: 1.4rem;
+    font-weight:600;
+    font-style: oblique;
+}
+
+.group-card-top > :nth-child(2){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-card-top > :nth-child(2) > *{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+
+.add-group-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    /* height: 40%; */
+
+}
+
+.add-group-button>* {
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
