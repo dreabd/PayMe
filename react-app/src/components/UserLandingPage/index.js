@@ -51,9 +51,9 @@ function UserLandingPage() {
           <Groups />
         </Route>
 
-        <Route exact path="/user/budgets">
+        {/* <Route exact path="/user/budgets">
           Budget Place Holder
-        </Route>
+        </Route> */}
 
         <Route exact path="/user/cards">
           <ManageCards />
