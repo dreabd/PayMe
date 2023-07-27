@@ -21,6 +21,7 @@ const Dropdown = ({ trans, current, options, updated, placeHolder,onChange}) => 
     const [selectedValue, setSelectedValue] = useState(
         (trans && updated && [trans?.payer.id]) ||
         (location.state?.friend && [location.state.id]) ||
+        (location.state?.group && [...location.state.id]) ||
         [])
 
     const getDisplay = () => {

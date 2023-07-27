@@ -13,12 +13,12 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const history = useHistory()
   const location = useLocation()
 
-  // console.log(trans)
   const [description, setDescription] = useState(trans?.description || "")
   const [publics, setPublics] = useState(trans?.public || false)
   const [name, setName] = useState(
     (updated && [trans?.payer.id]) ||
     (location.state?.friend && [location.state.id]) ||
+    (location.state?.group && [...location.state.id]) ||
     "")
   const [money, setMoney] = useState(trans?.money || 0)
   const [category, setCategory] = useState(trans?.category.id || "")
@@ -27,6 +27,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const [pay, setPay] = useState(false)
   const [request, setRequest] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [split, setSplit] = useState(false)
 
   const categories = useSelector(state => state.category.categories);
   const users = useSelector(state => state.session.allUsers)
@@ -73,7 +74,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
 
       formData.append("description", description)
       formData.append("public", publics)
-      formData.append("money", money)
+      !split ? formData.append("money", money) : formData.append("money", money / name.length)
       formData.append("category_id", category)
 
       for (let key of formData.entries()) {
@@ -140,7 +141,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   const options = users && Object.values(users)
 
 
-  // console.log(name)
+  console.log(name)
   return (
     <div className="trans-form-container">
       <form className="trans-form" onSubmit={!updated ? handleTransactionSubmit : updateTransaction}>
@@ -227,6 +228,10 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
             <button type="submit">
               Pay ${money}
             </button>
+            {name.length > 1 &&
+              <button onClick={() => setSplit(true)}>
+                Split ${(money / name.length).toFixed(0)}
+              </button>}
             <button onClick={transactionIsCanceled}>
               Cancel
             </button>
@@ -238,6 +243,10 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
             <button type="submit">
               Request ${money}
             </button>
+            {name.length > 1 &&
+              <button onClick={() => setSplit(true)}>
+                Split ${(money /(name.length )).toFixed(0)}
+              </button>}
             <button onClick={transactionIsCanceled}>
               Cancel
             </button>

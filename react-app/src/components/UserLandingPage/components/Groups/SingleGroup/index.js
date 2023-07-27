@@ -79,6 +79,7 @@ function GroupPage() {
 
     const member_id = members && Object.keys(members)
 
+    console.log(member_id)
 
     if (!loading) return (<h4 className="trans-feed-container">Loading...</h4>)
 
@@ -91,7 +92,7 @@ function GroupPage() {
                         Owner: {singleGroup.owner_id?.first_name} {singleGroup.owner_id?.last_name}
                     </p>
                     <button className="members-button" style={{ cursor: "auto" }}>
-                    <i class="fa-solid fa-users"></i>{singleGroup.memberCount} Members
+                        <i class="fa-solid fa-users"></i>{singleGroup.memberCount} Members
                     </button>
 
                 </div>
@@ -101,7 +102,7 @@ function GroupPage() {
                         <ul className={ulClassName}>
                             <OpenModalButton
                                 buttonText={"Update"}
-                                modalComponent={<UpdateGroupModal/>}
+                                modalComponent={<UpdateGroupModal />}
                             />
                             <OpenModalButton
                                 buttonText={"Delete"}
@@ -126,6 +127,7 @@ function GroupPage() {
                 <div className="member-container">
                     <p>Members</p>
                     <ul >
+                        {/* Seeing who is in the group */}
                         {
                             Object.values(singleGroup).length &&
                             Object.values(members).map(member => {
@@ -140,6 +142,7 @@ function GroupPage() {
                                 )
                             })
                         }
+                        {/* For Adding to a Group */}
                         {singleGroup.owner_id.id === user.id &&
                             <li className="add-member-container">
                                 <OpenModalButton
@@ -148,6 +151,7 @@ function GroupPage() {
                                 />
                             </li>
                         }
+                        {/* For Leaving a Group */}
                         {
                             member_id.includes(String(user.id)) && user.id !== singleGroup.owner_id.id &&
 
@@ -157,6 +161,13 @@ function GroupPage() {
                                     modalComponent={<LeaveGroupModal setUpdated={setUpdated} group={singleGroup} />}
                                 />
                             </li>
+                        }
+                        {/* For Paying / Requesting the group  */}
+                        {
+                            member_id.includes((String(user.id))) &&
+                            <button onClick={() => { history.push("/user/transaction", { id: member_id.map(id=>Number(id)).filter(id=> id!==user.id), group: true }) }} className="pay-request-button">
+                                Pay / Request
+                            </button>
                         }
                     </ul>
                 </div>
