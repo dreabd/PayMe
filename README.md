@@ -1,15 +1,14 @@
-# PayMe
 
+# <a href="http://payme-ksng.onrender.com/" target="_blank">PayMe</a>
 PayMe is a soft clone of the popular app Venmo. Over the past few years, Venmo's popularity has skyrocketed due to it's functionality of being able to charge or request users. However, since it's launch in 2009 thus following its rise to popularity in 2015, Venmo's social functionality has remained stagnant.
 
-This clone intends on improving that functionality by adding groups and group budgets. Additonally, a visualization of your tranasactions and a budget creator have been implemented as well to further improve application.
+On top of transactions, this clone intends to add **group transaction dashboard**, **visualization of user's transacitons** and **group budgetting**. Additonally, a visualization of your tranasactions and a budget creator have been implemented as well to further improve the application.
 
-## Check out <a href="http://payme-ksng.onrender.com/" target="_blank">PayMe</a>
 
 ## Getting started
 1. Clone this repository
 
-2. Install dependencies for the Backend and Frontend in different terminals
+2. Install dependencies for the Backend and Frontend in Two different terminals
 
       Backend:
       ```bash
@@ -28,17 +27,8 @@ This clone intends on improving that functionality by adding groups and group bu
 
    ```bash
    pipenv shell
-   ```
-
-   ```bash
    flask db upgrade
-   ```
-
-   ```bash
    flask seed all
-   ```
-
-   ```bash
    flask run
    ```
 
@@ -53,3 +43,10 @@ This clone intends on improving that functionality by adding groups and group bu
    ```
 
 6. Now you can use the app!
+
+## Features
+### Credit Cards
+### Data Visualization
+### Friends
+### Groups
+### Transactions
