@@ -42,7 +42,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
     const err = {}
 
     if (!description.trim().length) err["description"] = "Please provide a valid description"
-    if (description.length > 50) err["description"] = "Descriptions are limited to 50 characters  "
+    if (description.length > 50) err["description"] = "Descriptions are limited to 50 characters"
     if (money <= 0) err["money"] = "Please provide a valid amout"
     if (!name.length) err["name"] = "Please select a user"
     if (!category) err["category"] = "Please select a category"
@@ -52,7 +52,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   }, [description, name, money, category, submitted])
 
   const handleTransactionSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault()-
 
     setSubmitted(true)
 

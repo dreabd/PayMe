@@ -12,8 +12,6 @@ function CardForm({update,card}) {
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
-  // console.log("😂..................................",card)
-
   useEffect(() => {
     const err = {}
 
