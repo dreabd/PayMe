@@ -52,7 +52,7 @@ function TransactionForm({ setUserLoad, trans, updated, setUpdated }) {
   }, [description, name, money, category, submitted])
 
   const handleTransactionSubmit = async (e) => {
-    e.preventDefault()-
+    e.preventDefault()
 
     setSubmitted(true)
 

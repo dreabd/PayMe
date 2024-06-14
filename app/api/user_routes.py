@@ -101,14 +101,14 @@ def get_user_transactions(id):
             "transactions": user_transaction,
             "allTransData":transaction_obj(user_transaction),
             "category":{
-            "housing":Housing_Transactions,
-            "transportion":Transportation_Transactions,
-            "food":Food_Transactions,
-            "personal":Personal_Transactions,
-            "entertainment":Entertainment_Transactions,
-            "saving":Saving_Transactions
+                "housing":Housing_Transactions,
+                "transportion":Transportation_Transactions,
+                "food":Food_Transactions,
+                "personal":Personal_Transactions,
+                "entertainment":Entertainment_Transactions,
+                "saving":Saving_Transactions
             },
-            }
+        }
 
     if user.id in friends:
         user_trans = (
@@ -124,17 +124,6 @@ def get_user_transactions(id):
         user_transaction = [trans.to_dict() for trans in user_trans]
 
         # I want to return all the transactions between the user's id and the current user's id
-        #
-        # def filter_1(x):
-        #     # print("something..................",x)
-        #     # print("true or false......................", x["payer_id"] == current_user.id or x["requester_id"] == current_user.id)
-        #     # print ("Requester",x["requester_id"],x["requester"]["first_name"])
-        #     # print ("Payer",x["payer_id"], x["payer"]["first_name"])
-        #     # print (current_user.id,current_user.first_name)
-        #     # print(str(current_user.id or user.id))
-        #     # print("........................................................................")
-        #     return x["payer_id"] == current_user.id or x["requester_id"] == current_user.id
-
         friend_trans = filter(lambda x: (x["payer_id"] == current_user.id or x["requester_id"] == current_user.id), user_transaction)
         friend_transaction = list(friend_trans)
 
